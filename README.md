@@ -1,12 +1,17 @@
-# 📦 Proyecto de MEAN Stack - Administración de Tienda en Línea sobre Joyas
+# 📦 Proyecto AST - Administración de Tienda en Línea sobre Joyas
 
 ## 📌 Descripción
-Este proyecto es una aplicación **RESTful** desarrollada con la **MEAN stack** (MongoDB, Express, Angular/React/Vue, Node.js). Permite a un administrador gestionar artículos en una tienda en línea a través de una interfaz web, ofreciendo funcionalidades **CRUD** (Crear, Leer, Actualizar, Eliminar).
+Este proyecto es una aplicación **RESTful** desarrollada con la **MEAN stack** (MongoDB, Express, Angular, Node.js). Permite a un administrador gestionar artículos en una tienda en línea a través de una interfaz web, ofreciendo funcionalidades **CRUD** (Crear, Leer, Actualizar, Eliminar). Además, el sistema soporta diferentes roles de usuario:
+
+- **Administrador**: Puede gestionar los artículos en la base de datos, incluyendo la creación, modificación y eliminación.
+- **Usuario estándar**: Puede consultar los artículos disponibles y realizar compras.
+
+El sistema está diseñado para ser modular, escalable y fácil de usar, permitiendo una gestión eficiente de la tienda en línea.
 
 ## 🚀 Tecnologías Utilizadas
 - **MongoDB** - Base de datos NoSQL para almacenar los artículos.
 - **Express.js** - Framework de backend en Node.js.
-- **Angular/React/Vue** - Framework para el frontend (elige el que prefieras).
+- **Angular** - Framework para el frontend.
 - **Node.js** - Entorno de ejecución para JavaScript en el backend.
 - **Mongoose** - ODM para modelar datos en MongoDB.
 
@@ -53,7 +58,6 @@ node server.js
 ```sh
 cd frontend
 npm install
-npm start  # React/Vue
 ng serve    # Angular
 ```
 
@@ -64,18 +68,6 @@ ng serve    # Angular
 - ✏️ **Modificar un artículo** existente.
 - 🗑️ **Eliminar un artículo**.
 
-### 🔒 Roles de Usuario (Proyecto - Grupo C)
+### 🔒 Roles de Usuario
 - **Administrador**: Gestiona los artículos.
 - **Cliente**: Puede consultar y comprar artículos.
-
-## 📅 Entregas y Evaluación
-- **Prácticas (Grupo B):** CRUD de artículos (Fecha límite: 24 de marzo de 2025).
-- **Proyecto (Grupo C):** Implementación de microservicios (Fecha límite: 23 de abril de 2025).
-
-## 💡 Notas Importantes
-- MongoDB debe estar instalado localmente.
-- No se permite el uso de Docker ni bases de datos en línea.
-- No se usa autenticación; cada petición debe incluir el ID del usuario.
-
----
-✉️ **Contacto**: [tu-email@example.com](mailto:tu-email@example.com)

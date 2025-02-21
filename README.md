@@ -15,7 +15,14 @@ El sistema está diseñado para ser modular, escalable y fácil de usar, permiti
 - **Node.js** - Entorno de ejecución para JavaScript en el backend.
 - **Mongoose** - ODM para modelar datos en MongoDB.
 
-## 📂 Estructura del Proyecto
+## 🛠️ Funcionalidades
+### ✅ CRUD de Artículos
+- 📌 **Consultar artículos** por ID, nombre, precio, etc.
+- ➕ **Crear un artículo** con campos como ID, nombre, cantidad, precio.
+- ✏️ **Modificar un artículo** existente.
+- 🗑️ **Eliminar un artículo**.
+
+## 📂 Estructura del Proyecto (hay que modificarlo a medida que se añadan carpetas relevantes)
 ```
 ├── backend
 │   ├── models
@@ -60,13 +67,6 @@ cd frontend
 npm install
 ng serve    # Angular
 ```
-
-## 🛠️ Funcionalidades
-### ✅ CRUD de Artículos
-- 📌 **Consultar artículos** por ID, nombre, precio, etc.
-- ➕ **Crear un artículo** con campos como ID, nombre, cantidad, precio.
-- ✏️ **Modificar un artículo** existente.
-- 🗑️ **Eliminar un artículo**.
 
 ### 🔒 Roles de Usuario
 - **Administrador**: Gestiona los artículos.

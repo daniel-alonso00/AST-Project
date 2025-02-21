@@ -8,6 +8,10 @@ Este proyecto es una aplicación **RESTful** desarrollada con la **MEAN stack** 
 
 El sistema está diseñado para ser modular, escalable y fácil de usar, permitiendo una gestión eficiente de la tienda en línea.
 
+### 🔒 Roles de Usuario
+- **Administrador**: Gestiona los artículos.
+- **Cliente**: Puede consultar y comprar artículos.
+
 ## 🚀 Tecnologías Utilizadas
 - **MongoDB** - Base de datos NoSQL para almacenar los artículos.
 - **Express.js** - Framework de backend en Node.js.
@@ -67,7 +71,3 @@ cd frontend
 npm install
 ng serve    # Angular
 ```
-
-### 🔒 Roles de Usuario
-- **Administrador**: Gestiona los artículos.
-- **Cliente**: Puede consultar y comprar artículos.

@@ -21,6 +21,7 @@ app.get("/prueba",(req, res) => {res.sendFile(__dirname+'/index.html')});
 app.get("/", (req, res) => {
   res.send("✅ API funcionando...");
 });
+
 app.get("/admin",(req, res) => {res.send("Entrada para admin")});
 
 // Definir el puerto del servidor (5000 por defecto o el de .env)

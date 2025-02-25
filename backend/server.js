@@ -1,30 +1,47 @@
-require("dotenv").config(); //carga las variables de entorno desde .env
-const express = require("express"); //Importa express
-const mongoose = require("mongoose");   //Importa Mongoose para conectar a mongoDB
-const cors = require("cors");   //permite peticioens desde otros dominios (CORS)
+const mongoose = require("mongoose")
+const express = require("express")
+const app = express()
 
-const app = express();  //Crea una instancia de express
-app.use(express.json());    //Permite recibir JSON en las particiones
-app.use(cors());    //Habilita CORS para permitir el acceso desde el frontend
+const Anillo = require('./models/anillo')
+const Pulsera = require('./models/pulsera')
+const Collar = require('./models/collar')
+const Pendiente = require('./models/pendiente')
 
-// Conectar a MongoDB usando mogoose
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+
+// Conectar con Mongodb
+mongoose.connect('mongodb://127.18.33.244:27017/joyas', {})
+  .then(() => {
+    console.log('MongoDB connected')
+
+    // Escucha en puerto 8080
+    app.listen(8080, () => {
+      console.log("Localhost listening on 8080.")
+    })
+  })
+  .catch(err => console.log('Error connecting MongoBD: ', err));
+
+// --- GET ---
+app.get('/admin', (req, res) => {
+  res.sendFile(__dirname + "/index.html")
 })
-  .then(() => console.log("✅ MongoDB conectado"))
-  .catch(err => console.log("❌ Error al conectar MongoDB:", err));
 
-// Ruta de prueba para verificar que el servidor funciona
-app.get("/prueba",(req, res) => {res.sendFile(__dirname+'/index.html')});
+app.get('/joya', (req, res) => {
+  console.log(Joya.findOne({}))
+})
 
-app.get("/", (req, res) => {
-  res.send("✅ API funcionando...");
-});
-app.get("/admin",(req, res) => {res.send("Entrada para admin")});
+// --- POST ---
+app.post('/joya/anillo', (req, res) => {
+  nombre = req.body.nombre
+  precio = req.body.precio
+  gema = req.body.gema
 
-// Definir el puerto del servidor (5000 por defecto o el de .env)
-const PORT = process.env.PORT || 5000;
+  const newAnillo = new Anillo({
+    nombre: nombre,
+    precio: precio,
+    gema: gema
+  })
 
-//Iniciar el servidor
-app.listen(PORT, () => console.log(`🚀 Servidor corriendo en puerto ${PORT}`));
+  newAnillo.save()
+})

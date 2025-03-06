@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
 // Conectar con Mongodb
-mongoose.connect('mongodb://127.18.33.244:27017/joyas', {})
+mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .then(() => {
     console.log('MongoDB connected')
 

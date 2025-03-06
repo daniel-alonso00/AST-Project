@@ -1,16 +1,8 @@
 # 📦 Proyecto AST - Administración de Tienda en Línea sobre Joyería
 
 ## 📌 Descripción
-Este proyecto es una aplicación **RESTful** desarrollada con la **MEAN stack** (MongoDB, Express, Angular, Node.js). Permite a un administrador gestionar artículos en una tienda en línea a través de una interfaz web, ofreciendo funcionalidades **CRUD** (Crear, Leer, Actualizar, Eliminar) mediante una **API REST**. Además, el sistema soporta diferentes roles de usuario:
-
-- **Administrador**: Puede gestionar los artículos en la base de datos, incluyendo la creación, modificación y eliminación.
-- **Usuario estándar**: Puede consultar los artículos disponibles y realizar compras.
-
+Este proyecto es una aplicación **RESTful** desarrollada con la **MEAN stack** (MongoDB, Express, Angular, Node.js). Permite a un administrador gestionar artículos en una tienda en línea a través de una interfaz web, ofreciendo funcionalidades **CRUD** (Crear, Leer, Actualizar, Eliminar) mediante una **API REST**. Además, el sistema soporta un rol de usuario, con el cual se gestionan las funcionalidades CRUD y visualizar una lista de articulos.
 El sistema está diseñado para ser modular, escalable y fácil de usar, permitiendo una gestión eficiente de la tienda en línea.
-
-### 🔒 Roles de Usuario
-- **Administrador**: Gestiona los artículos.
-- **Cliente**: Puede consultar y comprar artículos.
 
 ## 🚀 Tecnologías Utilizadas
 - **MongoDB** - Base de datos NoSQL para almacenar los artículos.

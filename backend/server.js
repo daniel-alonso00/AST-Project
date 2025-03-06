@@ -27,8 +27,16 @@ app.get('/admin', (req, res) => {
   res.sendFile(__dirname + "/index.html")
 })
 
-app.get('/joya', (req, res) => {
-  console.log(Joya.findOne({}))
+app.get('/joya/anillo/all', (req, res) => {
+  Anillo.find({}, (err, anillos) => {
+    var mapAnillos = {};
+
+    anillos.forEach(anillo => {
+      mapAnillos[anillo._id] = anillo
+    });
+
+    res.send(mapAnillos)
+  });
 })
 
 // --- POST ---

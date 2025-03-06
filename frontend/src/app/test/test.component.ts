@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './test.component.css'
 })
 export class TestComponent {
-
+  logged = false;
+  username = "Pepito";
 }

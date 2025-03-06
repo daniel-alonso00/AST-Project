@@ -1,4 +1,11 @@
-<h1>Hello World!</h1>
-<app-test />
+<button (click)="changeAdmin()"> Admin </button>
+<br>
+@if (admin) {
+  <app-test />
+} @else {
+  <app-hola />
+}
+
+<p>{{ admin }}</p>
 
 <!-- <router-outlet /> -->

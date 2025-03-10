@@ -8,6 +8,8 @@
 <body>
 
     <h1>Tienda de Joyas</h1>
+
+    <h2>Anillos</h2>
     
     <form id="anilloForm">
         <input type="text" placeholder="Nombre" name="nombre" id="nombre" required />
@@ -33,7 +35,7 @@
                     gema: document.getElementById("gema").value
                 };
 
-                fetch("http://localhost:8080/joya/anillo", {
+                fetch("http://localhost:8080/anillo", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -60,7 +62,7 @@
             }
 
             // ✅ Cargar anillos al abrir la página
-            fetch("http://localhost:8080/joyas/anillos")
+            fetch("http://localhost:8080/anillos")
                 .then(response => response.json())
                 .then(data => mostrarAnillos(data))
                 .catch(error => console.error("Error al obtener anillos:", error));

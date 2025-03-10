@@ -27,6 +27,17 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + "/index.html")
 })
 
+
+
+app.get('/joya/anillo/all', async (req, res) => {
+  try {
+    let anillos = await Anillo.find({});
+    res.json(anillos)
+  } catch {
+    res.status(500).json({ error: 'Error al obtener los anillos' });
+  }
+});
+
 // --- POST ---
 app.post('/joya/anillo', (req, res) => {
   try{

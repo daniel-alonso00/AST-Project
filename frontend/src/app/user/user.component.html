@@ -1,1 +1,9 @@
+
 <p>pagina principal de usuario funciona</p>
+
+<ul>
+  @for(item of items; track item._id) {
+  <li>{{ item.nombre }}</li>
+  }
+</ul>
+

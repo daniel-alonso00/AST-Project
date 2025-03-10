@@ -8,23 +8,19 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  items: any[] = []; // Array to store API data
+  items: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit() {
     this.fetchItems();
   }
 
   fetchItems() {
-    this.http.get<any[]>('http://localhost:8080/joya/anillo/all')
-      .subscribe(
-        (data) => {
-          this.items = data;
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-        }
-      );
+    this.http.get('http://127.0.0.1:8080/joya/anillo/all')
+      .subscribe(data => {
+        this.items = data;
+      });
   }
 }

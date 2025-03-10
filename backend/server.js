@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
 // Conectar con Mongodb
-mongoose.connect('mongodb://127.18.33.244:27017/joyas', {})
+mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .then(() => {
     console.log('MongoDB connected')
 
@@ -23,25 +23,39 @@ mongoose.connect('mongodb://127.18.33.244:27017/joyas', {})
   .catch(err => console.log('Error connecting MongoBD: ', err));
 
 // --- GET ---
-app.get('/admin', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + "/index.html")
-})
-
-app.get('/joya', (req, res) => {
-  console.log(Joya.findOne({}))
 })
 
 // --- POST ---
 app.post('/joya/anillo', (req, res) => {
-  nombre = req.body.nombre
-  precio = req.body.precio
-  gema = req.body.gema
+  try{
+    nombre = req.body.nombre
+    precio = req.body.precio
+    gema = req.body.gema
+  
+    const newAnillo = new Anillo({
+      nombre: nombre,
+      precio: precio,
+      gema: gema
+    })
+  
+    newAnillo.save()
+    res.status(201).json({ message: "Anillo creado correctamente", anillo: newAnillo });
 
-  const newAnillo = new Anillo({
-    nombre: nombre,
-    precio: precio,
-    gema: gema
-  })
+  }catch(error){
+    res.status(500).json({ error: "Error al crear el anillo", details: error.message });
+  }
 
-  newAnillo.save()
 })
+
+
+// Nueva ruta para obtener todos los anillos
+app.get('/joyas/anillos', async (req, res) => {
+  try {
+    const anillos = await Anillo.find();
+    res.json(anillos);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los anillos", details: error.message });
+  }
+});

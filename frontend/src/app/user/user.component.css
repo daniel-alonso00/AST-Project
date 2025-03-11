@@ -1,0 +1,102 @@
+/* Contenedor principal */
+.box-anillos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+/* Estilos para cada artículo individual */
+.box-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    width: 200px;
+    flex-shrink: 0;
+    position: relative; /* Necesario para posicionar los botones */
+    text-align: left; /* Alineación del texto */
+}
+
+.box-item:hover {
+    /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);*/
+    transform: translateY(-5px);
+}
+
+.box-item p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #333333;
+}
+
+/* .box-item p:last-child {
+    margin-bottom: 0;
+} */
+
+/* Botón de eliminar (cruz) */
+.btn-eliminar {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #ff4d4d;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #f58989;
+}
+
+/* Botón de editar */
+.btn-editar {
+    position: absolute;
+    top: 5px;
+    right: 35px;
+    background-color: #4d79ff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+    background-color: #a3baff;
+}
+
+/* Estilos para el botón de añadir */
+.box-item.add-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* Color de fondo más claro */
+    width: 200px;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+}
+
+.box-item.add-item:hover {
+    background-color: #e0e0e0; /* Cambia el color de fondo al pasar el mouse */
+    border-color: #999; /* Cambia el color del borde al pasar el mouse */
+}
+

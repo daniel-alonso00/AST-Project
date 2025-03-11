@@ -7,3 +7,33 @@
   }
 </ul>
 
+<h2>Sección de anillos</h2>
+<div class="box-anillos">
+    @for(item of items; track item._id){
+        <div class="box-item">
+            <button class="btn-eliminar">×</button>
+            <button class="btn-editar">✎</button>
+            <p>Nombre: {{item.nombre}}</p>
+            <p>Precio: {{item.precio}}</p>
+            <p>Gema: {{item.gema}}</p>
+            
+        </div>
+    }
+    <!-- Nuevo botón para añadir un artículo -->
+    <button class="box-item add-item">
+        <p class="add-icon">+</p>
+    </button>
+</div>
+
+<div class="box-collares">
+
+</div>
+
+<div class="box-pendientes">
+
+</div>
+
+<div class="box-pulseras">
+
+
+</div>

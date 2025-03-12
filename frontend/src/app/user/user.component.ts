@@ -10,20 +10,34 @@ import { HttpClient } from '@angular/common/http';
 export class UserComponent {
   apiURL: String = 'http://127.0.0.1:8080'
 
+  currentDisp: any;   // Variable que se muestra en el HTML
+
+  // Variables que contienen data de la tienda
   anillos: any;
   collares: any;
   pendientes: any;
   pulseras: any;
+  allItems: any;    // Concatenación de las tres anteriores
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    this.updateData()
+  }
+
+  // --- UTIL ---
+
+  updateData() {
     this.fetchAnillos();
     this.fetchCollares();
     this.fetchPendientes();
     this.fetchPulseras();
+
+    this.allItems = this.anillos.concat(this.collares.concat(this.pendientes.concat(this.pulseras)));
+    this.currentDisp = this.allItems;
   }
+
+  // --- READ ---
 
   fetchAnillos() {
     this.http.get(this.apiURL + '/anillos')
@@ -59,5 +73,4 @@ export class UserComponent {
         console.log(responseData)
       })
   }
-
 }

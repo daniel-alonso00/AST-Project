@@ -154,13 +154,13 @@ app.put('/anillo', async (req, res) => {
     precio = req.body.precio
     gema = req.body.gema
 
-    await Anillo.findOneAndReplace({ _id: _id }, {
+    await Anillo.updateOne({ _id: _id }, {
       nombre: nombre,
       precio: precio,
       gema: gema
     })
 
-    res.status(201).json({ message: "Anillo creado correctamente", anillo: newAnillo });
+    res.status(201).json({ message: "Anillo actualizado correctamente" });
 
   } catch(error) {
     res.status(500).json({ error: "Error al crear el anillo", details: error.message });
@@ -175,13 +175,13 @@ app.put('/pulsera', async (req, res) => {
     precio = req.body.precio
     talla = req.body.talla
 
-    await Pulsera.replaceOne({ _id: _id }, {
+    await Pulsera.updateOne({ _id: _id }, {
       nombre: nombre,
       precio: precio,
       talla: talla
     })
 
-    res.status(201).json({ message: "Pulsera creada correctamente", pulsera: newPulsera });
+    res.status(201).json({ message: "Pulsera actualizada correctamente" });
 
   } catch(error) {
     res.status(500).json({ error: "Error al crear la pulsera", details: error.message });
@@ -196,13 +196,13 @@ app.put('/collar', async (req, res) => {
     precio = req.body.precio
     color = req.body.color
 
-    await Collar.replaceOne({ _id: _id }, {
+    await Collar.updateOne({ _id: _id }, {
       nombre: nombre,
       precio: precio,
       color: color
     })
 
-    res.status(201).json({ message: "Collar creado correctamente", collar: newCollar });
+    res.status(201).json({ message: "Collar actualizado correctamente" });
   } catch(error) {
     res.status(500).json({ error: "Error al crear el collar", details: error.message });
   }
@@ -215,13 +215,13 @@ app.put('/pendiente', async (req, res) => {
     precio = req.body.precio
     metal = req.body.metal
 
-    await Pendiente.findOne({ _id: _id }, {
+    await Pendiente.updateOne({ _id: _id }, {
       nombre: nombre,
       precio: precio,
       metal: metal
     })
 
-    res.status(201).json({ message: "Pendiente creado correctamente", collar: newPendiente });
+    res.status(201).json({ message: "Pendiente actualizado correctamente" });
 
   } catch(error) {
     res.status(500).json({ error: "Error al crear el pendiente", details: error.message });

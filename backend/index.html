@@ -22,9 +22,9 @@
     <b>Actualizar</b>
     <form id="anilloPut">
         <input type="text" placeholder="ID" name="id" id="id" required />
-        <input type="text" placeholder="Nombre" name="nombre" id="nombrePut" required />
-        <input type="text" placeholder="Precio" name="precio" id="precioPut" required />
-        <input type="text" placeholder="Gema" name="gema" id="gemaPut" required />
+        <input type="text" placeholder="Nombre" name="nombrePut" id="nombrePut" required />
+        <input type="text" placeholder="Precio" name="precioPut" id="precioPut" required />
+        <input type="text" placeholder="Gema" name="gemaPut" id="gemaPut" required />
         <button type="submit">Submit</button>
     </form>
 
@@ -40,9 +40,9 @@
                 event.preventDefault(); // Evita que el formulario recargue la página
 
                 const formData = {
-                    nombre: document.getElementById("nombrePut").value,
-                    precio: document.getElementById("precioPut").value,
-                    gema: document.getElementById("gemaPut").value
+                    nombre: document.getElementById("nombre").value,
+                    precio: document.getElementById("precio").value,
+                    gema: document.getElementById("gema").value
                 };
 
                 fetch("http://localhost:8080/anillo", {
@@ -67,9 +67,9 @@
 
                 const formData = {
                     _id: document.getElementById("id").value,
-                    nombre: document.getElementById("nombre").value,
-                    precio: document.getElementById("precio").value,
-                    gema: document.getElementById("gema").value
+                    nombre: document.getElementById("nombrePut").value,
+                    precio: document.getElementById("precioPut").value,
+                    gema: document.getElementById("gemaPut").value
                 };
 
                 fetch("http://localhost:8080/anillo", {

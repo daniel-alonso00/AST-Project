@@ -145,3 +145,85 @@ app.post('/pendiente', (req, res) => {
     res.status(500).json({ error: "Error al crear el pendiente", details: error.message });
   }
 })
+
+// --- PUT ---
+app.put('/anillo', async (req, res) => {
+  try {
+    _id = req.body._id
+    nombre = req.body.nombre
+    precio = req.body.precio
+    gema = req.body.gema
+
+    await Anillo.findOneAndReplace({ _id: _id }, {
+      nombre: nombre,
+      precio: precio,
+      gema: gema
+    })
+
+    res.status(201).json({ message: "Anillo creado correctamente", anillo: newAnillo });
+
+  } catch(error) {
+    res.status(500).json({ error: "Error al crear el anillo", details: error.message });
+  }
+
+})
+
+app.put('/pulsera', async (req, res) => {
+  try {
+    _id = req.body._id
+    nombre = req.body.nombre
+    precio = req.body.precio
+    talla = req.body.talla
+
+    await Pulsera.replaceOne({ _id: _id }, {
+      nombre: nombre,
+      precio: precio,
+      talla: talla
+    })
+
+    res.status(201).json({ message: "Pulsera creada correctamente", pulsera: newPulsera });
+
+  } catch(error) {
+    res.status(500).json({ error: "Error al crear la pulsera", details: error.message });
+  }
+
+})
+
+app.put('/collar', async (req, res) => {
+  try {
+    _id = req.body._id
+    nombre = req.body.nombre
+    precio = req.body.precio
+    color = req.body.color
+
+    await Collar.replaceOne({ _id: _id }, {
+      nombre: nombre,
+      precio: precio,
+      color: color
+    })
+
+    res.status(201).json({ message: "Collar creado correctamente", collar: newCollar });
+  } catch(error) {
+    res.status(500).json({ error: "Error al crear el collar", details: error.message });
+  }
+})
+
+app.put('/pendiente', async (req, res) => {
+  try {
+    _id = req.body._id
+    nombre = req.body.nombre
+    precio = req.body.precio
+    metal = req.body.metal
+
+    await Pendiente.findOne({ _id: _id }, {
+      nombre: nombre,
+      precio: precio,
+      metal: metal
+    })
+
+    res.status(201).json({ message: "Pendiente creado correctamente", collar: newPendiente });
+
+  } catch(error) {
+    res.status(500).json({ error: "Error al crear el pendiente", details: error.message });
+  }
+})

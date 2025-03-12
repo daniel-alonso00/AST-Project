@@ -26,35 +26,35 @@ export class UserComponent {
   }
 
   fetchAnillos() {
-    this.http.get(apiURL + '/anillos')
+    this.http.get(this.apiURL + '/anillos')
       .subscribe(data => {
         this.anillos = data;
       });
   }
 
   fetchCollares() {
-    this.http.get(apiURL + '/collares')
+    this.http.get(this.apiURL + '/collares')
       .subscribe(data => {
         this.collares = data;
       });
   }
 
   fetchPendientes() {
-    this.http.get(apiURL + '/pendientes')
+    this.http.get(this.apiURL + '/pendientes')
       .subscribe(data => {
         this.pendientes = data;
       });
   }
 
   fetchPulseras() {
-    this.http.get(apiURL + '/pulseras')
+    this.http.get(this.apiURL + '/pulseras')
       .subscribe(data => {
         this.pulseras = data;
       });
   }
 
-  createAnillo(formData) {
-    this.http.post(apiURL + '/anillo', formData)
+  createAnillo(formData: {}) {
+    this.http.post(this.apiURL + '/anillo', formData)
       .subscribe(responseData => {
         console.log(responseData)
       })

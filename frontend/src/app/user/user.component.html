@@ -1,10 +1,52 @@
 <form action="">
 
+
 </form>
 
+<!--
 <ul>
   @for(item of allItems; track item._id) {
   <li><b>{{ item.nombre }}</b> || {{ item.precio }} €</li>
   }
 </ul>
+-->
 
+<!-- <div class="barra-inicio">
+    <button class="botones-menu">TODOS</button>
+    <button class="botones-menu">ANILLOS</button>
+    <button class="botones-menu">COLLARES</button>
+    <button class="botones-menu">PENDIENTES</button>
+    <button class="botones-menu">PULSERAS</button>
+</div> -->
+
+
+<h2>Sección de anillos</h2>
+<div class="box-anillos">
+    @for(item of items; track item._id){
+        <div class="box-item">
+            <button class="btn-eliminar">×</button>
+            <button class="btn-editar">✎</button>
+            <p>Nombre: {{item.nombre}}</p>
+            <p>Precio: {{item.precio}}</p>
+            <p>Gema: {{item.gema}}</p>
+            
+        </div>
+    }
+    <!--Boton para añadir un elementos-->
+    <button class="box-item add-item">
+        <p class="add-icon">+</p>
+    </button>
+</div>
+
+<div class="box-collares">
+
+</div>
+
+<div class="box-pendientes">
+
+</div>
+
+<div class="box-pulseras">
+
+
+</div>

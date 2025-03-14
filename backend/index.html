@@ -8,11 +8,23 @@
 <body>
 
     <h1>Tienda de Joyas</h1>
+
+    <h2>Anillos</h2>
     
+    <b>Añadir</b>
     <form id="anilloForm">
         <input type="text" placeholder="Nombre" name="nombre" id="nombre" required />
         <input type="text" placeholder="Precio" name="precio" id="precio" required />
         <input type="text" placeholder="Gema" name="gema" id="gema" required />
+        <button type="submit">Submit</button>
+    </form>
+
+    <b>Actualizar</b>
+    <form id="anilloPut">
+        <input type="text" placeholder="ID" name="id" id="id" required />
+        <input type="text" placeholder="Nombre" name="nombrePut" id="nombrePut" required />
+        <input type="text" placeholder="Precio" name="precioPut" id="precioPut" required />
+        <input type="text" placeholder="Gema" name="gemaPut" id="gemaPut" required />
         <button type="submit">Submit</button>
     </form>
 
@@ -33,7 +45,7 @@
                     gema: document.getElementById("gema").value
                 };
 
-                fetch("http://localhost:8080/joya/anillo", {
+                fetch("http://localhost:8080/anillo", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -44,7 +56,33 @@
                 .then(data => {
                     alert(data.message); // Mensaje de éxito
                     form.reset(); // Limpia el formulario
-                    mostrarAnillos(data.anillos); // ✅ Actualiza la lista
+                })
+                .catch(error => console.error("Error:", error));
+            });
+
+            const putform = document.getElementById("anilloPut");
+
+            putform.addEventListener("submit", function (event) {
+                event.preventDefault(); // Evita que el formulario recargue la página
+
+                const formData = {
+                    _id: document.getElementById("id").value,
+                    nombre: document.getElementById("nombrePut").value,
+                    precio: document.getElementById("precioPut").value,
+                    gema: document.getElementById("gemaPut").value
+                };
+
+                fetch("http://localhost:8080/anillo", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message); // Mensaje de éxito
+                    putform.reset(); // Limpia el formulario
                 })
                 .catch(error => console.error("Error:", error));
             });
@@ -54,13 +92,13 @@
 
                 anillos.forEach(anillo => {
                     const item = document.createElement("div");
-                    item.innerHTML = `<strong>${anillo.nombre}</strong> - ${anillo.precio}€ - Gema: ${anillo.gema}`;
+                    item.innerHTML = `id: ${anillo._id} - <strong>${anillo.nombre}</strong> - ${anillo.precio}€ - Gema: ${anillo.gema}`;
                     anillosList.appendChild(item);
                 });
             }
 
             // ✅ Cargar anillos al abrir la página
-            fetch("http://localhost:8080/joyas/anillos")
+            fetch("http://localhost:8080/anillos")
                 .then(response => response.json())
                 .then(data => mostrarAnillos(data))
                 .catch(error => console.error("Error al obtener anillos:", error));

@@ -1,52 +1,53 @@
-<form action="">
+<h1>Joyería</h1>
 
+<div class="barra-inicio">
+    <button class="botones-menu" (click)='filterSelect("todos")'>TODOS</button>
+    <button class="botones-menu" (click)='filterSelect("anillos")'>ANILLOS</button>
+    <button class="botones-menu" (click)='filterSelect("collares")'>COLLARES</button>
+    <button class="botones-menu" (click)='filterSelect("pendientes")'>PENDIENTES</button>
+    <button class="botones-menu" (click)='filterSelect("pulseras")'>PULSERAS</button>
+</div>
 
-</form>
-
-<!--
-<ul>
-  @for(item of allItems; track item._id) {
-  <li><b>{{ item.nombre }}</b> || {{ item.precio }} €</li>
-  }
-</ul>
--->
-
-<!-- <div class="barra-inicio">
-    <button class="botones-menu">TODOS</button>
-    <button class="botones-menu">ANILLOS</button>
-    <button class="botones-menu">COLLARES</button>
-    <button class="botones-menu">PENDIENTES</button>
-    <button class="botones-menu">PULSERAS</button>
-</div> -->
-
-
-<h2>Sección de anillos</h2>
-<div class="box-anillos">
-    @for(item of items; track item._id){
+<div class="box-container">
+    @for(item of currentDisp; track item._id){
         <div class="box-item">
             <button class="btn-eliminar">×</button>
             <button class="btn-editar">✎</button>
             <p>Nombre: {{item.nombre}}</p>
             <p>Precio: {{item.precio}}</p>
             <p>Gema: {{item.gema}}</p>
-            
         </div>
     }
     <!--Boton para añadir un elementos-->
-    <button class="box-item add-item">
+    <button class="box-item add-item" (click)="this.showForm = 'visible'">
         <p class="add-icon">+</p>
     </button>
 </div>
 
-<div class="box-collares">
+<div id="addForm-container" [style]="'visibility:' + this.showForm">
+    <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
+        <div id="radio-container">
+            <input type="radio" id="anillo" name="coleccion" value="anillo" (click)='this.placeString = "Gema del anillo"; this.actionDir = "/anillo"'>
+            <label for="anillo">Anillo</label>
+            <br>
 
-</div>
+            <input type="radio" id="collar" name="coleccion" value="collar" (click)='this.placeString = "Color del collar"; this.actionDir = "/collar"'>
+            <label for="collar">Collar</label>
+            <br>
 
-<div class="box-pendientes">
+            <input type="radio" id="pendiente" name="coleccion" value="pendiente" (click)='this.placeString = "Metal del pendiente"; this.actionDir = "/pendiente"'>
+            <label for="pendiente">Pendiente</label>
+            <br>
 
-</div>
+            <input type="radio" id="pulsera" name="coleccion" value="pulsera" (click)='this.placeString = "Talla de la pulsera"; this.actionDir = "/pulsera"'>
+            <label for="pulsera">Pulsera</label>
+            <br>
+        </div>
 
-<div class="box-pulseras">
+        <input type="text" formControlName="nombre" placeholder="Nombre del artículo">
+        <input type="text" formControlName="precio" placeholder="Precio del artículo">
+        <input type="text" formControlName="extra" [placeholder]="this.placeString">
 
-
+        <input type="submit" name="submit" value="submit">
+    </form>
 </div>

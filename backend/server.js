@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const express = require("express")
+const cors = require("cors")
 const app = express()
 
 const Anillo = require('./models/anillo')
@@ -9,6 +10,7 @@ const Pendiente = require('./models/pendiente')
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+app.use(cors())
 
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
@@ -68,7 +70,7 @@ app.post('/anillo', (req, res) => {
   try {
     nombre = req.body.nombre
     precio = req.body.precio
-    gema = req.body.gema
+    gema = req.body.extra
 
     const newAnillo = new Anillo({
       nombre: nombre,
@@ -89,7 +91,7 @@ app.post('/pulsera', (req, res) => {
   try {
     nombre = req.body.nombre
     precio = req.body.precio
-    talla = req.body.talla
+    talla = req.body.extra
 
     const newPulsera = new Pulsera({
       nombre: nombre,
@@ -110,7 +112,7 @@ app.post('/collar', (req, res) => {
   try {
     nombre = req.body.nombre
     precio = req.body.precio
-    color = req.body.color
+    color = req.body.extra
 
     const newCollar = new Collar({
       nombre: nombre,
@@ -130,7 +132,7 @@ app.post('/pendiente', (req, res) => {
   try {
     nombre = req.body.nombre
     precio = req.body.precio
-    metal = req.body.metal
+    metal = req.body.extra
 
     const newPendiente = new Pendiente({
       nombre: nombre,

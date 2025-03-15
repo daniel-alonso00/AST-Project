@@ -1,0 +1,191 @@
+h1{
+    text-align: center;
+}
+
+.barra-inicio {
+    display: flex; /* Activa Flexbox */
+    justify-content: center; /* Centra los botones horizontalmente */
+    align-items: center; /* Centra los botones verticalmente */
+    width: 100%; /* Ocupa todo el ancho de la página */
+}
+
+.botones-menu {
+    flex: 1; /* Hace que los botones se estiren para ocupar el espacio disponible */
+    padding: 20px; /* Espacio interno de los botones */
+    margin-bottom: 20px;
+    font-size: 16px; /* Tamaño de la fuente */
+    border: none; /* Elimina el borde */
+    background-color: var(--dark-blue); /* Color de fondo del botón */
+    color: white; /* Color del texto */
+    transition: background-color 0.3s ease; /* Transición suave al cambiar el color de fondo */
+}
+
+.botones-menu:hover {
+    background-color: var(--mid-blue); /* Cambia el color de fondo al pasar el ratón */
+}
+
+/* Contenedor principal */
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+/* Estilos para cada artículo individual */
+.box-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: var(--white);
+    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    width: 200px;
+    flex-shrink: 0;
+    position: relative; /* Necesario para posicionar los botones */
+    text-align: left; /* Alineación del texto */
+}
+
+.box-item:hover {
+    /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);*/
+    transform: translateY(-5px);
+}
+
+.box-item p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #333333;
+}
+
+/* Botón de eliminar (cruz) */
+.btn-eliminar {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #ff4d4d;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #f58989;
+}
+
+/* Botón de editar */
+.btn-editar {
+    position: absolute;
+    top: 5px;
+    right: 35px;
+    background-color: var(--dark-blue);
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+    background-color: var(--mid-blue);
+}
+
+/* Estilos para el botón de añadir */
+.box-item.add-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white); /* Color de fondo más claro */
+    width: 200px;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: 0.1s all ease-in-out;
+}
+
+.box-item.add-item:hover {
+    background-color: var(--mid-blue); /* Cambia el color de fondo al pasar el mouse */
+    border-color: #999; /* Cambia el color del borde al pasar el mouse */
+}
+
+#addForm-container {
+    visibility: hidden;
+    margin: 0 auto;
+    padding: 5px;
+    width: 30%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#addForm {
+    background-color: var(--dark-blue);
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#addForm > #radio-container {
+    margin-bottom: 10px;
+}
+
+#addForm > input[type="text"] {
+    display: block;
+    color: black;
+    background-color: var(--light-blue);
+    border: none;
+    border-radius: 2px;
+    width: 80%;
+    height: 20px;
+    margin: 5px;
+}
+
+#addForm > input[type="text"]:focus {
+    background-color: var(--white);
+}
+
+#addForm > input[type="submit"] {
+    width: 50%;
+    height: 25px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 100px;
+    background-color: var(--white);
+    color: var(--dark-blue);
+    font-weight: bold;
+    transition: 0.1s all ease-in-out;
+}
+
+#addForm > input[type="submit"]:hover {
+    background-color: var(--mid-blue);
+    color: white;
+}

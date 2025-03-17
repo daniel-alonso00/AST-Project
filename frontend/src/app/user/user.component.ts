@@ -63,16 +63,15 @@ export class UserComponent {
   }
 
   onSubmit() {
-    console.log(this.apiURL + this.actionDir);
-
     this.http.post<any>(this.apiURL + this.actionDir, {
       nombre: this.addForm.value.nombre ?? '',
       precio: this.addForm.value.precio ?? '',
       extra: this.addForm.value.extra ?? '',
     }).subscribe(data => {
+      alert(data.message)
       this.updateData()
     }, error => {
-      console.log(error)
+      alert(error)
     })
   }
 
@@ -130,10 +129,4 @@ export class UserComponent {
       });
   }
 
-  createAnillo(formData: {}) {
-    this.http.post(this.apiURL + '/anillo', formData)
-      .subscribe(responseData => {
-        console.log(responseData)
-      })
-  }
 }

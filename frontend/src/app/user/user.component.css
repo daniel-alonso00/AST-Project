@@ -129,10 +129,10 @@ h1{
     padding: 5px;
     width: 30%;
 
-    display: flex;
+    /*display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-around;*/
 
     position: absolute;
     top: 50%;
@@ -188,4 +188,21 @@ h1{
 #addForm > input[type="submit"]:hover {
     background-color: var(--mid-blue);
     color: white;
+}
+
+#addForm > button {
+    margin-top: 10px;
+    width: 30%;
+    height: 25px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 100px;
+    background-color: #f58989;
+    color: black;
+    font-weight: bold;
+    transition: 0.1s all ease-in-out;
+}
+
+#addForm > button:hover {
+    background-color: #BD210D;
 }

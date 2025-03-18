@@ -62,7 +62,6 @@ app.post('/inventario', (req, res) => {
   } catch(error) {
     res.status(500).json({ error: "Error al crear la joya", details: error.message });
   }
-
 })
 
 // --- PUT ---
@@ -87,6 +86,29 @@ app.put('/inventario', async (req, res) => {
   }
 })
 
+app.put('/getById', async (req, res) => {
+  try {
+    _id = req.body._id;
+    let joya = await Inventario.find({_id: id});
+    if (joya.length() != 0) {
+      res.status(200).json({ joya: joya });
+    } else {
+      throw new Error("Joya no encontrada")
+    }
+  } catch(error) {
+    res.status(500).json({ message: error.message })
+  }
+});
+
+app.put('/getTipo', async (req, res) => {
+  try {
+    tipo = req.body.tipo;
+    let joyas = await Inventario.find({ tipo: tipo });
+    res.status(200).json({joyas: joyas});
+  } catch(error) {
+    res.status(500).json({ message: "Tipo no valido" })
+  }
+});
 
 //-- DELETE --
 app.delete('/inventario', async (req, res) =>{

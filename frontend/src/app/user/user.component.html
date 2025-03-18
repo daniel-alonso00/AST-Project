@@ -13,8 +13,11 @@
 <div class="box-container">
     @for(item of currentDisp; track item._id){
         <div class="box-item">
+
             <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
             <button class="btn-editar">✎</button>
+        <button class="btn-eliminar">×</button>
+            <button class="btn-editar" (click)="this.showUpdateForm = 'visible'; this.updatingId = item._id">✎</button>
             <p>Nombre: {{item.nombre}}</p>
             <p>Precio: {{item.precio}}</p>
             <p>Gema: {{item.gema}}</p>
@@ -27,22 +30,24 @@
     </button>
 </div>
 
+<!-- Formulario para borrar -->
 <div id="addForm-container" [style]="'visibility:' + this.showForm">
     <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
+        <span>Create Form</span>
         <div id="radio-container">
-            <input type="radio" id="anillo" name="coleccion" value="anillo" (click)='this.placeString = "Gema del anillo"; this.actionDir = "/anillo"'>
+            <input type="radio" id="anillo" name="coleccion" value="anillo" (click)='this.creatingTipo = this.tipoEnum.anillo'>
             <label for="anillo">Anillo</label>
             <br>
 
-            <input type="radio" id="collar" name="coleccion" value="collar" (click)='this.placeString = "Color del collar"; this.actionDir = "/collar"'>
+            <input type="radio" id="collar" name="coleccion" value="collar" (click)='this.creatingTipo = this.tipoEnum.anillo'>
             <label for="collar">Collar</label>
             <br>
 
-            <input type="radio" id="pendiente" name="coleccion" value="pendiente" (click)='this.placeString = "Metal del pendiente"; this.actionDir = "/pendiente"'>
+            <input type="radio" id="pendiente" name="coleccion" value="pendiente" (click)='this.creatingTipo = this.tipoEnum.anillo'>
             <label for="pendiente">Pendiente</label>
             <br>
 
-            <input type="radio" id="pulsera" name="coleccion" value="pulsera" (click)='this.placeString = "Talla de la pulsera"; this.actionDir = "/pulsera"'>
+            <input type="radio" id="pulsera" name="coleccion" value="pulsera" (click)='this.creatingTipo = this.tipoEnum.anillo'>
             <label for="pulsera">Pulsera</label>
             <br>
         </div>
@@ -53,5 +58,18 @@
 
         <input type="submit" name="submit" value="submit">
         <button type="button" (click)="this.showForm = 'hidden'">Close</button>
+    </form>
+</div>
+
+<!-- Formulario para editar -->
+<div id="updateForm-container" [style]="'visibility:' + this.showUpdateForm">
+    <form id="updateForm" [formGroup]="updateForm" (submit)="onUpdateSubmit()">
+        <span>Update Form</span>
+        <input type="text" formControlName="nombre" placeholder="Nombre del artículo">
+        <input type="text" formControlName="precio" placeholder="Precio del artículo">
+        <input type="text" formControlName="extra" [placeholder]="this.placeUpdateString">
+
+        <input type="submit" name="submit" value="submit">
+        <button type="button" (click)="this.showUpdateForm = 'hidden'">Close</button>
     </form>
 </div>

@@ -229,3 +229,26 @@ app.put('/pendiente', async (req, res) => {
     res.status(500).json({ error: "Error al crear el pendiente", details: error.message });
   }
 })
+
+
+//-- DELETE --
+app.delete('/anillo', async (req, res) =>{
+  try {
+    const { _id } = req.body;
+
+    if (!_id) {
+      return res.status(400).json({ error: "Se requiere el _id del anillo para eliminarlo" });
+    }
+
+    const item = await Anillo.findByIdAndDelete(_id);
+
+    if (!item) {
+      return res.status(404).json({ error: "Anillo no encontrado" });
+    }
+
+    // Responder con éxito
+    res.status(200).json({ message: "Anillo eliminado correctamente", deletedItem: item });
+  } catch (error) {
+    res.status(500).json({error: "Error al borrar el anillo", details: error.message });
+  }
+})

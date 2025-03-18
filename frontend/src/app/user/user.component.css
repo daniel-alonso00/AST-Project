@@ -206,3 +206,83 @@ h1{
 #addForm > button:hover {
     background-color: #BD210D;
 }
+
+#updateForm-container {
+    visibility: hidden;
+    margin: 0 auto;
+    padding: 5px;
+    width: 30%;
+
+    /*display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;*/
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#updateForm {
+    background-color: var(--dark-blue);
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#updateForm > input[type="text"] {
+    display: block;
+    color: black;
+    background-color: var(--light-blue);
+    border: none;
+    border-radius: 2px;
+    width: 80%;
+    height: 20px;
+    margin: 5px;
+}
+
+#updateForm > input[type="text"]:focus {
+    background-color: var(--white);
+}
+
+#updateForm > input[type="submit"] {
+    width: 50%;
+    height: 25px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 100px;
+    background-color: var(--white);
+    color: var(--dark-blue);
+    font-weight: bold;
+    transition: 0.1s all ease-in-out;
+}
+
+#updateForm > input[type="submit"]:hover {
+    background-color: var(--mid-blue);
+    color: white;
+}
+
+#updateForm > button {
+    margin-top: 10px;
+    width: 30%;
+    height: 25px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 100px;
+    background-color: #f58989;
+    color: black;
+    font-weight: bold;
+    transition: 0.1s all ease-in-out;
+}
+
+#updateForm > button:hover {
+    background-color: #BD210D;
+}

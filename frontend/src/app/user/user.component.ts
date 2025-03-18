@@ -75,6 +75,11 @@ export class UserComponent {
     })
   }
 
+  eliminarItem(_id:String){
+    this.http.delete('/inventario')
+
+  }
+
   filterSelect(option: string) {
     switch (option) {
       case "todos":

@@ -8,14 +8,17 @@
     <button class="botones-menu" (click)='filterSelect("pulseras")'>PULSERAS</button>
 </div>
 
+<div>Busqueda de articulo por ID: <input type="text"></div>
+
 <div class="box-container">
     @for(item of currentDisp; track item._id){
         <div class="box-item">
-            <button class="btn-eliminar">×</button>
+            <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
             <button class="btn-editar">✎</button>
             <p>Nombre: {{item.nombre}}</p>
             <p>Precio: {{item.precio}}</p>
             <p>Gema: {{item.gema}}</p>
+            <p>Id: {{item._id}}</p>
         </div>
     }
     <!--Boton para añadir un elementos-->

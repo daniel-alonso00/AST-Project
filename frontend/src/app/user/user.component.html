@@ -1,19 +1,18 @@
 <h1>Joyería</h1>
 
 <div class="barra-inicio">
-    <button class="botones-menu" (click)='filterSelect("todos")'>TODOS</button>
-    <button class="botones-menu" (click)='filterSelect("anillos")'>ANILLOS</button>
-    <button class="botones-menu" (click)='filterSelect("collares")'>COLLARES</button>
-    <button class="botones-menu" (click)='filterSelect("pendientes")'>PENDIENTES</button>
-    <button class="botones-menu" (click)='filterSelect("pulseras")'>PULSERAS</button>
+    <button class="botones-menu" (click)='filterSelect(4)'>TODOS</button>
+    <button class="botones-menu" (click)='filterSelect(tipoEnum.anillo)'>ANILLOS</button>
+    <button class="botones-menu" (click)='filterSelect(tipoEnum.collar)'>COLLARES</button>
+    <button class="botones-menu" (click)='filterSelect(tipoEnum.pendiente)'>PENDIENTES</button>
+    <button class="botones-menu" (click)='filterSelect(tipoEnum.pulsera)'>PULSERAS</button>
 </div>
 
 <div>Busqueda de articulo por ID: <input type="text"></div>
 
 <div class="box-container">
-    @for(item of currentDisp; track item._id){
+    @for(item of displayItems; track item._id){
         <div class="box-item">
-
             <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
             <button class="btn-editar">✎</button>
         <button class="btn-eliminar">×</button>
@@ -35,26 +34,26 @@
     <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
         <span>Create Form</span>
         <div id="radio-container">
-            <input type="radio" id="anillo" name="coleccion" value="anillo" (click)='this.creatingTipo = this.tipoEnum.anillo'>
+            <input type="radio" id="anillo" (click)='this.creatingTipo = this.tipoEnum.anillo'>
             <label for="anillo">Anillo</label>
             <br>
 
-            <input type="radio" id="collar" name="coleccion" value="collar" (click)='this.creatingTipo = this.tipoEnum.anillo'>
+            <input type="radio" id="collar" (click)='this.creatingTipo = this.tipoEnum.collar'>
             <label for="collar">Collar</label>
             <br>
 
-            <input type="radio" id="pendiente" name="coleccion" value="pendiente" (click)='this.creatingTipo = this.tipoEnum.anillo'>
+            <input type="radio" id="pendiente" (click)='this.creatingTipo = this.tipoEnum.pendiente'>
             <label for="pendiente">Pendiente</label>
             <br>
 
-            <input type="radio" id="pulsera" name="coleccion" value="pulsera" (click)='this.creatingTipo = this.tipoEnum.anillo'>
+            <input type="radio" id="pulsera" (click)='this.creatingTipo = this.tipoEnum.pulsera'>
             <label for="pulsera">Pulsera</label>
             <br>
         </div>
 
         <input type="text" formControlName="nombre" placeholder="Nombre del artículo">
         <input type="text" formControlName="precio" placeholder="Precio del artículo">
-        <input type="text" formControlName="extra" [placeholder]="this.placeString">
+        <input type="text" formControlName="cantidad" placeholder="Cantidad">
 
         <input type="submit" name="submit" value="submit">
         <button type="button" (click)="this.showForm = 'hidden'">Close</button>
@@ -67,7 +66,7 @@
         <span>Update Form</span>
         <input type="text" formControlName="nombre" placeholder="Nombre del artículo">
         <input type="text" formControlName="precio" placeholder="Precio del artículo">
-        <input type="text" formControlName="extra" [placeholder]="this.placeUpdateString">
+        <input type="text" formControlName="cantidad" placeholder="Cantidad">
 
         <input type="submit" name="submit" value="submit">
         <button type="button" (click)="this.showUpdateForm = 'hidden'">Close</button>

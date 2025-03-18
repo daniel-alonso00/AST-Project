@@ -10,14 +10,20 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
 })
 export class UserComponent {
   // apiURL: String = 'http://127.0.0.1:8080'
-  apiURL: String = 'http://localhost:8080'
+  apiURL = 'http://localhost:8080'
+
+  tipoEnum = {
+    anillo: 0,
+    collar: 1,
+    pendiente: 2,
+    pulsera: 3
+  }
 
   showForm = "hidden";          // Formulario HTML para crear
   showUpdateForm = "hidden";    // Formulario HTML para actualizar
-  placeUpdateString = "Placeholder";
   updatingId = "";
 
-  creatingTipo: Number;
+  creatingTipo = 0;
 
   addForm = new FormGroup({
     nombre: new FormControl(''),
@@ -39,14 +45,10 @@ export class UserComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.updateData();
+    this.readJoyas();
   }
 
   // --- UTIL ---
-
-  updateData() {
-    this.readJoyas();
-  }
 
   handleShowUpdate(_id: string) {
     this.showUpdateForm = "visible";
@@ -54,43 +56,28 @@ export class UserComponent {
   }
 
   onSubmit() {
-    this.http.post<any>(this.apiURL + this.actionDir, {
+    this.http.post<any>(this.apiURL + '/inventario', {
       nombre: this.addForm.value.nombre ?? '',
       precio: this.addForm.value.precio ?? '',
       extra: this.addForm.value.extra ?? '',
     }).subscribe(data => {
       alert(data.message)
-      this.updateData()
+      this.readJoyas();
     }, error => {
       alert(error)
     })
   }
 
-
-  eliminarItem(_id:String){
-    this.http.delete('/inventario')
-
   onUpdateSubmit() {
 
   }
 
-  filterSelect(option: string) {
-    switch (option) {
-      case "todos":
-        break;
+  filterSelect(tipo: Number) {
+    this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
+  }
 
-      case "anillos":
-        break;
-
-      case "collares":
-        break;
-
-      case "pendientes":
-        break;
-
-      case "pulseras":
-        break;
-    }
+  eliminarItem(_id: String){
+    this.http.delete('/inventario')
   }
 
   // --- READ ---

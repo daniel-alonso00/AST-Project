@@ -89,8 +89,8 @@ app.put('/inventario', async (req, res) => {
 app.put('/getById', async (req, res) => {
   try {
     _id = req.body._id;
-    let joya = await Inventario.find({_id: id});
-    if (joya.length() != 0) {
+    let joya = await Inventario.findOne({_id: new mongoose.Types.ObjectId(_id)});
+    if (joya) {
       res.status(200).json({ joya: joya });
     } else {
       throw new Error("Joya no encontrada")
@@ -104,6 +104,7 @@ app.put('/getTipo', async (req, res) => {
   try {
     tipo = req.body.tipo;
     let joyas = await Inventario.find({ tipo: tipo });
+    console.log(joyas)
     res.status(200).json({joyas: joyas});
   } catch(error) {
     res.status(500).json({ message: "Tipo no valido" })

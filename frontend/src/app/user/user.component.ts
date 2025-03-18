@@ -9,7 +9,6 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  // apiURL: String = 'http://127.0.0.1:8080'
   apiURL = 'http://localhost:8080'
 
   tipoEnum = {
@@ -19,28 +18,28 @@ export class UserComponent {
     pulsera: 3
   }
 
+  displayItems: any;            // Concatenación de las tres anteriores
   showForm = "hidden";          // Formulario HTML para crear
   showUpdateForm = "hidden";    // Formulario HTML para actualizar
-  updatingId = "";
 
+  updatingId = "";
   creatingTipo = 0;
+
+  searchForm = new FormGroup({
+    id: new FormControl('')
+  });
 
   addForm = new FormGroup({
     nombre: new FormControl(''),
     precio: new FormControl(''),
-    extra: new FormControl(''),
+    cantidad: new FormControl('')
   });
 
   updateForm = new FormGroup({
     nombre: new FormControl(''),
     precio: new FormControl(''),
-    extra: new FormControl(''),
+    cantidad: new FormControl('')
   });
-
-  currentDisp: any;   // Variable que se muestra en el HTML
-
-  // Variables que contienen data de la tienda
-  displayItems: any;    // Concatenación de las tres anteriores
 
   constructor(private http: HttpClient) {}
 
@@ -57,12 +56,15 @@ export class UserComponent {
 
   onSubmit() {
     this.http.post<any>(this.apiURL + '/inventario', {
+      tipo: this.creatingTipo,
       nombre: this.addForm.value.nombre ?? '',
       precio: this.addForm.value.precio ?? '',
-      extra: this.addForm.value.extra ?? '',
+      cantidad: this.addForm.value.cantidad ?? ''
     }).subscribe(data => {
       alert(data.message)
       this.readJoyas();
+      this.showForm = 'hidden';
+      this.addForm.reset();
     }, error => {
       alert(error)
     })
@@ -72,8 +74,27 @@ export class UserComponent {
 
   }
 
+  onSearchSubmit() {
+    this.http.put<any>(this.apiURL + '/getById', {_id: this.searchForm.value.id ?? ''})
+      .subscribe(data => {
+        this.displayItems = [data.joya];
+      }, error => {
+        alert(error.message)
+      })
+  }
+
   filterSelect(tipo: Number) {
-    this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
+    if (tipo == 4) {
+      this.readJoyas();
+    } else {
+      this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
+        .subscribe(data => {
+          console.log(data)
+          this.displayItems = data.joyas;
+        }, error => {
+          alert(error.message)
+        })
+    }
   }
 
   eliminarItem(_id: String){

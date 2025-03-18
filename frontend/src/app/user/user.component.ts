@@ -66,7 +66,12 @@ export class UserComponent {
     })
   }
 
+
+  eliminarItem(_id:String){
+    this.http.delete('/inventario')
+
   onUpdateSubmit() {
+
   }
 
   filterSelect(option: string) {

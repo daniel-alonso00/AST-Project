@@ -8,7 +8,11 @@
     <button class="botones-menu" (click)='filterSelect(tipoEnum.pulsera)'>PULSERAS</button>
 </div>
 
-<div>Busqueda de articulo por ID: <input type="text"></div>
+<form [formGroup]="searchForm" (submit)="onSearchSubmit()">
+    Busqueda de articulo por ID:
+    <input type="text" formControlName="id" placeholder="Introduce ID para buscar">
+    <button type="submit">Submit</button>
+</form>
 
 <div class="box-container">
     @for(item of displayItems; track item._id){
@@ -19,7 +23,7 @@
             <button class="btn-editar" (click)="this.showUpdateForm = 'visible'; this.updatingId = item._id">✎</button>
             <p>Nombre: {{item.nombre}}</p>
             <p>Precio: {{item.precio}}</p>
-            <p>Gema: {{item.gema}}</p>
+            <p>Cantidad: {{ item.cantidad }}</p>
             <p>Id: {{item._id}}</p>
         </div>
     }
@@ -29,24 +33,24 @@
     </button>
 </div>
 
-<!-- Formulario para borrar -->
+<!-- Formulario para crear -->
 <div id="addForm-container" [style]="'visibility:' + this.showForm">
     <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
         <span>Create Form</span>
         <div id="radio-container">
-            <input type="radio" id="anillo" (click)='this.creatingTipo = this.tipoEnum.anillo'>
+            <input type="radio" id="anillo" name="tipo" checked="checked" (click)='this.creatingTipo = this.tipoEnum.anillo'>
             <label for="anillo">Anillo</label>
             <br>
 
-            <input type="radio" id="collar" (click)='this.creatingTipo = this.tipoEnum.collar'>
+            <input type="radio" id="collar" name="tipo" (click)='this.creatingTipo = this.tipoEnum.collar'>
             <label for="collar">Collar</label>
             <br>
 
-            <input type="radio" id="pendiente" (click)='this.creatingTipo = this.tipoEnum.pendiente'>
+            <input type="radio" id="pendiente" name="tipo" (click)='this.creatingTipo = this.tipoEnum.pendiente'>
             <label for="pendiente">Pendiente</label>
             <br>
 
-            <input type="radio" id="pulsera" (click)='this.creatingTipo = this.tipoEnum.pulsera'>
+            <input type="radio" id="pulsera" name="tipo" (click)='this.creatingTipo = this.tipoEnum.pulsera'>
             <label for="pulsera">Pulsera</label>
             <br>
         </div>

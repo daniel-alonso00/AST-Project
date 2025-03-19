@@ -18,24 +18,29 @@ export class UserComponent {
     pulsera: 3
   }
 
-  displayItems: any;            // Concatenación de las tres anteriores
-  showForm = "hidden";          // Formulario HTML para crear
-  showUpdateForm = "hidden";    // Formulario HTML para actualizar
+  displayItems: any;            // Contiene el array de las joyas que se muestran por pantalla
 
+  showForm = "hidden";          // Controla si el form para añadir está visible
+  showUpdateForm = "hidden";    // Controla si el form para editar está visible
+
+  // Estas tres variables contienen info sobre las joyas
+  // que se modifica al mostrar los forms y se envía
+  // en la request al backend
   updatingId = "";
+  updatingTipo = 0;
   creatingTipo = 0;
 
-  searchForm = new FormGroup({
+  searchForm = new FormGroup({      // Form de búsqueda por ID
     id: new FormControl('')
   });
 
-  addForm = new FormGroup({
+  addForm = new FormGroup({         // Form para añadir Joya
     nombre: new FormControl(''),
     precio: new FormControl(''),
     cantidad: new FormControl('')
   });
 
-  updateForm = new FormGroup({
+  updateForm = new FormGroup({      // Form para editra Joya
     nombre: new FormControl(''),
     precio: new FormControl(''),
     cantidad: new FormControl('')
@@ -43,17 +48,40 @@ export class UserComponent {
 
   constructor(private http: HttpClient) {}
 
+  // Este método se llama al cargar la página
   ngOnInit() {
     this.readJoyas();
   }
 
-  // --- UTIL ---
+  // --- Métodos CRUD (get, put, post, delete) ---
 
-  handleShowUpdate(_id: string) {
-    this.showUpdateForm = "visible";
-    this.updatingId = _id;
+  // (GET) Leer todas las joyas del inventario
+  readJoyas() {
+    this.http.get(this.apiURL + '/inventario')
+      .subscribe(data => {
+        this.displayItems = data;
+      });
   }
 
+  // (PUT) Form para editar joya (botón con lápiz)
+  onUpdateSubmit() {
+    this.http.put<any>(this.apiURL + '/inventario', {
+      _id: this.updatingId,
+      tipo: this.updatingTipo,
+      nombre: this.updateForm.value.nombre ?? '',
+      precio: this.updateForm.value.precio ?? '',
+      cantidad: this.updateForm.value.cantidad ?? ''
+    }).subscribe(data => {
+      alert(data.message);
+      this.readJoyas();
+      this.showUpdateForm = 'hidden';
+      this.updateForm.reset();
+    }, error => {
+      alert(error)
+    })
+  }
+
+  // (POST) Form para añadir nueva joya
   onSubmit() {
     this.http.post<any>(this.apiURL + '/inventario', {
       tipo: this.creatingTipo,
@@ -61,7 +89,7 @@ export class UserComponent {
       precio: this.addForm.value.precio ?? '',
       cantidad: this.addForm.value.cantidad ?? ''
     }).subscribe(data => {
-      alert(data.message)
+      alert(data.message);
       this.readJoyas();
       this.showForm = 'hidden';
       this.addForm.reset();
@@ -70,10 +98,20 @@ export class UserComponent {
     })
   }
 
-  onUpdateSubmit() {
-
+  // (DELETE) Eliminar una joya (botón con X)
+  eliminarItem(_id: String){
+    this.http.delete<any>(this.apiURL + '/inventario/' + _id )
+      .subscribe(data => {
+        alert(data.message);
+        this.readJoyas();
+      }, error => {
+        alert(error.message);
+      })
   }
 
+  // --- Filtrados ---
+
+  // Put para búsqueda por ID
   onSearchSubmit() {
     this.http.put<any>(this.apiURL + '/getById', {_id: this.searchForm.value.id ?? ''})
       .subscribe(data => {
@@ -83,13 +121,13 @@ export class UserComponent {
       })
   }
 
+  // Put para filtrar por tipo de joya (anillo, collar, pendiente, pulsera)
   filterSelect(tipo: Number) {
     if (tipo == 4) {
       this.readJoyas();
     } else {
       this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
         .subscribe(data => {
-          console.log(data)
           this.displayItems = data.joyas;
         }, error => {
           alert(error.message)
@@ -97,16 +135,12 @@ export class UserComponent {
     }
   }
 
-  eliminarItem(_id: String){
-    this.http.delete('/inventario')
-  }
+  // --- ETC ---
 
-  // --- READ ---
-
-  readJoyas() {
-    this.http.get(this.apiURL + '/inventario')
-      .subscribe(data => {
-        this.displayItems = data;
-      });
+  // Mostrar Form para actualizar
+  handleShowUpdate(_id: string, tipo: number) {
+    this.showUpdateForm = "visible";
+    this.updatingId = _id;
+    this.updatingTipo = tipo;
   }
 }

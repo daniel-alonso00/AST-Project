@@ -18,9 +18,7 @@
     @for(item of displayItems; track item._id){
         <div class="box-item">
             <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
-            <button class="btn-editar">✎</button>
-        <button class="btn-eliminar">×</button>
-            <button class="btn-editar" (click)="this.showUpdateForm = 'visible'; this.updatingId = item._id">✎</button>
+            <button class="btn-editar" (click)="this.handleShowUpdate(item._id, item.tipo)">✎</button>
             <p>Nombre: {{item.nombre}}</p>
             <p>Precio: {{item.precio}}</p>
             <p>Cantidad: {{ item.cantidad }}</p>

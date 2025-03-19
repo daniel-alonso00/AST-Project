@@ -104,7 +104,6 @@ app.put('/getTipo', async (req, res) => {
   try {
     tipo = req.body.tipo;
     let joyas = await Inventario.find({ tipo: tipo });
-    console.log(joyas)
     res.status(200).json({joyas: joyas});
   } catch(error) {
     res.status(500).json({ message: "Tipo no valido" })
@@ -112,10 +111,9 @@ app.put('/getTipo', async (req, res) => {
 });
 
 //-- DELETE --
-app.delete('/inventario', async (req, res) =>{
+app.delete('/inventario/:_id', async (req, res) =>{
   try {
-    //const { _id } = req.body;
-    const _id = req.body._id;
+    const _id = req.params._id;
     const item = await Inventario.findByIdAndDelete(_id);
 
     if (!item) {

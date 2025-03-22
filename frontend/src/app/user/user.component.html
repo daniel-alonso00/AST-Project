@@ -1,4 +1,5 @@
-<h1>Joyería</h1>
+<h1>Fake Tous</h1>
+<h3>--- ¿Qué te apetece hoy? ---</h3>
 
 <div class="barra-inicio">
     <button class="botones-menu" (click)='filterSelect(4)'>TODOS</button>
@@ -8,10 +9,9 @@
     <button class="botones-menu" (click)='filterSelect(tipoEnum.pulsera)'>PULSERAS</button>
 </div>
 
-<form [formGroup]="searchForm" (submit)="onSearchSubmit()">
-    Busqueda de articulo por ID:
+<form id="id-search-form" [formGroup]="searchForm" (submit)="onSearchSubmit()">
     <input type="text" formControlName="id" placeholder="Introduce ID para buscar">
-    <button type="submit">Submit</button>
+    <button type="submit">Buscar</button>
 </form>
 
 <div class="box-container">
@@ -19,14 +19,14 @@
         <div class="box-item">
             <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
             <button class="btn-editar" (click)="this.handleShowUpdate(item._id, item.tipo)">✎</button>
-            <p>Nombre: {{item.nombre}}</p>
-            <p>Precio: {{item.precio}}</p>
-            <p>Cantidad: {{ item.cantidad }}</p>
-            <p>Id: {{item._id}}</p>
+            <p class="prop-nombre">{{item.nombre}}</p>
+            <p class="prop-precio">Precio: {{item.precio}} €</p>
+            <p class="prop-cantidad">Cantidad: {{ item.cantidad }}</p>
+            <p class="prop-id">{{item._id}}</p>
         </div>
     }
     <!--Boton para añadir un elementos-->
-    <button class="box-item add-item" (click)="this.showForm = 'visible'">
+    <button class="add-item" (click)="this.showForm = 'visible'">
         <p class="add-icon">+</p>
     </button>
 </div>
@@ -34,7 +34,7 @@
 <!-- Formulario para crear -->
 <div id="addForm-container" [style]="'visibility:' + this.showForm">
     <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
-        <span>Create Form</span>
+        <span>Nueva Joya</span>
         <div id="radio-container">
             <input type="radio" id="anillo" name="tipo" checked="checked" (click)='this.creatingTipo = this.tipoEnum.anillo'>
             <label for="anillo">Anillo</label>
@@ -57,20 +57,20 @@
         <input type="text" formControlName="precio" placeholder="Precio del artículo">
         <input type="text" formControlName="cantidad" placeholder="Cantidad">
 
-        <input type="submit" name="submit" value="submit">
-        <button type="button" (click)="this.showForm = 'hidden'">Close</button>
+        <input type="submit" name="submit" value="Crear Joya">
+        <button type="button" (click)="this.showForm = 'hidden'">Cerrar</button>
     </form>
 </div>
 
 <!-- Formulario para editar -->
 <div id="updateForm-container" [style]="'visibility:' + this.showUpdateForm">
     <form id="updateForm" [formGroup]="updateForm" (submit)="onUpdateSubmit()">
-        <span>Update Form</span>
+        <span>Actualizar Joya</span>
         <input type="text" formControlName="nombre" placeholder="Nombre del artículo">
         <input type="text" formControlName="precio" placeholder="Precio del artículo">
         <input type="text" formControlName="cantidad" placeholder="Cantidad">
 
-        <input type="submit" name="submit" value="submit">
+        <input type="submit" name="submit" value="Actualizar">
         <button type="button" (click)="this.showUpdateForm = 'hidden'">Close</button>
     </form>
 </div>

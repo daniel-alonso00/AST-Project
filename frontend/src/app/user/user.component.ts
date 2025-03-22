@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms'
+import { FormControl, FormGroup, ReactiveFormsModule, Validator, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-user',
@@ -36,14 +36,14 @@ export class UserComponent {
 
   addForm = new FormGroup({         // Form para añadir Joya
     nombre: new FormControl(''),
-    precio: new FormControl(''),
-    cantidad: new FormControl('')
+    precio: new FormControl('', [Validators.required, Validators.min(0)]) ,   // Campos requeridos con una cantidad minima
+    cantidad: new FormControl('', [Validators.required, Validators.min(0)])   // Campos requeridos con una cantidad minima
   });
 
-  updateForm = new FormGroup({      // Form para editra Joya
+  updateForm = new FormGroup({      // Form para editar Joya
     nombre: new FormControl(''),
-    precio: new FormControl(''),
-    cantidad: new FormControl('')
+    precio: new FormControl('', [Validators.required, Validators.min(0)]) ,   // Campos requeridos con una cantidad minima
+    cantidad: new FormControl('', [Validators.required, Validators.min(0)])   // Campos requeridos con una cantidad minima
   });
 
   constructor(private http: HttpClient) {}
@@ -65,37 +65,49 @@ export class UserComponent {
 
   // (PUT) Form para editar joya (botón con lápiz)
   onUpdateSubmit() {
-    this.http.put<any>(this.apiURL + '/inventario', {
-      _id: this.updatingId,
-      tipo: this.updatingTipo,
-      nombre: this.updateForm.value.nombre ?? '',
-      precio: this.updateForm.value.precio ?? '',
-      cantidad: this.updateForm.value.cantidad ?? ''
-    }).subscribe(data => {
-      alert(data.message);
-      this.readJoyas();
-      this.showUpdateForm = 'hidden';
-      this.updateForm.reset();
-    }, error => {
-      alert(error)
-    })
+    if (this.updateForm.valid){
+      this.http.put<any>(this.apiURL + '/inventario', {
+        _id: this.updatingId,
+        tipo: this.updatingTipo,
+        nombre: this.updateForm.value.nombre ?? '',
+        precio: this.updateForm.value.precio ?? '',
+        cantidad: this.updateForm.value.cantidad ?? ''
+      }).subscribe(data => {
+        alert(data.message);
+        this.readJoyas();
+        this.showUpdateForm = 'hidden';
+        this.updateForm.reset();
+      }, error => {
+        alert(error)
+      })
+    }else{
+      alert("Los campos precio y cantidad tienen que ser mayores que cero.")
+      return
+    }
+
   }
 
   // (POST) Form para añadir nueva joya
   onSubmit() {
-    this.http.post<any>(this.apiURL + '/inventario', {
-      tipo: this.creatingTipo,
-      nombre: this.addForm.value.nombre ?? '',
-      precio: this.addForm.value.precio ?? '',
-      cantidad: this.addForm.value.cantidad ?? ''
-    }).subscribe(data => {
-      alert(data.message);
-      this.readJoyas();
-      this.showForm = 'hidden';
-      this.addForm.reset();
-    }, error => {
-      alert(error)
-    })
+    if(this.addForm.valid){
+      this.http.post<any>(this.apiURL + '/inventario', {
+        tipo: this.creatingTipo,
+        nombre: this.addForm.value.nombre ?? '',
+        precio: this.addForm.value.precio ?? '',
+        cantidad: this.addForm.value.cantidad ?? ''
+      }).subscribe(data => {
+        alert(data.message);
+        this.readJoyas();
+        this.showForm = 'hidden';
+        this.addForm.reset();
+      }, error => {
+        alert(error)
+      })
+    }else{
+      alert("Los campos precio y cantidad tienen que ser mayores que cero.")
+      return
+    }
+
   }
 
   // (DELETE) Eliminar una joya (botón con X)

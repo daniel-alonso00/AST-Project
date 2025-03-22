@@ -18,7 +18,7 @@
     @for(item of displayItems; track item._id){
         <div class="box-item">
             <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
-            <button class="btn-editar" (click)="this.handleShowUpdate(item._id, item.tipo)">✎</button>
+            <button class="btn-editar" (click)="this.handleShowUpdate(item._id, item.tipo, item.nombre, item.precio, item.cantidad)">✎</button>
             <p>Nombre: {{item.nombre}}</p>
             <p>Precio: {{item.precio}}</p>
             <p>Cantidad: {{ item.cantidad }}</p>
@@ -66,9 +66,17 @@
 <div id="updateForm-container" [style]="'visibility:' + this.showUpdateForm">
     <form id="updateForm" [formGroup]="updateForm" (submit)="onUpdateSubmit()">
         <span>Update Form</span>
-        <input type="text" formControlName="nombre" placeholder="Nombre del artículo">
-        <input type="text" formControlName="precio" placeholder="Precio del artículo">
-        <input type="text" formControlName="cantidad" placeholder="Cantidad">
+        <span>Id: {{this.updatingId}}</span>
+        <br>
+        <!--<input type="text" formControlName="nombre" placeholder="Nombre del artículo">-->
+        <label for="nombre">Nombre: </label>
+        <input type="text" formControlName="nombre" value={{this.nombreItem}}>
+        <label for="precio">Precio: </label>
+        <!--<input type="text" formControlName="precio" placeholder="Precio del artículo">-->
+        <input type="text" formControlName="precio" value={{this.precioItem}}>
+        <label for="cantidad">Cantidad: </label>
+        <!--<input type="text" formControlName="cantidad" placeholder="Cantidad">-->
+        <input type="text" formControlName="cantidad" value={{this.cantidadItem}}>
 
         <input type="submit" name="submit" value="submit">
         <button type="button" (click)="this.showUpdateForm = 'hidden'">Close</button>

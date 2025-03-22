@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup, ReactiveFormsModule, Validator, Validators } from '@angular/forms'
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-user',
@@ -29,6 +29,11 @@ export class UserComponent {
   updatingId = "";
   updatingTipo = 0;
   creatingTipo = 0;
+
+  // Variables para hacer el update de un articulo y mostrarlas en el form
+  nombreItem = "";
+  precioItem = "";
+  cantidadItem = "";
 
   searchForm = new FormGroup({      // Form de búsqueda por ID
     id: new FormControl('')
@@ -150,8 +155,11 @@ export class UserComponent {
   // --- ETC ---
 
   // Mostrar Form para actualizar
-  handleShowUpdate(_id: string, tipo: number) {
+  handleShowUpdate(_id: string, tipo: number, nombre: string, precio: string, cantidad: string) {
     this.showUpdateForm = "visible";
+    this.nombreItem = nombre;
+    this.precioItem = precio;
+    this.cantidadItem = cantidad;
     this.updatingId = _id;
     this.updatingTipo = tipo;
   }

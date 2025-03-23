@@ -86,19 +86,24 @@ app.put('/inventario', async (req, res) => {
   }
 })
 
-app.put('/getById', async (req, res) => {
+// Filtrado por ID mediante solitud al backend
+app.get('/getById/:_id', async (req,res)=>{
   try {
-    _id = req.body._id;
+    _id = req.params._id;
+    //const item = await Inventario.findById(_id);
     let joya = await Inventario.findOne({_id: new mongoose.Types.ObjectId(_id)});
-    if (joya) {
-      res.status(200).json({ joya: joya });
-    } else {
-      throw new Error("Joya no encontrada")
+
+    if(!joya){
+      return res.status(404).json({error: "Articulo no encontrado"});
     }
-  } catch(error) {
-    res.status(500).json({ message: error.message })
+    //res.status(200).json({item});
+    res.status(200).json({joya: joya});    
+
+  } catch (error) {
+    res.status(500).json({error: "Error al encontrar el articulo", details:error.message});
   }
-});
+})
+
 
 app.put('/getTipo', async (req, res) => {
   try {

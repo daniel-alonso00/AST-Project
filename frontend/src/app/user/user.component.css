@@ -1,27 +1,71 @@
 h1{
     text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 40px auto 0 auto;
+    padding-bottom: 0;
+}
+
+h3 {
+    font-style: italic;
+    text-align: center;
+    margin-top: 0;
 }
 
 .barra-inicio {
-    display: flex; /* Activa Flexbox */
-    justify-content: center; /* Centra los botones horizontalmente */
-    align-items: center; /* Centra los botones verticalmente */
-    width: 100%; /* Ocupa todo el ancho de la página */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto 50px auto;
 }
 
 .botones-menu {
-    flex: 1; /* Hace que los botones se estiren para ocupar el espacio disponible */
-    padding: 20px; /* Espacio interno de los botones */
-    margin-bottom: 20px;
-    font-size: 16px; /* Tamaño de la fuente */
-    border: none; /* Elimina el borde */
-    background-color: var(--dark-blue); /* Color de fondo del botón */
-    color: white; /* Color del texto */
-    transition: background-color 0.3s ease; /* Transición suave al cambiar el color de fondo */
+    width: 100%;
+    height: 2rem;
+    padding: 21px;
+    font-size: 16px;
+    border: none;
+    border-bottom: #A18E63 solid 2px;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s ease;
 }
 
 .botones-menu:hover {
-    background-color: var(--mid-blue); /* Cambia el color de fondo al pasar el ratón */
+    padding: 20px;
+    border-bottom: #A18E63 solid 3px;
+}
+
+#id-search-form > input  {
+    height: 32px;
+    width: 20%;
+    padding: 2px 2px 2px 12px;
+    outline: none;
+    border: #A18E63 solid 1px;
+    border-radius: 3px;
+    margin-right: 5px;
+    margin-left: 20px;
+    transform: skewX(-10deg);
+}
+
+#id-search-form > input:focus {
+    border-width: 3px;
+    padding: 0 0 0 10px;
+}
+
+#id-search-form > button  {
+    height: 36px;
+    width: 5%;
+    border: none;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    transform: skewX(-10deg);
+    background-color: #A18E63;
+}
+
+#id-search-form > button:hover  {
+    background-color: #695C40;
+    color: white;
 }
 
 /* Contenedor principal */
@@ -41,24 +85,51 @@ h1{
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     padding: 15px;
-    background-color: var(--white);
+    padding-right: 40px;
     box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
-    width: 200px;
+    /*width: 200px;*/
+    min-width: 200px;
     flex-shrink: 0;
     position: relative; /* Necesario para posicionar los botones */
     text-align: left; /* Alineación del texto */
+    border: none;
+    border-bottom: lightgray solid 2px;
+    /*background-color: #D9CDBC;*/
+    background-color: white;
 }
 
 .box-item:hover {
     /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);*/
     transform: translateY(-5px);
+    border-bottom: #A18E63 solid 2px;
 }
 
 .box-item p {
     margin: 0 0 8px 0;
-    font-size: 14px;
-    color: #333333;
+}
+
+/* Propiedades de las Joyas */
+.prop-nombre {
+    display: block;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    font-style: italic;
+    color: #695C40;
+}
+
+.prop-precio {
+}
+
+.prop-cantidad {
+}
+
+.prop-id {
+    font-style: italic;
+    margin-top: 15px;
+    text-align: right;
+    font-size: 12px;
 }
 
 /* Botón de eliminar (cruz) */
@@ -66,12 +137,13 @@ h1{
     position: absolute;
     top: 5px;
     right: 5px;
-    background-color: #ff4d4d;
-    border: none;
-    border-radius: 50%;
+    border: #ff4d4d solid 1px;
+    border-radius: 10px;
+    border-color: #ff4d4d;
+    background-color: white;
     width: 24px;
     height: 24px;
-    color: white;
+    color: #ff4d4d;
     font-size: 16px;
     cursor: pointer;
     display: flex;
@@ -81,20 +153,22 @@ h1{
 }
 
 .btn-eliminar:hover {
-    background-color: #f58989;
+    /*background-color: #f58989;*/
+    border-width: 2px;
 }
 
 /* Botón de editar */
 .btn-editar {
     position: absolute;
-    top: 5px;
-    right: 35px;
-    background-color: var(--dark-blue);
-    border: none;
-    border-radius: 50%;
+    top: 35px;
+    right: 5px;
+    border: #A18E63 solid 1px;
+    border-radius: 10px;
     width: 24px;
     height: 24px;
-    color: white;
+    /*color: #0AC4B3;*/
+    color: #A18E63;
+    background-color: white;
     font-size: 16px;
     cursor: pointer;
     display: flex;
@@ -104,23 +178,29 @@ h1{
 }
 
 .btn-editar:hover {
-    background-color: var(--mid-blue);
+    border-width: 2px;
 }
 
 /* Estilos para el botón de añadir */
-.box-item.add-item {
+.add-item {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: var(--white); /* Color de fondo más claro */
-    width: 200px;
+    justify-content: space-around;
+    background-color: white;
+    width: 50px;
+    font-size: 20px;
+    border: #A18E63 solid 1px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
     transition: 0.1s all ease-in-out;
+    color: #695C40;
 }
 
-.box-item.add-item:hover {
-    background-color: var(--mid-blue); /* Cambia el color de fondo al pasar el mouse */
-    border-color: #999; /* Cambia el color del borde al pasar el mouse */
+.add-item:hover {
+    border-width: 2px;
+    transform: translateY(-5px);
 }
 
 #addForm-container {
@@ -129,11 +209,6 @@ h1{
     padding: 5px;
     width: 30%;
 
-    /*display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;*/
-
     position: absolute;
     top: 50%;
     left: 50%;
@@ -141,17 +216,24 @@ h1{
 }
 
 #addForm {
-    background-color: var(--dark-blue);
     width: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
 
+    background-color: white;
     border-radius: 10px;
+    border: grey solid 1px;
+    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+
+#addForm > span {
+    font-size: 22px;
+    margin-bottom: 10px;
 }
 
 #addForm > #radio-container {
@@ -161,32 +243,32 @@ h1{
 #addForm > input[type="text"] {
     display: block;
     color: black;
-    background-color: var(--light-blue);
+    background-color: #D9CDBC;
     border: none;
     border-radius: 2px;
     width: 80%;
     height: 20px;
     margin: 5px;
+    padding: 3px 0 3px 5px;
 }
 
 #addForm > input[type="text"]:focus {
-    background-color: var(--white);
+    background-color: white;
 }
 
 #addForm > input[type="submit"] {
-    width: 50%;
-    height: 25px;
+    width: 70%;
+    height: 35px;
     margin-top: 20px;
     border: none;
-    border-radius: 100px;
-    background-color: var(--white);
-    color: var(--dark-blue);
+    border-radius: 10px;
+    background-color: #A18E63;
     font-weight: bold;
     transition: 0.1s all ease-in-out;
 }
 
 #addForm > input[type="submit"]:hover {
-    background-color: var(--mid-blue);
+    background-color: #695C40;
     color: white;
 }
 
@@ -196,7 +278,7 @@ h1{
     height: 25px;
     margin-top: 20px;
     border: none;
-    border-radius: 100px;
+    border-radius: 10px;
     background-color: #f58989;
     color: black;
     font-weight: bold;
@@ -213,11 +295,6 @@ h1{
     padding: 5px;
     width: 30%;
 
-    /*display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;*/
-
     position: absolute;
     top: 50%;
     left: 50%;
@@ -225,12 +302,14 @@ h1{
 }
 
 #updateForm {
-    background-color: var(--dark-blue);
     width: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
 
+    background-color: white;
     border-radius: 10px;
+    border: grey solid 1px;
+    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
 
     display: flex;
     flex-direction: column;
@@ -238,35 +317,40 @@ h1{
     justify-content: space-around;
 }
 
+#updateForm > span {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
 #updateForm > input[type="text"] {
     display: block;
     color: black;
-    background-color: var(--light-blue);
+    background-color: #D9CDBC;
     border: none;
     border-radius: 2px;
     width: 80%;
     height: 20px;
     margin: 5px;
+    padding: 3px 0 3px 5px;
 }
 
 #updateForm > input[type="text"]:focus {
-    background-color: var(--white);
+    background-color: white;
 }
 
 #updateForm > input[type="submit"] {
-    width: 50%;
-    height: 25px;
+    width: 70%;
+    height: 35px;
     margin-top: 20px;
     border: none;
-    border-radius: 100px;
-    background-color: var(--white);
-    color: var(--dark-blue);
+    border-radius: 10px;
+    background-color: #A18E63;
     font-weight: bold;
     transition: 0.1s all ease-in-out;
 }
 
 #updateForm > input[type="submit"]:hover {
-    background-color: var(--mid-blue);
+    background-color: #695C40;
     color: white;
 }
 
@@ -276,7 +360,7 @@ h1{
     height: 25px;
     margin-top: 20px;
     border: none;
-    border-radius: 100px;
+    border-radius: 10px;
     background-color: #f58989;
     color: black;
     font-weight: bold;

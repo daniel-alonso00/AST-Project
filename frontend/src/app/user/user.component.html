@@ -36,19 +36,19 @@
     <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
         <span>Nueva Joya</span>
         <div id="radio-container">
-            <input type="radio" id="anillo" formControlName="tipo" [value]="this.tipoEnum.anillo" checked="checked">
+            <input type="radio" id="anillo" name="tipo" (click)="this.creatingTipo=this.tipoEnum.anillo" checked="checked">
             <label for="anillo">Anillo</label>
             <br>
 
-            <input type="radio" id="collar" [value]="this.tipoEnum.anillo" formControlName="tipo">
+            <input type="radio" id="collar" name="tipo" (click)="this.creatingTipo=this.tipoEnum.collar">
             <label for="collar">Collar</label>
             <br>
 
-            <input type="radio" id="pendiente" [value]="this.tipoEnum.anillo" formControlName="tipo">
+            <input type="radio" id="pendiente" name="tipo" (click)="this.creatingTipo=this.tipoEnum.pendiente">
             <label for="pendiente">Pendiente</label>
             <br>
 
-            <input type="radio" id="pulsera" [value]="this.tipoEnum.anillo" formControlName="tipo">
+            <input type="radio" id="pulsera" name="tipo" (click)="this.creatingTipo=this.tipoEnum.pulsera">
             <label for="pulsera">Pulsera</label>
             <br>
         </div>

@@ -86,29 +86,47 @@ app.put('/inventario', async (req, res) => {
   }
 })
 
-app.put('/getById', async (req, res) => {
+// Filtrado por ID mediante solitud al backend
+app.get('/getById/:_id', async (req,res)=>{
   try {
-    _id = req.body._id;
+    _id = req.params._id;
+    //const item = await Inventario.findById(_id);
     let joya = await Inventario.findOne({_id: new mongoose.Types.ObjectId(_id)});
-    if (joya) {
-      res.status(200).json({ joya: joya });
-    } else {
-      throw new Error("Joya no encontrada")
-    }
-  } catch(error) {
-    res.status(500).json({ message: error.message })
-  }
-});
 
-app.put('/getTipo', async (req, res) => {
+    if(!joya){
+      return res.status(404).json({error: "Articulo no encontrado"});
+    }
+    //res.status(200).json({item});
+    res.status(200).json({joya: joya});    
+
+  } catch (error) {
+    res.status(500).json({error: "Error al encontrar el articulo", details:error.message});
+  }
+})
+
+
+// app.put('/getTipo', async (req, res) => {
+//   try {
+//     tipo = req.body.tipo;
+//     let joyas = await Inventario.find({ tipo: tipo });
+//     res.status(200).json({joyas: joyas});
+//   } catch(error) {
+//     res.status(500).json({ message: "Tipo no valido" })
+//   }
+// });
+
+//////////////////////////////////////////////////////////////////
+app.get('/getTipo/:tipo', async (req, res) => {
   try {
-    tipo = req.body.tipo;
+    tipo = req.params.tipo;
+    //tipo = 1;
     let joyas = await Inventario.find({ tipo: tipo });
     res.status(200).json({joyas: joyas});
   } catch(error) {
     res.status(500).json({ message: "Tipo no valido" })
   }
 });
+//////////////////////////////////////////////////////////////////
 
 //-- DELETE --
 app.delete('/inventario/:_id', async (req, res) =>{

@@ -126,24 +126,38 @@ export class UserComponent {
       })
   }
 
-  // --- Filtrados ---
+    // --- Filtrados ---
 
   // Put para búsqueda por ID
-  onSearchSubmit() {
-    this.http.put<any>(this.apiURL + '/getById', {_id: this.searchForm.value.id ?? ''})
+  onSearchSubmit(){
+    this.http.get<any>(this.apiURL + '/getById/' + this.searchForm.value.id)
       .subscribe(data => {
         this.displayItems = [data.joya];
+        console.log(data);
       }, error => {
-        alert(error.message)
+        alert("Articulo no encontradooooooo");
+        //alert(error.message);
       })
   }
 
   // Put para filtrar por tipo de joya (anillo, collar, pendiente, pulsera)
+  // filterSelect(tipo: Number) {
+  //   if (tipo == 4) {
+  //     this.readJoyas();
+  //   } else {
+  //     this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
+  //       .subscribe(data => {
+  //         this.displayItems = data.joyas;
+  //       }, error => {
+  //         alert(error.message)
+  //       })
+  //   }
+  // }
   filterSelect(tipo: Number) {
     if (tipo == 4) {
       this.readJoyas();
     } else {
-      this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
+      this.http.get<any>(this.apiURL + '/getTipo/' + tipo)
         .subscribe(data => {
           this.displayItems = data.joyas;
         }, error => {

@@ -105,15 +105,28 @@ app.get('/getById/:_id', async (req,res)=>{
 })
 
 
-app.put('/getTipo', async (req, res) => {
+// app.put('/getTipo', async (req, res) => {
+//   try {
+//     tipo = req.body.tipo;
+//     let joyas = await Inventario.find({ tipo: tipo });
+//     res.status(200).json({joyas: joyas});
+//   } catch(error) {
+//     res.status(500).json({ message: "Tipo no valido" })
+//   }
+// });
+
+//////////////////////////////////////////////////////////////////
+app.get('/getTipo/:tipo', async (req, res) => {
   try {
-    tipo = req.body.tipo;
+    tipo = req.params.tipo;
+    //tipo = 1;
     let joyas = await Inventario.find({ tipo: tipo });
     res.status(200).json({joyas: joyas});
   } catch(error) {
     res.status(500).json({ message: "Tipo no valido" })
   }
 });
+//////////////////////////////////////////////////////////////////
 
 //-- DELETE --
 app.delete('/inventario/:_id', async (req, res) =>{

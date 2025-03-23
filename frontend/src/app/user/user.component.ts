@@ -141,11 +141,23 @@ export class UserComponent {
   }
 
   // Put para filtrar por tipo de joya (anillo, collar, pendiente, pulsera)
+  // filterSelect(tipo: Number) {
+  //   if (tipo == 4) {
+  //     this.readJoyas();
+  //   } else {
+  //     this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
+  //       .subscribe(data => {
+  //         this.displayItems = data.joyas;
+  //       }, error => {
+  //         alert(error.message)
+  //       })
+  //   }
+  // }
   filterSelect(tipo: Number) {
     if (tipo == 4) {
       this.readJoyas();
     } else {
-      this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
+      this.http.get<any>(this.apiURL + '/getTipo/' + tipo)
         .subscribe(data => {
           this.displayItems = data.joyas;
         }, error => {

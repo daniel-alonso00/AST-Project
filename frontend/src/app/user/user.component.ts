@@ -40,6 +40,7 @@ export class UserComponent {
   });
 
   addForm = new FormGroup({         // Form para añadir Joya
+    tipo: new FormControl(''),
     nombre: new FormControl(''),
     precio: new FormControl('', [Validators.required, Validators.min(0)]) ,   // Campos requeridos con una cantidad minima
     cantidad: new FormControl('', [Validators.required, Validators.min(0)])   // Campos requeridos con una cantidad minima
@@ -83,7 +84,7 @@ export class UserComponent {
         this.showUpdateForm = 'hidden';
         this.updateForm.reset();
       }, error => {
-        alert(error)
+        alert(error.error.message)
       })
     }else{
       alert("Los campos precio y cantidad tienen que ser mayores que cero.")
@@ -96,7 +97,7 @@ export class UserComponent {
   onSubmit() {
     if(this.addForm.valid){
       this.http.post<any>(this.apiURL + '/inventario', {
-        tipo: this.creatingTipo,
+        tipo: this.addForm.value.tipo ?? '',
         nombre: this.addForm.value.nombre ?? '',
         precio: this.addForm.value.precio ?? '',
         cantidad: this.addForm.value.cantidad ?? ''
@@ -106,7 +107,7 @@ export class UserComponent {
         this.showForm = 'hidden';
         this.addForm.reset();
       }, error => {
-        alert(error)
+        alert(error.error.message)
       })
     }else{
       alert("Los campos precio y cantidad tienen que ser mayores que cero.")
@@ -122,11 +123,11 @@ export class UserComponent {
         alert(data.message);
         this.readJoyas();
       }, error => {
-        alert(error.message);
+        alert(error.error.message);
       })
   }
 
-    // --- Filtrados ---
+  // --- Filtrados ---
 
   // Put para búsqueda por ID
   onSearchSubmit(){
@@ -135,24 +136,11 @@ export class UserComponent {
         this.displayItems = [data.joya];
         console.log(data);
       }, error => {
-        alert("Articulo no encontradooooooo");
-        //alert(error.message);
+        alert(error.error.message);
       })
   }
 
   // Put para filtrar por tipo de joya (anillo, collar, pendiente, pulsera)
-  // filterSelect(tipo: Number) {
-  //   if (tipo == 4) {
-  //     this.readJoyas();
-  //   } else {
-  //     this.http.put<any>(this.apiURL + '/getTipo', { tipo: tipo })
-  //       .subscribe(data => {
-  //         this.displayItems = data.joyas;
-  //       }, error => {
-  //         alert(error.message)
-  //       })
-  //   }
-  // }
   filterSelect(tipo: Number) {
     if (tipo == 4) {
       this.readJoyas();
@@ -161,7 +149,7 @@ export class UserComponent {
         .subscribe(data => {
           this.displayItems = data.joyas;
         }, error => {
-          alert(error.message)
+          alert(error.error.message)
         })
     }
   }

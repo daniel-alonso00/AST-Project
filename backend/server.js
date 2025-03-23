@@ -37,7 +37,7 @@ app.get('/inventario', async (req, res) => {
     let joyas = await Inventario.find({});
     res.json(joyas)
   } catch {
-    res.status(500).json({ error: 'Error al obtener la joya' });
+    res.status(500).json({ message: 'Error al obtener la joya' });
   }
 });
 
@@ -57,10 +57,10 @@ app.post('/inventario', (req, res) => {
     })
 
     newJoya.save()
-    res.status(201).json({ message: "Joya creada correctamente", anillo: newJoya });
+    res.status(201).json({ message: "Joya creada correctamente" });
 
   } catch(error) {
-    res.status(500).json({ error: "Error al crear la joya", details: error.message });
+    res.status(500).json({ message: "Error al crear la joya" });
   }
 })
 
@@ -82,65 +82,57 @@ app.put('/inventario', async (req, res) => {
 
     res.status(201).json({ message: "Joya actualizada correctamente" });
   } catch(error) {
-    res.status(500).json({ error: "Error al crear la joya", details: error.message });
+    res.status(500).json({ message: "Error al crear la joya" });
   }
 })
 
 // Filtrado por ID mediante solitud al backend
-app.get('/getById/:_id', async (req,res)=>{
+app.get('/getById/:_id?', async (req,res)=>{
   try {
     _id = req.params._id;
-    //const item = await Inventario.findById(_id);
+
+    if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+      return res.status(400).json({ message: "ID inválido o no proporcionado" });
+    }
+
     let joya = await Inventario.findOne({_id: new mongoose.Types.ObjectId(_id)});
 
     if(!joya){
-      return res.status(404).json({error: "Articulo no encontrado"});
+      return res.status(404).json({ message: "Articulo no encontrado"});
     }
-    //res.status(200).json({item});
     res.status(200).json({joya: joya});    
 
   } catch (error) {
-    res.status(500).json({error: "Error al encontrar el articulo", details:error.message});
+    res.status(500).json({ message: "Error al encontrar el articulo" });
   }
 })
 
-
-// app.put('/getTipo', async (req, res) => {
-//   try {
-//     tipo = req.body.tipo;
-//     let joyas = await Inventario.find({ tipo: tipo });
-//     res.status(200).json({joyas: joyas});
-//   } catch(error) {
-//     res.status(500).json({ message: "Tipo no valido" })
-//   }
-// });
-
-//////////////////////////////////////////////////////////////////
+// Filtrado por tipo
 app.get('/getTipo/:tipo', async (req, res) => {
   try {
     tipo = req.params.tipo;
-    //tipo = 1;
     let joyas = await Inventario.find({ tipo: tipo });
     res.status(200).json({joyas: joyas});
   } catch(error) {
     res.status(500).json({ message: "Tipo no valido" })
   }
 });
-//////////////////////////////////////////////////////////////////
 
-//-- DELETE --
+// --- DELETE ---
 app.delete('/inventario/:_id', async (req, res) =>{
   try {
     const _id = req.params._id;
+
     const item = await Inventario.findByIdAndDelete(_id);
+    
 
     if (!item) {
-      return res.status(404).json({ error: "Articulo no encontrado" });
+      return res.status(404).json({ message: "Articulo no encontrado" });
     }
     // Responder con éxito
-    res.status(200).json({ message: "Articulo eliminado correctamente", deletedItem: item });
+    res.status(200).json({ message: "Articulo eliminado correctamente" });
 
   } catch (error) {
-    res.status(500).json({error: "Error al borrar el articulo", details: error.message });
+    res.status(500).json({ message: "Error al borrar el articulo" });
   }
 })

@@ -19,10 +19,10 @@
         <div class="box-item">
             <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
             <button class="btn-editar" (click)="this.handleShowUpdate(item._id, item.tipo, item.nombre, item.precio, item.cantidad)">✎</button>
-            <p>Nombre: {{item.nombre}}</p>
-            <p>Precio: {{item.precio}}</p>
-            <p>Cantidad: {{ item.cantidad }}</p>
-            <p>Id: {{item._id}}</p>
+            <p class="prop-nombre">{{item.nombre}}</p>
+            <p class="prop-precio">Precio: {{item.precio}}</p>
+            <p class="prop-cantidad">Cantidad: {{ item.cantidad }}</p>
+            <p class="prop-id">{{item._id}}</p>
         </div>
     }
     <!--Boton para añadir un elementos-->
@@ -36,19 +36,19 @@
     <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
         <span>Nueva Joya</span>
         <div id="radio-container">
-            <input type="radio" id="anillo" name="tipo" checked="checked" (click)='this.creatingTipo = this.tipoEnum.anillo'>
+            <input type="radio" id="anillo" formControlName="tipo" [value]="this.tipoEnum.anillo" checked="checked">
             <label for="anillo">Anillo</label>
             <br>
 
-            <input type="radio" id="collar" name="tipo" (click)='this.creatingTipo = this.tipoEnum.collar'>
+            <input type="radio" id="collar" [value]="this.tipoEnum.anillo" formControlName="tipo">
             <label for="collar">Collar</label>
             <br>
 
-            <input type="radio" id="pendiente" name="tipo" (click)='this.creatingTipo = this.tipoEnum.pendiente'>
+            <input type="radio" id="pendiente" [value]="this.tipoEnum.anillo" formControlName="tipo">
             <label for="pendiente">Pendiente</label>
             <br>
 
-            <input type="radio" id="pulsera" name="tipo" (click)='this.creatingTipo = this.tipoEnum.pulsera'>
+            <input type="radio" id="pulsera" [value]="this.tipoEnum.anillo" formControlName="tipo">
             <label for="pulsera">Pulsera</label>
             <br>
         </div>
@@ -65,7 +65,7 @@
 <!-- Formulario para editar -->
 <div id="updateForm-container" [style]="'visibility:' + this.showUpdateForm">
     <form id="updateForm" [formGroup]="updateForm" (submit)="onUpdateSubmit()">
-        <span>Update Form</span>
+        <span>Actualizar Joya</span>
         <span>Id: {{this.updatingId}}</span>
         <br>
         <label for="nombre">Nombre: </label>
@@ -75,6 +75,6 @@
         <label for="cantidad">Cantidad: </label>
         <input type="text" formControlName="cantidad">
         <input type="submit" name="submit" value="Actualizar">
-        <button type="button" (click)="this.showUpdateForm = 'hidden'">Close</button>
+        <button type="button" (click)="this.showUpdateForm = 'hidden'">Cerrar</button>
     </form>
 </div>

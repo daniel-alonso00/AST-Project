@@ -157,10 +157,15 @@ export class UserComponent {
   // Mostrar Form para actualizar
   handleShowUpdate(_id: string, tipo: number, nombre: string, precio: string, cantidad: string) {
     this.showUpdateForm = "visible";
-    this.nombreItem = nombre;
-    this.precioItem = precio;
-    this.cantidadItem = cantidad;
     this.updatingId = _id;
     this.updatingTipo = tipo;
+
+    // Asignamos a updateForm los valores sacados del articulo
+    this.updateForm.patchValue({
+      nombre: nombre,
+      precio: precio,
+      cantidad: cantidad
+    });
+
   }
 }

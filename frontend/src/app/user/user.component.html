@@ -18,11 +18,11 @@
     @for(item of displayItems; track item._id){
         <div class="box-item">
             <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
-            <button class="btn-editar" (click)="this.handleShowUpdate(item._id, item.tipo)">✎</button>
-            <p class="prop-nombre">{{item.nombre}}</p>
-            <p class="prop-precio">Precio: {{item.precio}} €</p>
-            <p class="prop-cantidad">Cantidad: {{ item.cantidad }}</p>
-            <p class="prop-id">{{item._id}}</p>
+            <button class="btn-editar" (click)="this.handleShowUpdate(item._id, item.tipo, item.nombre, item.precio, item.cantidad)">✎</button>
+            <p>Nombre: {{item.nombre}}</p>
+            <p>Precio: {{item.precio}}</p>
+            <p>Cantidad: {{ item.cantidad }}</p>
+            <p>Id: {{item._id}}</p>
         </div>
     }
     <!--Boton para añadir un elementos-->
@@ -65,11 +65,15 @@
 <!-- Formulario para editar -->
 <div id="updateForm-container" [style]="'visibility:' + this.showUpdateForm">
     <form id="updateForm" [formGroup]="updateForm" (submit)="onUpdateSubmit()">
-        <span>Actualizar Joya</span>
-        <input type="text" formControlName="nombre" placeholder="Nombre del artículo">
-        <input type="text" formControlName="precio" placeholder="Precio del artículo">
-        <input type="text" formControlName="cantidad" placeholder="Cantidad">
-
+        <span>Update Form</span>
+        <span>Id: {{this.updatingId}}</span>
+        <br>
+        <label for="nombre">Nombre: </label>
+        <input type="text" formControlName="nombre">
+        <label for="precio">Precio: </label>
+        <input type="text" formControlName="precio">
+        <label for="cantidad">Cantidad: </label>
+        <input type="text" formControlName="cantidad">
         <input type="submit" name="submit" value="Actualizar">
         <button type="button" (click)="this.showUpdateForm = 'hidden'">Close</button>
     </form>

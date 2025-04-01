@@ -42,7 +42,12 @@ export class UserComponent {
   addForm = new FormGroup({         // Form para añadir Joya
     nombre: new FormControl(''),
     precio: new FormControl('', [Validators.required, Validators.min(0)]) ,   // Campos requeridos con una cantidad minima
-    cantidad: new FormControl('', [Validators.required, Validators.min(0)])   // Campos requeridos con una cantidad minima
+    cantidad: new FormControl('', [Validators.required, Validators.min(0)]),  // Campos requeridos con una cantidad minima
+    userId: new FormControl('')
+  });
+
+  userIdForm = new FormGroup({
+    userId: new FormControl('')
   });
 
   updateForm = new FormGroup({      // Form para editar Joya
@@ -94,6 +99,7 @@ export class UserComponent {
 
   // (POST) Form para añadir nueva joya
   onSubmit() {
+    console.log(this.userIdForm.value.userId);
     if(this.addForm.valid){
       this.http.post<any>(this.apiURL + '/inventario', {
         tipo: this.creatingTipo,

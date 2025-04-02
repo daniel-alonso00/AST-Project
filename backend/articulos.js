@@ -3,22 +3,16 @@ const express = require("express")
 const cors = require("cors")
 const app = express()
 
-const Inventario = require('./models/inventario')
-const tipoEnum = {
-  anillo: 0,
-  collar: 1,
-  pendiente: 2,
-  pulsera: 3
-}
-
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
 
+const Inventario = require('./models/inventario')
+
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .then(() => {
-    console.log('MongoDB connected')
+    console.log('MongoDB connected (from atriculos.js)')
 
     // Escucha en puerto 8080
     app.listen(8080, () => {

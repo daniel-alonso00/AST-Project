@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "run": "node server.js",
-    "dev-articulos": "nodemon server.js"
+    "dev": "nodemon articulos.js & nodemon compras.js & nodemon usuarios.js", // <- Lanza los tres backends a la vez (npm run dev)
+    // Lanzar backaend por separado (Ej: npm run articulos)
+    "articulos": "nodemon articulos.js",
+    "compras": "nodemon compras.js",
+    "usuarios": "nodemon usuarios.js"
   },
   "author": "",
   "license": "ISC",

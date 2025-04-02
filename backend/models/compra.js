@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const compra = new mongoose.Schema({
-  idArticulo: Schema.ObjectId,
-  idCliente: Schema.ObjectId,
+  idArticulo: mongoose.Schema.ObjectId,
+  idCliente: mongoose.Schema.ObjectId,
   cantidad: Number,
   nombreCliente: String,
   direccion: String

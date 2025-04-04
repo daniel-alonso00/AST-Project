@@ -22,6 +22,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .catch(err => console.log('Error connecting MongoBD: ', err));
 
 // --- GET ---
+  app.get('/', async (req,res) => {
+    res.send("Pagina de usuarios")
+  })
+
 app.get('/usuario', async (req, res) => {
   try {
     let usuarios = await Usuario.find({});

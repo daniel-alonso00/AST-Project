@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-articulo',
   imports: [ReactiveFormsModule],
-  templateUrl: './user.component.html',
-  styleUrl: './user.component.css'
+  templateUrl: './articulo.component.html',
+  styleUrl: './articulo.component.css'
 })
-export class UserComponent {
+export class ArticuloComponent {
   apiURL = 'http://localhost:8080'
 
   tipoEnum = {

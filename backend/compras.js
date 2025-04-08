@@ -34,3 +34,26 @@ app.get('/compras', async (req, res) => {
     res.status(500).json({ message: 'Error al obtener las compras' });
   }
 });
+
+app.post('/compra', async (req, res) => {
+  try {
+    idArticulo = req.body.idArticulo
+    idCliente = req.body.idCliente
+    cantidad = req.body.cantidad
+    nombreCliente = req.body.nombreCliente
+    direccion = req.body.direccion
+
+    let newCompra = new Compra({
+      idArticulo: idArticulo,
+      idCliente: idCliente,
+      cantidad: parseInt(cantidad),
+      nombreCliente: nombreCliente,
+      direccion: direccion
+    });
+
+    newCompra.save();
+    res.status(200).json({ message: "Compra creada correctamente" })
+  } catch {
+    res.status(500).json({ message: "Error al crear compra" })
+  }
+});

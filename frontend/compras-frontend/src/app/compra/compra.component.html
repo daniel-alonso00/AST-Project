@@ -1,1 +1,28 @@
-<p>frontend compra funcionando con el componente </p>
+<form id="userForm" [formGroup]="userIdForm">
+    <p>ID Usuario:</p>
+    <input type="text" formControlName="userId" name="userId">
+</form>
+
+<div id="box-container">
+    @for(item of displayItems; track item._id){
+        <div class="box-item">
+            <p class="prop-nombre">{{item.nombre}}</p>
+            <p class="prop-precio">Precio: {{item.precio}}</p>
+            <p class="prop-cantidad">Cantidad: {{ item.cantidad }}</p>
+            <p class="prop-id">{{item._id}}</p>
+            <button (click)="this.showForm= 'visible'; this.articleId = item._id">Comprar</button>
+        </div>
+    }
+</div>
+
+<form id="addForm" [style]="'visibility:' + this.showForm" [formGroup]="compraForm" (submit)="onSubmit()">
+    <span>Comprar</span>
+    <p>Articulo: {{ this.articleId }}</p>
+
+    <input type="text" formControlName="cantidad" placeholder="Cantidad">
+    <input type="text" formControlName="nombreCliente" placeholder="Introduzca su nombre">
+    <input type="text" formControlName="direccion" placeholder="Introduzca su dirección">
+
+    <input type="submit" name="submit" value="Comprar">
+    <button type="button" (click)="this.showForm = 'hidden'">Cerrar</button>
+</form>

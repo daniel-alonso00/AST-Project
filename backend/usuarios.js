@@ -8,6 +8,7 @@ app.use(express.json())
 app.use(cors())
 
 const Usuario = require('./models/usuario')
+const { type } = require("os")
 
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
@@ -35,42 +36,18 @@ app.get('/usuario', async (req, res) => {
   }
 });
 
-// --- POST ---
-// app.post('/usuario/:permisos/:nombre', (req,res) => {
-//   try {
-//     // permisos = req.body.permisos;
-//     // nombre = req.body.nombre;
-//     permisos = req.params.permisos;
-//     nombre = req.params.nombre;
-
-//     const newUsuario = new Usuario({
-//       permisos : permisos,
-//       nombre: nombre
-//     })
-
-//     newUsuario.save()
-//     res.status(201).json({message: "Usuario creado correctamente"});
-
-//   } catch (error) {
-//     res.status(500).json({message: "Error al crear el usuario"});
-//   }
-// })
+// --POST--
 app.post('/usuario', (req,res) => {
   try {
-    permisos = req.body.permisos;
+    permisos = req.body.rolUsuario;
     nombre = req.body.nombre;
-    console.log("Variables asignadas");
 
     const newUsuario = new Usuario({
       permisos : permisos,
       nombre: nombre
     })
-    console.log("creado objecto");
-
     newUsuario.save()
-    console.log("usuario guardado");
     res.status(201).json({message: "Usuario creado correctamente"});
-    console.log("respeusta");
 
   } catch (error) {
     res.status(500).json({message: "Error al crear el usuario"});

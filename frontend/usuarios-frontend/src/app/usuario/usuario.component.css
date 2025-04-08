@@ -1,0 +1,372 @@
+h1{
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 40px auto 0 auto;
+    padding-bottom: 0;
+}
+
+h3 {
+    font-style: italic;
+    text-align: center;
+    margin-top: 0;
+}
+
+.barra-inicio {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto 50px auto;
+}
+
+.botones-menu {
+    width: 100%;
+    height: 2rem;
+    padding: 21px;
+    font-size: 16px;
+    border: none;
+    border-bottom: #A18E63 solid 2px;
+    background-color: white;
+    color: black;
+    transition: background-color 0.3s ease;
+}
+
+.botones-menu:hover {
+    padding: 20px;
+    border-bottom: #A18E63 solid 3px;
+}
+
+#id-search-form > input  {
+    height: 32px;
+    width: 20%;
+    padding: 2px 2px 2px 12px;
+    outline: none;
+    border: #A18E63 solid 1px;
+    border-radius: 3px;
+    margin-right: 5px;
+    margin-left: 20px;
+    transform: skewX(-10deg);
+}
+
+#id-search-form > input:focus {
+    border-width: 3px;
+    padding: 0 0 0 10px;
+}
+
+#id-search-form > button  {
+    height: 36px;
+    width: 5%;
+    border: none;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    transform: skewX(-10deg);
+    background-color: #A18E63;
+}
+
+#id-search-form > button:hover  {
+    background-color: #695C40;
+    color: white;
+}
+
+/* Contenedor principal */
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+/* Estilos para cada artículo individual */
+.box-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    padding-right: 40px;
+    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    /*width: 200px;*/
+    min-width: 200px;
+    flex-shrink: 0;
+    position: relative; /* Necesario para posicionar los botones */
+    text-align: left; /* Alineación del texto */
+    border: none;
+    border-bottom: lightgray solid 2px;
+    background-color: rgb(250, 250, 250);
+}
+
+.box-item:hover {
+    /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);*/
+    transform: translateY(-5px);
+    border-bottom: #A18E63 solid 2px;
+}
+
+.box-item p {
+    margin: 0 0 8px 0;
+}
+
+/* Propiedades de las Joyas */
+.prop-nombre {
+    display: block;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    font-style: italic;
+    color: #695C40;
+}
+
+.prop-precio {
+}
+
+.prop-cantidad {
+}
+
+.prop-id {
+    font-style: italic;
+    margin-top: 15px;
+    text-align: right;
+    font-size: 14px;
+}
+
+/* Botón de eliminar (cruz) */
+.btn-eliminar {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border: #ff4d4d solid 1px;
+    border-radius: 10px;
+    border-color: #ff4d4d;
+    background-color: white;
+    width: 24px;
+    height: 24px;
+    color: #ff4d4d;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    /*background-color: #f58989;*/
+    border-width: 2px;
+}
+
+/* Botón de editar */
+.btn-editar {
+    position: absolute;
+    top: 35px;
+    right: 5px;
+    border: #A18E63 solid 1px;
+    border-radius: 10px;
+    width: 24px;
+    height: 24px;
+    /*color: #0AC4B3;*/
+    color: #A18E63;
+    background-color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-editar:hover {
+    border-width: 2px;
+}
+
+/* Estilos para el botón de añadir */
+.add-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: white;
+    width: 50px;
+    font-size: 20px;
+    border: #A18E63 solid 1px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    transition: 0.1s all ease-in-out;
+    color: #695C40;
+    background-color: rgb(250, 250, 250);
+}
+
+.add-item:hover {
+    border-width: 2px;
+    transform: translateY(-5px);
+}
+
+#addForm-container {
+    visibility: hidden;
+    margin: 0 auto;
+    padding: 5px;
+    width: 30%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#addForm {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    background-color: white;
+    border-radius: 10px;
+    border: grey solid 1px;
+    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#addForm > span {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+#addForm > #radio-container {
+    margin-bottom: 10px;
+}
+
+#addForm > input[type="text"] {
+    display: block;
+    color: black;
+    background-color: #D9CDBC;
+    border: none;
+    border-radius: 2px;
+    width: 80%;
+    height: 20px;
+    margin: 5px;
+    padding: 3px 0 3px 5px;
+}
+
+#addForm > input[type="text"]:focus {
+    background-color: white;
+}
+
+#addForm > input[type="submit"] {
+    width: 70%;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #A18E63;
+    font-weight: bold;
+    transition: 0.1s all ease-in-out;
+}
+
+#addForm > input[type="submit"]:hover {
+    background-color: #695C40;
+    color: white;
+}
+
+#addForm > button {
+    margin-top: 10px;
+    width: 30%;
+    height: 25px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f58989;
+    color: black;
+    font-weight: bold;
+    transition: 0.1s all ease-in-out;
+}
+
+#addForm > button:hover {
+    background-color: #BD210D;
+}
+
+#updateForm-container {
+    visibility: hidden;
+    margin: 0 auto;
+    padding: 5px;
+    width: 30%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#updateForm {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    background-color: white;
+    border-radius: 10px;
+    border: grey solid 1px;
+    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#updateForm > span {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+#updateForm > input[type="text"] {
+    display: block;
+    color: black;
+    background-color: #D9CDBC;
+    border: none;
+    border-radius: 2px;
+    width: 80%;
+    height: 20px;
+    margin: 5px;
+    padding: 3px 0 3px 5px;
+}
+
+#updateForm > input[type="text"]:focus {
+    background-color: white;
+}
+
+#updateForm > input[type="submit"] {
+    width: 70%;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #A18E63;
+    font-weight: bold;
+    transition: 0.1s all ease-in-out;
+}
+
+#updateForm > input[type="submit"]:hover {
+    background-color: #695C40;
+    color: white;
+}
+
+#updateForm > button {
+    margin-top: 10px;
+    width: 30%;
+    height: 25px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #f58989;
+    color: black;
+    font-weight: bold;
+    transition: 0.1s all ease-in-out;
+}
+
+#updateForm > button:hover {
+    background-color: #BD210D;
+}

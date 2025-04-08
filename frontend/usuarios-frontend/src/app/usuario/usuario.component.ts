@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-usuario',
-  imports: [ReactiveFormsModule, HttpClientModule],
+  imports: [ReactiveFormsModule, HttpClientModule, FormsModule],
   templateUrl: './usuario.component.html',
   styleUrl: './usuario.component.css'
 })
@@ -13,30 +15,30 @@ export class UsuarioComponent {
 
   displayItems: any;  //Contiene el array de los usuarios
 
-  rolDefault = false;  //definimos que por defecto el rol sea Estandar
-
-  tipoUser = {
-    admin: true,
-    estandar: false
-  }
-
-  
+  // tipoUser = {
+  //   admin: true,
+  //   estandar: false
+  // }
 
   //Constructor para el cliente HTTP
   constructor(private http: HttpClient) {}
 
+  //Metodo de inicio al recargar la pagina
   ngOnInit(){
     this.readUsuarios();
   }
 
-  
+  //FormGroup para la creacion de usuarios
   addForm = new FormGroup({
-    nombre: new FormGroup('')
+    nombre: new FormControl(''),
+    rolUsuario: new FormControl('estandar')
   });
 
   onSubmit() {
+    //console.log(this.rolDefault);
     this.http.post<any>(this.apiURL + '/usuario',{
-      rolUsuario: this.rolDefault ?? '',
+      
+      rolUsuario: this.addForm.value.rolUsuario ?? '',
       nombre: this.addForm.value.nombre ?? ''
     }).subscribe(data =>{
       this.readUsuarios();

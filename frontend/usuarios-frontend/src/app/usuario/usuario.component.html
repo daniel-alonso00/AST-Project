@@ -1,27 +1,31 @@
-<p>frontend de usuario con componente creado en angular funcionando</p>
-
-<p>Formulario de alta para creacion de usuario</p>
+<h1>Fake Tous</h1>
+<h3>--- ¿Qué te apetece hoy? ---</h3>
+<h2>Gestion de Usuarios</h2>
 
 <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
-    <span>Nuevo usuario</span>
+    <span>Nuevo Usuario</span>
     <div id="radio-container">
-        <label for="admin">Usuario Administrador</label>
-        <input type="radio" name="tipo" value="admin" (click)="this.rolDefault=this.tipoUser.admin">
+        <label for="administrador">Administrador</label>
+        <input type="radio" name="rolUsuario" id="administrador" value="administrador" formControlName="rolUsuario">
         <br>
-        <label for="estandar">Usuario estandar</label>
-        <input type="radio" name="tipo" value="estandar" (click)="this.rolDefault=this.tipoUser.estandar">
+        <label for="estandar">Estandar</label>
+        <input type="radio" name="rolUsuario" id="estandar" value="estandar" formControlName="rolUsuario">
         <br>
     </div>
     <input type="text" formControlName="nombre" placeholder="Nombre del usuario">
     <input type="submit" name="submit" value="Crear usuario">
-    <!-- <button type="button">Cerrar</button> -->
 </form>
 
 <p>Aqui vamos a mostrar los usuarios</p>
 
-@for (item of displayItems; track item._id) {
-    <p>articulo</p>
-    <p>{{item.nombre}}</p>
-    <p>{{item.permisos}}</p>
-    <p>{{item._id}}</p>
-}
+<div class="box-container">
+    @for (item of displayItems; track item._id) {
+        <div class="box-item">
+            <p>{{item.nombre}}</p>
+            <p>{{item.permisos}}</p>
+            <p>{{item._id}}</p>
+            <p>__________________________</p>
+        </div>
+        
+    }
+</div>

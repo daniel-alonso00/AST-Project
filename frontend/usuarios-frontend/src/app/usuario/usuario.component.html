@@ -1,1 +1,27 @@
 <p>frontend de usuario con componente creado en angular funcionando</p>
+
+<p>Formulario de alta para creacion de usuario</p>
+
+<form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
+    <span>Nuevo usuario</span>
+    <div id="radio-container">
+        <label for="admin">Usuario Administrador</label>
+        <input type="radio" name="tipo" value="admin" (click)="this.rolDefault=this.tipoUser.admin">
+        <br>
+        <label for="estandar">Usuario estandar</label>
+        <input type="radio" name="tipo" value="estandar" (click)="this.rolDefault=this.tipoUser.estandar">
+        <br>
+    </div>
+    <input type="text" formControlName="nombre" placeholder="Nombre del usuario">
+    <input type="submit" name="submit" value="Crear usuario">
+    <!-- <button type="button">Cerrar</button> -->
+</form>
+
+<p>Aqui vamos a mostrar los usuarios</p>
+
+@for (item of displayItems; track item._id) {
+    <p>articulo</p>
+    <p>{{item.nombre}}</p>
+    <p>{{item.permisos}}</p>
+    <p>{{item._id}}</p>
+}

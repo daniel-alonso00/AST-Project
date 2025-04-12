@@ -14,7 +14,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .then(() => {
     console.log('MongoDB connected (from compras.js)')
 
-    // Escucha en puerto 8080
+    // Escucha en puerto 8070
     app.listen(8070, () => {
       console.log("Localhost listening on 8070.")
     })

@@ -12,17 +12,25 @@ export class CompraComponent {
   articulosApiURL = 'http://localhost:8080';
   apiURL = 'http://localhost:8070';
 
+  tipoEnum = {
+    anillo: 0,
+    collar: 1,
+    pendiente: 2,
+    pulsera: 3
+  }
+
   displayItems: any;
   showForm = 'hidden';
 
   articleId = '';
+  articleName = '';
 
   constructor(private http: HttpClient) {}
 
   compraForm = new FormGroup({
-    cantidad: new FormControl(''),
-    nombreCliente: new FormControl(''),
-    direccion: new FormControl(''),
+    cantidad: new FormControl('', [Validators.required, Validators.min(0)]),
+    nombreCliente: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    direccion: new FormControl('', [Validators.required, Validators.minLength(1)]),
   })
 
   userIdForm = new FormGroup({
@@ -41,17 +49,44 @@ export class CompraComponent {
   }
 
   onSubmit() {
-    this.http.post<any>(this.apiURL + '/compra', {
-      idArticulo: this.articleId ?? '',
-      idCliente: this.userIdForm.value.userId ?? '',
-      cantidad: this.compraForm.value.cantidad ?? '',
-      nombreCliente: this.compraForm.value.nombreCliente ?? '',
-      direccion: this.compraForm.value.direccion ?? ''
-    })
-      .subscribe(res => {
+    if (this.compraForm.valid && /^\d+$/.test(this.compraForm.value.cantidad as string)) {
+      this.http.post<any>(this.apiURL + '/compra', {
+        idArticulo: this.articleId ?? '',
+        idCliente: this.userIdForm.value.userId ?? '',
+        cantidad: this.compraForm.value.cantidad ?? '',
+        nombreCliente: this.compraForm.value.nombreCliente ?? '',
+        direccion: this.compraForm.value.direccion ?? ''
+      }).subscribe(res => {
         alert(res.message);
+        this.compraForm.reset();
       }, error => {
+        alert(error);
         alert(error.error.message);
       })
+    } else {
+      alert("Debe introducir nombre, dirección y cantidad válidos.");
+    }
+  }
+
+  showAddForm(item: any) {
+    this.showForm= 'visible';
+    this.articleId = item._id;
+    this.articleName = item.nombre;
+  }
+
+  filterSelect(tipo: number) {
+    if (tipo == 4) {
+      this.readJoyas();
+    } else {
+      this.http.get<any>(this.articulosApiURL + '/getTipo/' + tipo)
+        .subscribe(data => {
+          this.displayItems = data.joyas;
+        }, error => {
+          alert(error.error.message)
+        })
+    }
+  }
+
+  showCompras() {
   }
 }

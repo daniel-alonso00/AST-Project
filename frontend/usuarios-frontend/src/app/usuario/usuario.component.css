@@ -95,7 +95,7 @@ h3 {
     text-align: left; /* Alineación del texto */
     border: none;
     border-bottom: lightgray solid 2px;
-    background-color: rgb(250, 250, 250);
+    background-color: rgb(228, 209, 184);
 }
 
 .box-item:hover {
@@ -208,6 +208,7 @@ h3 {
     margin: 0 auto;
     padding: 5px;
     width: 30%;
+    z-index: 10;
 
     position: absolute;
     top: 50%;
@@ -370,3 +371,11 @@ h3 {
 #updateForm > button:hover {
     background-color: #BD210D;
 }
+
+
+#opciones{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+

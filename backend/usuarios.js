@@ -9,6 +9,7 @@ app.use(cors())
 
 const Usuario = require('./models/usuario')
 const { type } = require("os")
+const { measureMemory } = require("vm")
 
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
@@ -37,7 +38,7 @@ app.get('/usuario', async (req, res) => {
 });
 
 // --POST--
-app.post('/usuario', (req,res) => {
+app.post('/usuario', async (req,res) => {
   try {
     permisos = req.body.rolUsuario;
     nombre = req.body.nombre;
@@ -46,10 +47,27 @@ app.post('/usuario', (req,res) => {
       permisos : permisos,
       nombre: nombre
     })
-    newUsuario.save()
-    res.status(201).json({message: "Usuario creado correctamente"});
+    const usuarioGuardado = await newUsuario.save();
+    res.status(200).json({message: "Usuario creado correctamente", _id: usuarioGuardado._id});
 
   } catch (error) {
     res.status(500).json({message: "Error al crear el usuario"});
+  }
+})
+
+// --DELETE--
+app.delete('/usuario/:_id', async (req,res) => {
+  try {
+    const _id = req.params._id;
+    let usuario = await Usuario.findByIdAndDelete(_id);
+
+    if(!usuario){
+      return res.status(404).json({message: "Usuario no encontrado"});
+    }
+    res.status(200).json({message:"Usuario eliminado correctamente"});
+
+  } catch (error) {
+    res.status(500).json({message: "Error al borrar el usuario"});
+    
   }
 })

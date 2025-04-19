@@ -1,1 +1,81 @@
-<p>frontend compra funcionando con el componente </p>
+<h1>Fake Tous</h1>
+<span id="subtitle">— ¿Qué te apetece hoy?— </span>
+
+<form id="userForm" [formGroup]="userIdForm">
+    <p>ID Usuario:</p>
+    <input type="text" formControlName="userId" name="userId">
+</form>
+
+@if (this.shopping) {
+
+<div id="mainMenu">
+    <div id="filterMenu">
+        <button (click)="this.filterSelect(4)">Todos</button>
+        <button (click)="this.filterSelect(this.tipoEnum.anillo)">Anillos</button>
+        <button (click)="this.filterSelect(this.tipoEnum.collar)">Collares</button>
+        <button (click)="this.filterSelect(this.tipoEnum.pendiente)">Pendientes</button>
+        <button (click)="this.filterSelect(this.tipoEnum.pulsera)">Pulseras</button>
+    </div>
+    <div id="showBuyMune">
+        <button (click)="this.showCompras()">Ver mis compras</button>
+    </div>
+</div>
+
+<form [formGroup]="searchForm" (submit)="onSearchSubmit()">
+    <input type="text" formControlName="id" placeholder="ID del artículo">
+    <button type="submit">Buscar</button>
+</form>
+
+<div id="box-container">
+    @for(item of displayItems; track item._id){
+        <div class="box-item">
+            <p class="prop-nombre">{{item.nombre}}</p>
+            <p class="prop-precio">Precio: {{item.precio}}</p>
+            <p class="prop-cantidad">Cantidad: {{ item.cantidad }}</p>
+            <p class="prop-id">{{item._id}}</p>
+            <button (click)="showAddForm(item)">Comprar</button>
+        </div>
+    }
+</div>
+
+<div id="addForm-container" [style]="'visibility:' + this.showForm">
+    <form id="addForm" [formGroup]="compraForm" (submit)="onSubmit()">
+        <h3>Comprar Artículo: <i>{{ this.articleName }}</i></h3>
+        <p id="addFormItemId">Id: {{ this.articleId }}</p>
+
+        <div id="cantidad-container">
+            <button type="button" (click)="cantidadModify(-1)">-</button>
+            <input type="text" formControlName="cantidad" id="compra-cantidad">
+            <button type="button" (click)="cantidadModify(1)">+</button>
+        </div>
+
+        <div class="input-container">
+            <span>Nombre:</span>
+            <input type="text" formControlName="nombreCliente" placeholder="Introduzca su nombre">
+        </div>
+        <div class="input-container">
+            <span>Dirección:</span>
+            <input type="text" formControlName="direccion" placeholder="Introduzca su dirección">
+        </div>
+
+        <input type="submit" name="submit" value="Comprar">
+        <button type="button" (click)="this.showForm = 'hidden'">Cerrar</button>
+    </form>
+</div>
+
+} @else {
+
+<button id="shop-button" (click)="this.shopping=true">Volver a comprar</button>
+<div id="compras-container">
+    @for(compra of displayCompras; track compra._id) {
+        <div class="box-compra">
+            <p>ID árticulo: {{ compra.idArticulo }}</p>
+            <p>ID cliente: {{ compra.idCliente }}</p>
+            <p>Cantidad: {{ compra.cantidad }}</p>
+            <p>Nombre del cliente: {{ compra.nombreCliente }}</p>
+            <p>Dirección de envío: {{ compra.direccion }}</p>
+        </div>
+    }
+</div>
+
+}

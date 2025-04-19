@@ -71,3 +71,21 @@ app.delete('/usuario/:_id', async (req,res) => {
     
   }
 })
+
+// Filtrado por rol
+app.get('/getRolById/:_id',async (req,res) =>{
+  try {
+    const _id = req.params._id;
+
+    let usuario = await Usuario.findById(_id);
+
+    const rol = usuario.permisos;
+
+    res.status(200).json({rol});
+    
+  } catch (error) {
+    res.status(500).json({message: "Error al buscar el rol"});
+  }
+})
+
+//app.get('/getUserByTipo/:')

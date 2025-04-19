@@ -11,16 +11,18 @@
 <div id="opciones">
     <input type="button" id="crearUsuario" value="Crear Usuario" (click)="this.showFormCreate = 'visible'">
     <input type="button" value="Eliminar Usuario" (click)="this.deleteUserFromButton()">
+    
     <div id="listarUsuarios">
         <label for="menu-busqueda">Listar usuarios </label>
-        <select name="listarUsuarios" id="menu-busqueda">
+        <select name="listarUsuarios" id="menu-busqueda" #seleccionUsuarios>
             <option value="" disabled selected>Listar Usuarios</option>
             <option value="todos">Todos</option>
             <option value="administradores">Administradores</option>
             <option value="clientes">Clientes</option>
         </select>
         <button id="mostrarUsuarios">Mostrar</button>
-    </div>  
+        <!-- <button id="mostrarUsuarios" (click)="this.filtradoUsers(seleccionUsuarios.value)">Mostrar</button> -->
+    </div>
 </div>
 <hr>
 

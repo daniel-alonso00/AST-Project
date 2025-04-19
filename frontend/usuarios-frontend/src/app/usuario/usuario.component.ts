@@ -14,6 +14,11 @@ import { error } from 'node:console';
 export class UsuarioComponent {
   apiURL = 'http://localhost:8060'
 
+  tipoEnum ={
+    administrador: "administrador",
+    cliente: "cliente"
+  }
+
   displayItems: any;  //Contiene el array de los usuarios
 
   showFormCreate = "hidden";
@@ -31,7 +36,7 @@ export class UsuarioComponent {
   //FormGroup para la creacion de usuarios
   addForm = new FormGroup({
     nombre: new FormControl(''),
-    rolUsuario: new FormControl('cliente')
+    rolUsuario: new FormControl(this.tipoEnum.cliente)
   });
 
   onSubmit() {
@@ -42,7 +47,7 @@ export class UsuarioComponent {
     }).subscribe(data =>{
       this.readUsuarios();
       this.addForm.reset();
-      this.addForm.patchValue({rolUsuario:'cliente'});  //despues de resetear el formulario asignamos el rol por defecto
+      this.addForm.patchValue({rolUsuario: this.tipoEnum.cliente});  //despues de resetear el formulario asignamos el rol por defecto
       this.showFormCreate = "hidden";
       alert(`Usuario creado correctamente con ID: ${data._id}`);
     }, error =>{
@@ -70,15 +75,24 @@ export class UsuarioComponent {
         alert(error.error.message);
       })
   }
-    // (DELETE) Eliminar una joya (botón con X)
-    eliminarItem(_id: String){
-      this.http.delete<any>(this.apiURL + '/usuario/' + _id )
-        .subscribe(data => {
-          alert(data.message);
-          this.readUsuarios();
-        }, error => {
-          alert(error.error.message);
-        })
-    }
+  // (DELETE) Eliminar una joya (botón con X)
+  eliminarItem(_id: String){
+    this.http.delete<any>(this.apiURL + '/usuario/' + _id )
+      .subscribe(data => {
+        alert(data.message);
+        this.readUsuarios();
+      }, error => {
+        alert(error.error.message);
+      })
+  }
+
+  // Funcion para el filtrado de los tipos de usuarios
+  // filtradoUsers(tipoUsuario: String){
+  //   this.http.get<any>(this.apiURL + '/getUserByTipo/' + tipoUsuario)
+
+  //   console.log(tipoUsuario);
+
+  // }
+
 
 }

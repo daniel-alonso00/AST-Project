@@ -9,6 +9,11 @@ app.use(cors())
 
 const Compra = require('./models/compra')
 
+const rolEnum = {
+  administrador: "administrador",
+  cliente: "cliente"
+};
+
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .then(() => {
@@ -35,6 +40,9 @@ app.get('/compras', async (req, res) => {
   }
 });
 
+// --- POST ---
+
+// Crear una compra
 app.post('/compra', async (req, res) => {
   try {
     idArticulo = req.body.idArticulo
@@ -42,6 +50,19 @@ app.post('/compra', async (req, res) => {
     cantidad = req.body.cantidad
     nombreCliente = req.body.nombreCliente
     direccion = req.body.direccion
+
+    // Comprovar validez del id del cliente
+    if (!idCliente || !mongoose.Types.ObjectId.isValid(idCliente)) {
+      res.status(400).json({ message: "ID del cliente inválido o no proporcionado" });
+      return
+    }
+    let rolResp = await fetch("http://localhost:8060/getRolById/" + idCliente);
+    let rolJSON = await rolResp.json();
+    let rol = rolJSON.rol;
+    if (rol === undefined) {
+      res.status(500).json({ message: "Cliente inexistente. Proporcione un ID de cliente válido." });
+      return
+    }
 
     let articuloSolicitado = await fetch("http://localhost:8080/getById/" + idArticulo);
     let articuloJSON = await articuloSolicitado.json();

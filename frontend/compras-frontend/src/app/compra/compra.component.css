@@ -62,6 +62,8 @@ h1 {
     color: var(--dark);
 }
 
+/* --- Consulta de Artículos --- */
+
 #box-container {
     margin-top: 30px;
     display: grid;
@@ -101,8 +103,7 @@ h1 {
 }
 
 .box-item > button:hover {
-    background-color: var(--light);
-    color: var(--mid-dark);
+    background-color: var(--hovered-blue);
 }
 
 #addForm-container {
@@ -146,6 +147,12 @@ h1 {
     margin-bottom: 20px;
 }
 
+#addForm > #cantidad-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #addForm > #cantidad-container > button {
     background-color: var(--mid-light);
     border-radius: 5px;
@@ -153,16 +160,20 @@ h1 {
     width: 35px;
     height: 35px;
     justify-items: center;
+    text-align: center;
+    padding: 0;
 }
 
 #addForm #compra-cantidad {
     background-color: var(--mid-light);
     border-radius: 5px;
     border: none;
-    width: 35px;
-    height: 35px;
+    width: 50px;
+    height: 38px;
     margin: 0 5px 0 5px;
     justify-items: center;
+    text-align: center;
+    padding: 0;
 }
 
 #addForm > .input-container {
@@ -198,12 +209,11 @@ h1 {
     background-color: var(--mid-dark);
     color: var(--mid-light);
     font-weight: bold;
-    transition: ease-in-out all 250ms;
+    transition: ease-in-out all 150ms;
 }
 
 #addForm > input[type="submit"]:hover {
-    color: var(--mid-dark);
-    background-color: var(--mid-light);
+    background-color: var(--hovered-blue);
 }
 
 #addForm > button {
@@ -215,9 +225,39 @@ h1 {
     background-color: var(--dark);
     color: var(--mid-light);
     font-weight: bold;
-    transition: ease-in-out all 250ms;
+    transition: ease-in-out all 150ms;
 }
 
 #addForm > button:hover {
-    width: 50%;
 }
+
+/* --- Consulta de Compras --- */
+
+#shop-button {
+    display: block;
+}
+
+#compras-container {
+    margin: 0 auto;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#compras-container > .box-compra {
+    background-color: var(--mid-light);
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 0 20px;
+    transition: 200ms ease-in-out all;
+}
+/*
+#compras-container > .box-compra:hover {
+    transform: translateX(5px);
+    border-left: var(--mid-dark) solid 5px;
+}
+*/
+
+

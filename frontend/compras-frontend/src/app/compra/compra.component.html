@@ -1,6 +1,13 @@
 <h1>Fake Tous</h1>
 <span id="subtitle">— ¿Qué te apetece hoy?— </span>
 
+<form id="userForm" [formGroup]="userIdForm">
+    <p>ID Usuario:</p>
+    <input type="text" formControlName="userId" name="userId">
+</form>
+
+@if (this.shopping) {
+
 <div id="mainMenu">
     <div id="filterMenu">
         <button (click)="this.filterSelect(4)">Todos</button>
@@ -14,9 +21,9 @@
     </div>
 </div>
 
-<form id="userForm" [formGroup]="userIdForm">
-    <p>ID Usuario:</p>
-    <input type="text" formControlName="userId" name="userId">
+<form [formGroup]="searchForm" (submit)="onSearchSubmit()">
+    <input type="text" formControlName="id" placeholder="ID del artículo">
+    <button type="submit">Buscar</button>
 </form>
 
 <div id="box-container">
@@ -37,9 +44,9 @@
         <p id="addFormItemId">Id: {{ this.articleId }}</p>
 
         <div id="cantidad-container">
-            <button type="button">-</button>
+            <button type="button" (click)="cantidadModify(-1)">-</button>
             <input type="text" formControlName="cantidad" id="compra-cantidad">
-            <button type="button">+</button>
+            <button type="button" (click)="cantidadModify(1)">+</button>
         </div>
 
         <div class="input-container">
@@ -55,3 +62,20 @@
         <button type="button" (click)="this.showForm = 'hidden'">Cerrar</button>
     </form>
 </div>
+
+} @else {
+
+<button id="shop-button" (click)="this.shopping=true">Volver a comprar</button>
+<div id="compras-container">
+    @for(compra of displayCompras; track compra._id) {
+        <div class="box-compra">
+            <p>ID árticulo: {{ compra.idArticulo }}</p>
+            <p>ID cliente: {{ compra.idCliente }}</p>
+            <p>Cantidad: {{ compra.cantidad }}</p>
+            <p>Nombre del cliente: {{ compra.nombreCliente }}</p>
+            <p>Dirección de envío: {{ compra.direccion }}</p>
+        </div>
+    }
+</div>
+
+}

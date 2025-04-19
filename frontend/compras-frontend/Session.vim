@@ -13,15 +13,15 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +81 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.ts
-badd +10 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.html
-badd +15 ~/AST-Project/frontend/compras-frontend/src/styles.css
-badd +24 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.css
+badd +98 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.ts
+badd +23 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.html
+badd +7 ~/AST-Project/frontend/compras-frontend/src/styles.css
+badd +234 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.css
 argglobal
 %argdel
 edit ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.css
 argglobal
-balt ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.html
+balt ~/AST-Project/frontend/compras-frontend/src/styles.css
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -32,11 +32,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+let s:l = 228 - ((15 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
+keepjumps 228
 normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'

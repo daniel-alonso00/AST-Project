@@ -1,1 +1,57 @@
-<p>frontend de usuario con componente creado en angular funcionando</p>
+<h1>Fake Tous</h1>
+<h3>--- ¿Qué te apetece hoy? ---</h3>
+<h2>Gestion de Usuarios</h2>
+
+<form [formGroup]="boxIdUser">
+    <label for="userId">Introduce tu usuario: </label>
+    <input type="text" formControlName="userId" name="userId">
+</form>
+<br>
+
+<div id="opciones">
+    <input type="button" id="crearUsuario" value="Crear Usuario" (click)="this.showFormCreate = 'visible'">
+    <input type="button" value="Eliminar Usuario" (click)="this.deleteUserFromButton()">
+    
+    <div id="listarUsuarios">
+        <label for="menu-busqueda">Listar usuarios </label>
+        <select name="listarUsuarios" id="menu-busqueda" #seleccionUsuarios>
+            <option value="" disabled selected>Listar Usuarios</option>
+            <option value="todos">Todos</option>
+            <option value="administradores">Administradores</option>
+            <option value="clientes">Clientes</option>
+        </select>
+        <button id="mostrarUsuarios">Mostrar</button>
+        <!-- <button id="mostrarUsuarios" (click)="this.filtradoUsers(seleccionUsuarios.value)">Mostrar</button> -->
+    </div>
+</div>
+<hr>
+
+
+
+<div id="addForm-container" [style]="'visibility:' + this.showFormCreate">
+    <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
+        <span>Nuevo Usuario</span>
+        <div id="radio-container">
+            <label for="administrador">Administrador</label>
+            <input type="radio" name="rolUsuario" id="administrador" value="administrador" formControlName="rolUsuario">
+            <br>
+            <label for="cliente">Cliente</label>
+            <input type="radio" name="rolUsuario" id="cliente" value="cliente" formControlName="rolUsuario" checked="checked">
+            <br>
+        </div>
+        <input type="text" formControlName="nombre" placeholder="Nombre del usuario">
+        <input type="submit" name="submit" value="Crear usuario">
+        <button type="button" (click)="this.showFormCreate = 'hidden'">Cerrar</button>
+    </form>
+</div>
+
+<div class="box-container">
+    @for (item of displayItems; track item._id) {
+        <div class="box-item">
+            <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
+            <p>Nombre: {{item.nombre}}</p>
+            <p>Rol: {{item.permisos}}</p>
+            <p>ID: {{item._id}}</p>
+        </div>
+    }
+</div>

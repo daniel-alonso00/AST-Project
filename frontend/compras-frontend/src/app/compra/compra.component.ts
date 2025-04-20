@@ -56,10 +56,12 @@ export class CompraComponent {
   }
 
   readCompras() {
-    this.http.get(this.apiURL + "/compras")
+    this.http.get(this.apiURL + "/compras/" + this.userIdForm.value.userId)
     .subscribe(data => {
       this.displayCompras = data;
-    })
+    }, error => {
+      alert(error.error.message);
+    });
   }
 
   onSubmit() {
@@ -73,6 +75,7 @@ export class CompraComponent {
       }).subscribe(res => {
         alert(res.message);
         this.compraForm.reset();
+        this.readJoyas();
       }, error => {
         alert(error.error.message);
       })
@@ -88,6 +91,17 @@ export class CompraComponent {
       }, error => {
         alert(error.error.message);
       })
+  }
+
+  showCompras() {
+    this.shopping = false;
+    this.http.get<any>(this.apiURL + '/getComprasById/' + this.userIdForm.value.userId)
+    .subscribe(data => {
+      console.log(data);
+      this.displayCompras = data;
+    }, error => {
+      alert(error.error.message);
+    });
   }
 
   showAddForm(item: any) {
@@ -120,10 +134,5 @@ export class CompraComponent {
       nombreCliente: this.compraForm.value.nombreCliente ?? '',
       direccion: this.compraForm.value.direccion ?? ''
     });
-  }
-
-  showCompras() {
-    this.shopping = false;
-    this.readCompras();
   }
 }

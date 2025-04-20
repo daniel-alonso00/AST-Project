@@ -66,6 +66,8 @@
 } @else {
 
 <button id="shop-button" (click)="this.shopping=true">Volver a comprar</button>
+<button id="show-all-button" (click)="this.readCompras()">Ver todas las compras</button>
+
 <div id="compras-container">
     @for(compra of displayCompras; track compra._id) {
         <div class="box-compra">

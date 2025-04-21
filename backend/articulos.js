@@ -59,15 +59,17 @@ app.post('/inventario/:userId?', async(req, res) => {
     console.log(rol.rol);
 
     if(rol.rol == "administrador"){
-    const newJoya = new Inventario({
-      tipo: tipo,
-      nombre: nombre,
-      precio: precio,
-      cantidad: cantidad
-    })
+      const newJoya = new Inventario({
+        tipo: tipo,
+        nombre: nombre,
+        precio: precio,
+        cantidad: cantidad
+      })
 
-    newJoya.save()
-    res.status(201).json({ message: "Joya creada correctamente" });
+      newJoya.save()
+      res.status(201).json({ message: "Joya creada correctamente" });
+    }else{
+      res.json({message:"No puedes crear joyas, no eres administrador"});
     }
   } catch(error) {
     res.status(500).json({ message: "Error al crear la joya" });
@@ -91,15 +93,16 @@ app.put('/inventario/:userId?', async (req, res) => {
 
     console.log(userId);
     if(rol.rol == 'administrador'){
-    await Inventario.updateOne({ _id: _id }, {
-      tipo: tipo,
-      nombre: nombre,
-      precio: precio,
-      cantidad: cantidad
-    })
-  }
-
-    res.status(201).json({ message: "Joya actualizada correctamente" });
+      await Inventario.updateOne({ _id: _id }, {
+        tipo: tipo,
+        nombre: nombre,
+        precio: precio,
+        cantidad: cantidad
+      })
+      res.status(201).json({ message: "Joya actualizada correctamente" });
+    }else{
+      res.json({message:"No puedes actualizar las joyas, no eres administrador"});
+    }    
   } catch(error) {
     res.status(500).json({ message: "Error al crear la joya" });
   }
@@ -147,14 +150,17 @@ app.delete('/inventario/:userId?/:_id?', async (req, res) =>{
     const rol = await rolResponse.json();
     console.log(rol.rol);
     if(rol.rol == 'administrador'){
-    const item = await Inventario.findByIdAndDelete(_id);
-  
-    if (!item) {
-      return res.status(404).json({ message: "Articulo no encontrado" });
+      const item = await Inventario.findByIdAndDelete(_id);
+    
+      if (!item) {
+        return res.status(404).json({ message: "Articulo no encontrado" });
+      }
+      // Responder con éxito
+      res.status(200).json({ message: "Articulo eliminado correctamente" });
+      
+    }else{
+      res.json({message:"No puedes borrar articulos, no eres administrador"});
     }
-    // Responder con éxito
-    res.status(200).json({ message: "Articulo eliminado correctamente" });
-  }
 
   } catch (error) {
     res.status(500).json({ message: "Error al borrar el articulo" });

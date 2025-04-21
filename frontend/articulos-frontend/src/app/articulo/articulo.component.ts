@@ -72,12 +72,11 @@ export class ArticuloComponent {
 
     this.http.get<any>(this.apiURL + '/inventario/' + userId)
       .subscribe(data => {
+        alert(data.message);
         this.displayItems = data.joyas;
       },error => {
         alert(error.error.message)
       } );
-
-
   }
 
   // (PUT) Form para editar joya (botón con lápiz)
@@ -92,7 +91,7 @@ export class ArticuloComponent {
         cantidad: this.updateForm.value.cantidad ?? ''
       }).subscribe(data => {
         alert(data.message);
-        this.readJoyas();
+        //this.readJoyas(); //para que no se actulice la lista automaticamente
         this.showUpdateForm = 'hidden';
         this.updateForm.reset();
       }, error => {
@@ -117,7 +116,7 @@ export class ArticuloComponent {
         cantidad: this.addForm.value.cantidad ?? ''
       }).subscribe(data => {
         alert(data.message);
-        this.readJoyas();
+        //this.readJoyas();   //no se si esto quitarlo por que si la intenta crear un cliente esto no funcionaria
         this.showForm = 'hidden';
         this.addForm.reset();
       }, error => {
@@ -136,7 +135,7 @@ export class ArticuloComponent {
     this.http.delete<any>(this.apiURL + '/inventario/' + userId + '/' + _id)
       .subscribe(data => {
         alert(data.message);
-        this.readJoyas();
+        //this.readJoyas(); //que se actualice dandole al boton, no automaticamente
       }, error => {
         alert(error.error.message);
       })

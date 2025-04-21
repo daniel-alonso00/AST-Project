@@ -23,12 +23,26 @@ export class CompraComponent {
   displayCompras: any;
   displayItems: any;
   showForm = 'hidden';
+  updateFormInfo = {
+    _id: '',
+    idArticulo: '',
+    idCliente: '',
+    cantidad: '',
+    nombreCliente: '',
+    direccion: ''
+  };
+  showUpdateForm = 'hidden';
 
   articleId = '';
   articleName = '';
 
   compraForm = new FormGroup({
     cantidad: new FormControl('', [Validators.required, Validators.min(0)]),
+    nombreCliente: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    direccion: new FormControl('', [Validators.required, Validators.minLength(1)]),
+  })
+
+  updateForm = new FormGroup({
     nombreCliente: new FormControl('', [Validators.required, Validators.minLength(1)]),
     direccion: new FormControl('', [Validators.required, Validators.minLength(1)]),
   })
@@ -84,6 +98,26 @@ export class CompraComponent {
     }
   }
 
+  onUpdateSubmit() {
+    if (this.updateForm.valid) {
+      this.http.put<any>(this.apiURL + '/compra', {
+        idCompra: this.updateFormInfo._id,
+        userId: this.userIdForm.value.userId ?? '',
+        idCliente: this.updateFormInfo.idCliente,
+        nombreCliente: this.updateForm.value.nombreCliente ?? '',
+        direccion: this.updateForm.value.direccion ?? ''
+      }).subscribe(data => {
+        alert(data.message);
+        this.showUpdateForm = 'hidden';
+        this.showCompras();
+      }, error => {
+        alert(error.error.message);
+      })
+    } else {
+      alert("Debe introducir un nombre y dirección no nulos.")
+    }
+  }
+
   onSearchSubmit(){
     this.http.get<any>(this.articulosApiURL + '/getById/' + this.searchForm.value.id)
       .subscribe(data => {
@@ -97,7 +131,6 @@ export class CompraComponent {
     this.shopping = false;
     this.http.get<any>(this.apiURL + '/getComprasById/' + this.userIdForm.value.userId)
     .subscribe(data => {
-      console.log(data);
       this.displayCompras = data;
     }, error => {
       alert(error.error.message);
@@ -108,6 +141,12 @@ export class CompraComponent {
     this.showForm= 'visible';
     this.articleId = item._id;
     this.articleName = item.nombre;
+  }
+
+  //viewUpdateForm(idCompra: any, idArticulo: any, idCliente: any, cantidad: any, nombreCliente: any, direccion:any) {
+  viewUpdateForm(compra: any) {
+    this.updateFormInfo = compra;
+    this.showUpdateForm = 'visible';
   }
 
   filterSelect(tipo: number) {

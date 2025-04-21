@@ -74,7 +74,6 @@ app.get('/getComprasById/:id?', async (req, res) => {
     }
 
     let compras = await Compra.find({ idCliente: new mongoose.Types.ObjectId(userId) });
-    console.log(compras);
     res.status(200).json(compras);
   } catch {
     res.status(500).json({ message: "Error al obtener las compras." })
@@ -134,5 +133,43 @@ app.post('/compra', async (req, res) => {
     }
   } catch {
     res.status(500).json({ message: "Error al crear compra" })
+  }
+});
+
+// --- PUT ---
+
+// Actualizar compra (solo nombre y/o direccion)
+app.put('/compra', async (req, res) => {
+  try {
+    idCompra = req.body.idCompra
+    idUsuario = req.body.userId
+    idCliente = req.body.idCliente
+    nombreCliente = req.body.nombreCliente
+    direccion = req.body.direccion
+
+    // Comprovar validez del id del usuario
+    if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
+      res.status(400).json({ message: "ID del cliente inválido o no proporcionado" });
+      return
+    }
+    let rolResp = await fetch("http://localhost:8060/getRolById/" + idUsuario);
+    let rolJSON = await rolResp.json();
+    let rol = rolJSON.rol;
+    if (rol === undefined) {
+      res.status(500).json({ message: "Usuario inexistente. Proporcione un ID de usuario válido." });
+      return
+    } else if (rol != rolEnum.administrador && idCliente != idUsuario) {
+      res.status(500).json({ message: "Solo un administrador puede modificar la compra de otro usuario" });
+      return
+    }
+    
+    await Compra.updateOne({_id: idCompra}, {
+      nombreCliente: nombreCliente,
+      direccion: direccion
+    })
+
+    res.status(200).json({ message: "Compra actualizada correctamente" })
+  } catch {
+    res.status(500).json({ message: "Error al actualizar la compra" })
   }
 });

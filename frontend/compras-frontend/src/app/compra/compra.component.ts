@@ -23,6 +23,15 @@ export class CompraComponent {
   displayCompras: any;
   displayItems: any;
   showForm = 'hidden';
+  updateFormInfo = {
+    _id: '',
+    idArticulo: '',
+    idCliente: '',
+    cantidad: '',
+    nombreCliente: '',
+    direccion: ''
+  };
+  showUpdateForm = 'hidden';
 
   articleId = '';
   articleName = '';
@@ -31,6 +40,15 @@ export class CompraComponent {
     cantidad: new FormControl('', [Validators.required, Validators.min(0)]),
     nombreCliente: new FormControl('', [Validators.required, Validators.minLength(1)]),
     direccion: new FormControl('', [Validators.required, Validators.minLength(1)]),
+  })
+
+  updateForm = new FormGroup({
+    nombreCliente: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    direccion: new FormControl('', [Validators.required, Validators.minLength(1)]),
+  })
+
+  articleFilterForm = new FormGroup({
+    idArticulo: new FormControl('', [Validators.required, Validators.minLength(1)]),
   })
 
   userIdForm = new FormGroup({
@@ -56,10 +74,12 @@ export class CompraComponent {
   }
 
   readCompras() {
-    this.http.get(this.apiURL + "/compras")
+    this.http.get(this.apiURL + "/compras/" + this.userIdForm.value.userId)
     .subscribe(data => {
       this.displayCompras = data;
-    })
+    }, error => {
+      alert(error.error.message);
+    });
   }
 
   onSubmit() {
@@ -73,11 +93,32 @@ export class CompraComponent {
       }).subscribe(res => {
         alert(res.message);
         this.compraForm.reset();
+        this.readJoyas();
       }, error => {
         alert(error.error.message);
       })
     } else {
       alert("Debe introducir nombre, dirección y cantidad válidos.");
+    }
+  }
+
+  onUpdateSubmit() {
+    if (this.updateForm.valid) {
+      this.http.put<any>(this.apiURL + '/compra', {
+        idCompra: this.updateFormInfo._id,
+        userId: this.userIdForm.value.userId ?? '',
+        idCliente: this.updateFormInfo.idCliente,
+        nombreCliente: this.updateForm.value.nombreCliente ?? '',
+        direccion: this.updateForm.value.direccion ?? ''
+      }).subscribe(data => {
+        alert(data.message);
+        this.showUpdateForm = 'hidden';
+        this.showCompras();
+      }, error => {
+        alert(error.error.message);
+      })
+    } else {
+      alert("Debe introducir un nombre y dirección no nulos.")
     }
   }
 
@@ -90,10 +131,59 @@ export class CompraComponent {
       })
   }
 
+  getComprasByArtId() {
+    if (this.articleFilterForm.valid) {
+      this.http.get<any>(this.apiURL + '/getComprasByArtId/' + this.userIdForm.value.userId + '/' + this.articleFilterForm.value.idArticulo)
+      .subscribe(data => {
+        this.displayCompras = data.compras;
+        console.log(data);
+      }, error => {
+        alert(error.error.message);
+      });
+    } else {
+      alert("Introduce un ID de artículo no nulo");
+    }
+  }
+
+  deleteCompra(compra: any) {
+    this.http.delete<any>(this.apiURL+'/compra/'+this.userIdForm.value.userId+'/'+compra.idCliente+'/'+compra._id)
+    .subscribe(data => {
+      alert(data.message);
+      this.showCompras();
+      this.readJoyas();
+    }, error => {
+      alert(error.error.message);
+    });
+  }
+
+  showCompras() {
+    this.shopping = false;
+    this.showUpdateForm = 'hidden';
+    this.updateFormInfo = {
+      _id: '',
+      idArticulo: '',
+      idCliente: '',
+      cantidad: '',
+      nombreCliente: '',
+      direccion: ''
+    };
+    this.http.get<any>(this.apiURL + '/getComprasById/' + this.userIdForm.value.userId)
+    .subscribe(data => {
+      this.displayCompras = data;
+    }, error => {
+      alert(error.error.message);
+    });
+  }
+
   showAddForm(item: any) {
     this.showForm= 'visible';
     this.articleId = item._id;
     this.articleName = item.nombre;
+  }
+
+  viewUpdateForm(compra: any) {
+    this.updateFormInfo = compra;
+    this.showUpdateForm = 'visible';
   }
 
   filterSelect(tipo: number) {
@@ -120,10 +210,5 @@ export class CompraComponent {
       nombreCliente: this.compraForm.value.nombreCliente ?? '',
       direccion: this.compraForm.value.direccion ?? ''
     });
-  }
-
-  showCompras() {
-    this.shopping = false;
-    this.readCompras();
   }
 }

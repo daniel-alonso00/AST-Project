@@ -16,12 +16,12 @@
         <button (click)="this.filterSelect(this.tipoEnum.pendiente)">Pendientes</button>
         <button (click)="this.filterSelect(this.tipoEnum.pulsera)">Pulseras</button>
     </div>
-    <div id="showBuyMune">
+    <div id="showBuyMenu">
         <button (click)="this.showCompras()">Ver mis compras</button>
     </div>
 </div>
 
-<form [formGroup]="searchForm" (submit)="onSearchSubmit()">
+<form class="searchForm" [formGroup]="searchForm" (submit)="onSearchSubmit()">
     <input type="text" formControlName="id" placeholder="ID del artículo">
     <button type="submit">Buscar</button>
 </form>
@@ -65,17 +65,54 @@
 
 } @else {
 
-<button id="shop-button" (click)="this.shopping=true">Volver a comprar</button>
+<div id="meCanseDePensarNombres">
+    <button (click)="this.showCompras()">Refrescar mis compras</button>
+    <button (click)="this.readCompras()">Ver todas las compras</button>
+    <button id="shop-button" (click)="this.shopping=true">Volver a la página de compras</button>
+</div>
+
+<form class="searchForm" [formGroup]="articleFilterForm" (submit)="this.getComprasByArtId()">
+    <input type="text" placeholder="ID de articulo" formControlName="idArticulo">
+    <button type="submit">Filtrar</button>
+</form>
+
 <div id="compras-container">
-    @for(compra of displayCompras; track compra._id) {
+    @for(compra of this.displayCompras; track compra._id) {
         <div class="box-compra">
-            <p>ID árticulo: {{ compra.idArticulo }}</p>
+            <p>ID compra: {{compra._id}}</p>
             <p>ID cliente: {{ compra.idCliente }}</p>
+            <p>ID árticulo: {{ compra.idArticulo }}</p>
             <p>Cantidad: {{ compra.cantidad }}</p>
             <p>Nombre del cliente: {{ compra.nombreCliente }}</p>
             <p>Dirección de envío: {{ compra.direccion }}</p>
+            <div class="box-buttons-container">
+                <button id="elBotonBueno" type="button" (click)="this.viewUpdateForm(compra)">Editar Compra</button>
+                <button type="button" (click)="this.deleteCompra(compra)">Eliminar Compra</button>
+            </div>
         </div>
     }
 </div>
 
+<div id="updateForm-container" [style]="'visibility:' + this.showUpdateForm">
+    <form id="updateForm" [formGroup]="updateForm" (submit)="onUpdateSubmit()">
+        <h3>Editar Compra</h3>
+
+        <div id="formContentContainer">
+            <span>ID Compra:</span>
+            <input type="text" [value]="this.updateFormInfo._id" disabled>
+            <span>ID Cliente:</span>
+            <input type="text" [value]="this.updateFormInfo.idCliente" disabled>
+            <span>ID Articulo:</span>
+            <input type="text" [value]="this.updateFormInfo.idArticulo" disabled>
+            <span>Cantidad:</span>
+            <input type="text" [value]="this.updateFormInfo.cantidad" disabled>
+            <span>Nombre del Cliente:</span>
+            <input type="text" [value]="this.updateFormInfo.nombreCliente" formControlName="nombreCliente">
+            <span>Dirección de Envío:</span>
+            <input type="text" [value]="this.updateFormInfo.direccion" formControlName="direccion">
+            <input type="submit" name="submit" value="Confirmar">
+            <button type="button" (click)="this.showUpdateForm = 'hidden'">Cerrar</button>
+        </div>
+    </form>
+</div>
 }

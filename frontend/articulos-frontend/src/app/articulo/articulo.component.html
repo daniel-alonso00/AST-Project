@@ -13,6 +13,8 @@
   <input type="text" formControlName="userId" name="userId">
 </form>
 
+<button (click)="this.readJoyas()"></button><br>
+
 <form id="id-search-form" [formGroup]="searchForm" (submit)="onSearchSubmit()">
     <input type="text" formControlName="id" placeholder="Introduce ID para buscar">
     <button type="submit">Buscar</button>

@@ -12,7 +12,7 @@ const Inventario = require('./models/inventario')
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .then(() => {
-    console.log('MongoDB connected (from atriculos.js)')
+    console.log('MongoDB connected (from articulos.js)')
 
     // Escucha en puerto 8080
     app.listen(8080, () => {
@@ -26,22 +26,38 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + "/index.html")
 })
 
-app.get('/inventario', async (req, res) => {
+app.get('/inventario/:userId?', async (req, res) => {
   try {
+    userId = req.params.userId;
+
+    const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
+    const rol = await rolResponse.json();
+    console.log(rol.rol);
+
+    if (rol.rol == "administrador"){
     let joyas = await Inventario.find({});
-    res.json(joyas)
+    res.status(200).json({message: "Artículos encontrados", joyas});
+    } else {
+      res.json({message: "No eres administrador."});
+    }
   } catch {
     res.status(500).json({ message: 'Error al obtener la joya' });
   }
 });
 
 // --- POST ---
-app.post('/inventario', (req, res) => {
+app.post('/inventario/:userId?', async(req, res) => {
   try {
     tipo = req.body.tipo;
     nombre = req.body.nombre;
     precio = req.body.precio;
     cantidad = req.body.cantidad;
+    userId = req.params.userId;
+
+    const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
+    const rol = await rolResponse.json();
+    console.log(rol.rol);
+
 
     const newJoya = new Inventario({
       tipo: tipo,
@@ -52,27 +68,35 @@ app.post('/inventario', (req, res) => {
 
     newJoya.save()
     res.status(201).json({ message: "Joya creada correctamente" });
-
+  
   } catch(error) {
     res.status(500).json({ message: "Error al crear la joya" });
   }
 })
 
 // --- PUT ---
-app.put('/inventario', async (req, res) => {
+app.put('/inventario/:userId?', async (req, res) => {
   try {
     _id = req.body._id;
     tipo = req.body.tipo;
     nombre = req.body.nombre;
     precio = req.body.precio;
     cantidad = req.body.cantidad;
+    userId = req.params.userId;
 
+    const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
+    const rol = await rolResponse.json();
+    console.log(rol.rol);
+
+    console.log(userId);
+    if(rol.rol == 'administrador'){
     await Inventario.updateOne({ _id: _id }, {
       tipo: tipo,
       nombre: nombre,
       precio: precio,
       cantidad: cantidad
     })
+  }
 
     res.status(201).json({ message: "Joya actualizada correctamente" });
   } catch(error) {
@@ -113,18 +137,23 @@ app.get('/getTipo/:tipo', async (req, res) => {
 });
 
 // --- DELETE ---
-app.delete('/inventario/:_id', async (req, res) =>{
+app.delete('/inventario/:userId?', async (req, res) =>{
   try {
     const _id = req.params._id;
+    userId = req.params.userId;
 
+    const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
+    const rol = await rolResponse.json();
+    console.log(rol.rol);
+    if(rol.rol == 'administrador'){
     const item = await Inventario.findByIdAndDelete(_id);
-    
-
+  
     if (!item) {
       return res.status(404).json({ message: "Articulo no encontrado" });
     }
     // Responder con éxito
     res.status(200).json({ message: "Articulo eliminado correctamente" });
+  }
 
   } catch (error) {
     res.status(500).json({ message: "Error al borrar el articulo" });

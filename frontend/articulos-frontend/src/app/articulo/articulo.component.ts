@@ -60,23 +60,29 @@ export class ArticuloComponent {
 
   // Este método se llama al cargar la página
   ngOnInit() {
-    this.readJoyas();
+
   }
 
   // --- Métodos CRUD (get, put, post, delete) ---
 
   // (GET) Leer todas las joyas del inventario
   readJoyas() {
-    this.http.get(this.apiURL + '/inventario')
+    const userId = this.userIdForm.value.userId;
+    this.http.get(this.apiURL + '/inventario/' + userId)
       .subscribe(data => {
         this.displayItems = data;
-      });
+      },error => {
+        alert(error.error.message)
+      } );
+
+
   }
 
   // (PUT) Form para editar joya (botón con lápiz)
   onUpdateSubmit() {
     if (this.updateForm.valid){
-      this.http.put<any>(this.apiURL + '/inventario', {
+      const userId = this.userIdForm.value.userId; 
+      this.http.put<any>(this.apiURL + '/inventario/' + userId, {
         _id: this.updatingId,
         tipo: this.updatingTipo,
         nombre: this.updateForm.value.nombre ?? '',
@@ -101,7 +107,8 @@ export class ArticuloComponent {
   onSubmit() {
     console.log(this.userIdForm.value.userId);
     if(this.addForm.valid){
-      this.http.post<any>(this.apiURL + '/inventario', {
+      const userId = this.userIdForm.value.userId;
+      this.http.post<any>(this.apiURL + '/inventario/' + userId, {
         tipo: this.creatingTipo,
         nombre: this.addForm.value.nombre ?? '',
         precio: this.addForm.value.precio ?? '',
@@ -123,7 +130,8 @@ export class ArticuloComponent {
 
   // (DELETE) Eliminar una joya (botón con X)
   eliminarItem(_id: String){
-    this.http.delete<any>(this.apiURL + '/inventario/' + _id )
+    const userId = this.userIdForm.value.userId;
+    this.http.delete<any>(this.apiURL + '/inventario/' + _id + userId)
       .subscribe(data => {
         alert(data.message);
         this.readJoyas();

@@ -72,7 +72,7 @@ app.delete('/usuario/:_id', async (req,res) => {
   }
 })
 
-// Filtrado por rol
+// Devuelve el rol segun el ID
 app.get('/getRolById/:_id',async (req,res) =>{
   try {
     const _id = req.params._id;
@@ -88,4 +88,22 @@ app.get('/getRolById/:_id',async (req,res) =>{
   }
 })
 
-//app.get('/getUserByTipo/:')
+//Filtrado por tipo de usuario
+app.get('/getUserByTipo/:tipoUsuario?', async(req,res) =>{
+  try {
+    const tipoUsuario = req.params.tipoUsuario;
+    
+    if(tipoUsuario == "todos"){
+      let usuarios = await Usuario.find({});
+      res.status(200).json({message :"Usuarios encontrados",usuarios});
+
+    }else{
+      let usuarios = await Usuario.find({permisos : tipoUsuario});
+      res.status(200).json({message :"Usuarios encontrados",usuarios});
+    }   
+
+  } catch (error) {
+    console.log("error el la api");
+    res.status(500).json({message:"Error al filtrar por rol"});
+  }
+})

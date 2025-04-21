@@ -68,9 +68,11 @@ export class ArticuloComponent {
   // (GET) Leer todas las joyas del inventario
   readJoyas() {
     const userId = this.userIdForm.value.userId;
-    this.http.get(this.apiURL + '/inventario/' + userId)
+    console.log('UserID:', userId);
+
+    this.http.get<any>(this.apiURL + '/inventario/' + userId)
       .subscribe(data => {
-        this.displayItems = data;
+        this.displayItems = data.joyas;
       },error => {
         alert(error.error.message)
       } );
@@ -131,7 +133,7 @@ export class ArticuloComponent {
   // (DELETE) Eliminar una joya (botón con X)
   eliminarItem(_id: String){
     const userId = this.userIdForm.value.userId;
-    this.http.delete<any>(this.apiURL + '/inventario/' + _id + userId)
+    this.http.delete<any>(this.apiURL + '/inventario/' + userId + '/' + _id)
       .subscribe(data => {
         alert(data.message);
         this.readJoyas();

@@ -58,7 +58,7 @@ app.post('/inventario/:userId?', async(req, res) => {
     const rol = await rolResponse.json();
     console.log(rol.rol);
 
-
+    if(rol.rol == "administrador"){
     const newJoya = new Inventario({
       tipo: tipo,
       nombre: nombre,
@@ -68,10 +68,11 @@ app.post('/inventario/:userId?', async(req, res) => {
 
     newJoya.save()
     res.status(201).json({ message: "Joya creada correctamente" });
-  
+    }
   } catch(error) {
     res.status(500).json({ message: "Error al crear la joya" });
   }
+
 })
 
 // --- PUT ---
@@ -137,7 +138,7 @@ app.get('/getTipo/:tipo', async (req, res) => {
 });
 
 // --- DELETE ---
-app.delete('/inventario/:userId?', async (req, res) =>{
+app.delete('/inventario/:userId?/:_id?', async (req, res) =>{
   try {
     const _id = req.params._id;
     userId = req.params.userId;

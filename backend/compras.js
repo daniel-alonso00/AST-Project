@@ -27,9 +27,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .catch(err => console.log('Error connecting MongoBD: ', err));
 
 // --- GET ---  
-app.get('/', async (req,res) => {
-  res.send("Pagina de compras")
-})
 
 // Obtener todas las compras
 app.get('/compras/:id?', async (req, res) => {
@@ -80,6 +77,36 @@ app.get('/getComprasById/:id?', async (req, res) => {
   }
 });
 
+// Obtener todas las compras de un artículo concreto
+app.get('/getComprasByArtId/:idUsuario?/:idArticulo?', async (req, res) => {
+  try {
+    idUsuario = req.params.idUsuario;
+    idArticulo = req.params.idArticulo;
+    
+    // Comprovar validez del id del usuario
+    if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
+      res.status(400).json({ message: "ID del cliente inválido o no proporcionado" });
+      return
+    }
+    let rolResp = await fetch("http://localhost:8060/getRolById/" + idUsuario);
+    let rolJSON = await rolResp.json();
+    let rol = rolJSON.rol;
+    if (rol === undefined) {
+      res.status(500).json({ message: "Usuario inexistente. Proporcione un ID de usuario válido." });
+      return
+    } else if (rol != rolEnum.administrador) {
+      res.status(500).json({ message: "Solo un administrador puede filtrar búsquedas por ID de artículo." });
+      return
+    }
+    
+    let compras = await Compra.find({ idArticulo: idArticulo });
+    res.status(200).json({ compras });
+    
+  } catch {
+    res.status(500).json({ message: "Error al obtener compras" });
+  }
+});
+
 // --- POST ---
 
 // Crear una compra
@@ -125,7 +152,6 @@ app.post('/compra', async (req, res) => {
           'Content-type': 'application/json; charset=UTF-8'
         }
       })
-      console.log("hey");
 
       res.status(200).json({ message: "Compra creada correctamente.\nID de la compra: " + newCompra._id })
     } else {
@@ -171,5 +197,54 @@ app.put('/compra', async (req, res) => {
     res.status(200).json({ message: "Compra actualizada correctamente" })
   } catch {
     res.status(500).json({ message: "Error al actualizar la compra" })
+  }
+});
+
+// --- DELETE ---
+
+// Eliminar una compra
+app.delete('/compra/:idUsuario?/:idCliente?/:idCompra?', async(req, res) => {
+  try {
+    idUsuario = req.params.idUsuario;
+    idCliente = req.params.idCliente;
+    idCompra = req.params.idCompra;
+
+    // Comprovar validez del id del usuario
+    if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
+      res.status(400).json({ message: "ID del cliente inválido o no proporcionado" });
+      return
+    }
+    let rolResp = await fetch("http://localhost:8060/getRolById/" + idUsuario);
+    let rolJSON = await rolResp.json();
+    let rol = rolJSON.rol;
+    if (rol === undefined) {
+      res.status(500).json({ message: "Usuario inexistente. Proporcione un ID de usuario válido." });
+      return
+    } else if (rol != rolEnum.administrador && idCliente != idUsuario) {
+      res.status(500).json({ message: "Solo un administrador puede modificar la compra de otro usuario" });
+      return
+    }
+
+    let compra_data = await Compra.findOne({_id: idCompra});
+    console.log(compra_data);
+    let articuloResp = await fetch('http://localhost:8080/getById/' + compra_data.idArticulo);
+    let articulo = await articuloResp.json();
+
+    articulo.joya.cantidad += compra_data.cantidad;
+    console.log('AAA')
+    await fetch('http://localhost:8080/inventario', {
+      method: 'PUT',
+      body: JSON.stringify(articulo.joya),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    })
+
+    console.log('BBB')
+    
+    await Compra.deleteOne({_id: idCompra});
+    res.status(200).json({ message: "Compra eliminada correctamente" });
+  } catch {
+    res.status(500).json({ message: "Error al eliminar la compra" });
   }
 });

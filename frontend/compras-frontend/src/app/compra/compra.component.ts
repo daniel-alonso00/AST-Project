@@ -47,6 +47,10 @@ export class CompraComponent {
     direccion: new FormControl('', [Validators.required, Validators.minLength(1)]),
   })
 
+  articleFilterForm = new FormGroup({
+    idArticulo: new FormControl('', [Validators.required, Validators.minLength(1)]),
+  })
+
   userIdForm = new FormGroup({
     userId: new FormControl('')
   })
@@ -127,8 +131,42 @@ export class CompraComponent {
       })
   }
 
+  getComprasByArtId() {
+    if (this.articleFilterForm.valid) {
+      this.http.get<any>(this.apiURL + '/getComprasByArtId/' + this.userIdForm.value.userId + '/' + this.articleFilterForm.value.idArticulo)
+      .subscribe(data => {
+        this.displayCompras = data.compras;
+        console.log(data);
+      }, error => {
+        alert(error.error.message);
+      });
+    } else {
+      alert("Introduce un ID de artículo no nulo");
+    }
+  }
+
+  deleteCompra(compra: any) {
+    this.http.delete<any>(this.apiURL+'/compra/'+this.userIdForm.value.userId+'/'+compra.idCliente+'/'+compra._id)
+    .subscribe(data => {
+      alert(data.message);
+      this.showCompras();
+      this.readJoyas();
+    }, error => {
+      alert(error.error.message);
+    });
+  }
+
   showCompras() {
     this.shopping = false;
+    this.showUpdateForm = 'hidden';
+    this.updateFormInfo = {
+      _id: '',
+      idArticulo: '',
+      idCliente: '',
+      cantidad: '',
+      nombreCliente: '',
+      direccion: ''
+    };
     this.http.get<any>(this.apiURL + '/getComprasById/' + this.userIdForm.value.userId)
     .subscribe(data => {
       this.displayCompras = data;
@@ -143,7 +181,6 @@ export class CompraComponent {
     this.articleName = item.nombre;
   }
 
-  //viewUpdateForm(idCompra: any, idArticulo: any, idCliente: any, cantidad: any, nombreCliente: any, direccion:any) {
   viewUpdateForm(compra: any) {
     this.updateFormInfo = compra;
     this.showUpdateForm = 'visible';

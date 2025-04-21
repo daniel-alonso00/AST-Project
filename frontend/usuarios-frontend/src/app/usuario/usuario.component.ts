@@ -63,7 +63,7 @@ export class UsuarioComponent {
       })
   }
 
-  // Borrar usuario introducido en la caja dandole al boton
+  // Borrar usuario introducido en la caja dandole al boton de borrar
   deleteUserFromButton(){
     const id = this.boxIdUser.value.userId;
     this.http.delete<any>(this.apiURL + '/usuario/' + id)
@@ -87,7 +87,8 @@ export class UsuarioComponent {
 
   // Funcion para el filtrado de los tipos de usuarios
   filtradoUsers(tipoUsuario: String){
-    this.http.get<any>(this.apiURL + '/getUserByTipo/' + tipoUsuario)
+    const id = this.boxIdUser.value.userId;
+    this.http.get<any>(this.apiURL + '/getUserByTipo/' + tipoUsuario + '/' + id)
       .subscribe(data => {
         alert(data.message);
         this.displayItems = data.usuarios; //Mostramos todos los usuarios segun el tipo seleccionado

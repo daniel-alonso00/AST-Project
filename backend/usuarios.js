@@ -73,9 +73,14 @@ app.delete('/usuario/:_id', async (req,res) => {
 })
 
 // Devuelve el rol segun el ID
-app.get('/getRolById/:_id',async (req,res) =>{
+app.get('/getRolById/:_id?',async (req,res) =>{
   try {
     const _id = req.params._id;
+
+    if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+      res.status(400).json({ message: "ID del cliente inválido o no proporcionado" });
+      return
+    }
 
     let usuario = await Usuario.findById(_id);
 
@@ -89,18 +94,34 @@ app.get('/getRolById/:_id',async (req,res) =>{
 })
 
 //Filtrado por tipo de usuario
-app.get('/getUserByTipo/:tipoUsuario?', async(req,res) =>{
+app.get('/getUserByTipo/:tipoUsuario?/:id?', async(req,res) =>{
+  //const rolResponse = await fetch(`/getRolById/${userId}`);
   try {
     const tipoUsuario = req.params.tipoUsuario;
-    
-    if(tipoUsuario == "todos"){
-      let usuarios = await Usuario.find({});
-      res.status(200).json({message :"Usuarios encontrados",usuarios});
+    const userId = req.params.id;
 
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      res.status(400).json({ message: "ID del cliente inválido o no proporcionado" });
+      return
+    }
+    
+    const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
+    const rol = await rolResponse.json();
+    console.log(rol.rol);
+    
+    if(rol.rol == "administrador"){
+      if(tipoUsuario == "todos"){
+        let usuarios = await Usuario.find({});
+        res.status(200).json({message :"Usuarios encontrados",usuarios});
+  
+      }else{
+        let usuarios = await Usuario.find({permisos : tipoUsuario});
+        res.status(200).json({message :"Usuarios encontrados",usuarios});
+      } 
     }else{
-      let usuarios = await Usuario.find({permisos : tipoUsuario});
-      res.status(200).json({message :"Usuarios encontrados",usuarios});
-    }   
+      res.json({message: "No eres administrador"});
+    }
+      
 
   } catch (error) {
     console.log("error el la api");

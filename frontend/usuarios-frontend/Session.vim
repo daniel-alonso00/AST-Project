@@ -14,24 +14,13 @@ else
   set shortmess=aoO
 endif
 badd +1 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.spec.ts
-badd +0 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
+badd +79 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
+badd +49 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.html
 argglobal
 %argdel
-edit ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
+edit ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.html
 argglobal
-balt ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.spec.ts
+balt ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -55,8 +44,6 @@ endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
 let &shortmess = s:shortmess_save
-let &winminheight = s:save_winminheight
-let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

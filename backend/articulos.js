@@ -7,7 +7,9 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
 
-const Inventario = require('./models/inventario')
+const Inventario = require('./models/inventario');
+const Compra = require('./models/compra');
+const Usuario = require('./models/usuario');
 
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
@@ -32,11 +34,10 @@ app.get('/inventario/:userId?', async (req, res) => {
 
     const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
     const rol = await rolResponse.json();
-    console.log(rol.rol);
 
     if (rol.rol == "administrador"){
-    let joyas = await Inventario.find({});
-    res.status(200).json({message: "Artículos encontrados", joyas});
+      let joyas = await Inventario.find({});
+      res.status(200).json({message: "Artículos encontrados", joyas});
     } else {
       res.json({message: "No eres administrador."});
     }
@@ -56,7 +57,6 @@ app.post('/inventario/:userId?', async(req, res) => {
 
     const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
     const rol = await rolResponse.json();
-    console.log(rol.rol);
 
     if(rol.rol == "administrador"){
       const newJoya = new Inventario({
@@ -89,9 +89,7 @@ app.put('/inventario/:userId?', async (req, res) => {
 
     const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
     const rol = await rolResponse.json();
-    console.log(rol.rol);
 
-    console.log(userId);
     if(rol.rol == 'administrador'){
       await Inventario.updateOne({ _id: _id }, {
         tipo: tipo,
@@ -167,7 +165,6 @@ app.delete('/inventario/:userId?/:_id?', async (req, res) =>{
 
     const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
     const rol = await rolResponse.json();
-    console.log(rol.rol);
     if(rol.rol == 'administrador'){
       const item = await Inventario.findByIdAndDelete(_id);
     

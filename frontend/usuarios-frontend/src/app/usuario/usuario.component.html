@@ -11,7 +11,7 @@
 <div id="opciones">
     <input type="button" id="crearUsuario" value="Crear Usuario" (click)="this.showFormCreate = 'visible'">
     <input type="button" value="Eliminar Usuario" (click)="this.deleteUserFromButton()">
-    
+
     <div id="listarUsuarios">
         <label for="menu-busqueda">Listar usuarios </label>
         <select name="listarUsuarios" id="menu-busqueda" #seleccionUsuarios>
@@ -46,7 +46,6 @@
 <div class="box-container">
     @for (item of displayItems; track item._id) {
         <div class="box-item">
-            <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
             <p>Nombre: {{item.nombre}}</p>
             <p>Rol: {{item.permisos}}</p>
             <p>ID: {{item._id}}</p>

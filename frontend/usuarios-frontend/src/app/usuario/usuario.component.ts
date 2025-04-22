@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule} from '@angular/common/http';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { error } from 'node:console';
-
 
 @Component({
   selector: 'app-usuario',
@@ -66,23 +64,17 @@ export class UsuarioComponent {
   // Borrar usuario introducido en la caja dandole al boton de borrar
   deleteUserFromButton(){
     const id = this.boxIdUser.value.userId;
-    this.http.delete<any>(this.apiURL + '/usuario/' + id)
-      .subscribe(data => {
-        alert(data.message);
-        this.displayItems;  //volvemos a mostrar la misma lista de usuarios que antes
-      },error => {
-        alert(error.error.message);
-      })
-  }
-  // (DELETE) Eliminar una joya (botón con X)
-  eliminarItem(_id: String){
-    this.http.delete<any>(this.apiURL + '/usuario/' + _id )
-      .subscribe(data => {
-        alert(data.message);
-        this.displayItems;  //volvemos a mostrar la misma lista de usuarios que antes
-      }, error => {
-        alert(error.error.message);
-      })
+    if (id) {
+      this.http.delete<any>(this.apiURL + '/usuario/' + id)
+        .subscribe(data => {
+          alert(data.message);
+          this.displayItems;  //volvemos a mostrar la misma lista de usuarios que antes
+        },error => {
+          alert(error.error.message);
+        })
+    } else {
+      alert("Introduce un ID de usuario");
+    }
   }
 
   // Funcion para el filtrado de los tipos de usuarios

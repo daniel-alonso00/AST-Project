@@ -7,7 +7,9 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
 
-const Compra = require('./models/compra')
+const Inventario = require('./models/inventario');
+const Compra = require('./models/compra');
+const Usuario = require('./models/usuario');
 
 const rolEnum = {
   administrador: "administrador",
@@ -28,29 +30,29 @@ mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
 
 // --- GET ---  
 
-// Obtener todas las compras
-app.get('/compras/:id?', async (req, res) => {
+// Otener joyas del inventario
+app.get('/inventario/:idUsuario?', async (req, res) => {
   try {
-    // Comprovar validez del id del cliente
-    userId = req.params.id;
-    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+    let idUsuario = req.params.idUsuario;
+    
+    if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
       return res.status(500).json({ message: "ID de usuario inválido o no proporcionado." });
     }
-    let rolResp = await fetch("http://localhost:8060/getRolById/" + userId);
+    let rolResp = await fetch("http://localhost:8060/getRolById/" + idUsuario);
     let rolJSON = await rolResp.json();
     let rol = rolJSON.rol;
     if (rol === undefined) {
       res.status(500).json({ message: "Cliente inexistente. Proporcione un ID de usuario válido." });
       return
-    } else if (rol == rolEnum.cliente) {
-      res.status(500).json({ message: "Esta operación solo puede ser realizada por administradores." });
+    } else if (rol != rolEnum.cliente) {
+      res.status(500).json({ message: "Servicio solo disponible para clientes" });
       return
     }
-
-    let compras = await Compra.find({});
-    res.status(200).json(compras)
+    
+    let joyas = await Inventario.find({});
+    res.status(200).json(joyas);
   } catch {
-    res.status(500).json({ message: 'Error al obtener las compras' });
+    alert("Error al obtener los artículos");
   }
 });
 
@@ -58,7 +60,7 @@ app.get('/compras/:id?', async (req, res) => {
 app.get('/getComprasById/:id?', async (req, res) => {
   try {
     // Comprovar validez del id del cliente
-    userId = req.params.id;
+    let userId = req.params.id;
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(500).json({ message: "ID de usuario inválido o no proporcionado." });
     }
@@ -67,6 +69,9 @@ app.get('/getComprasById/:id?', async (req, res) => {
     let rol = rolJSON.rol;
     if (rol === undefined) {
       res.status(500).json({ message: "Cliente inexistente. Proporcione un ID de usuario válido." });
+      return
+    } else if (rol != rolEnum.cliente) {
+      res.status(500).json({ message: "Servicio solo disponible para clientes" });
       return
     }
 
@@ -80,8 +85,8 @@ app.get('/getComprasById/:id?', async (req, res) => {
 // Obtener todas las compras de un artículo concreto
 app.get('/getComprasByArtId/:idUsuario?/:idArticulo?', async (req, res) => {
   try {
-    idUsuario = req.params.idUsuario;
-    idArticulo = req.params.idArticulo;
+    let idUsuario = req.params.idUsuario;
+    let idArticulo = req.params.idArticulo;
     
     // Comprovar validez del id del usuario
     if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
@@ -94,16 +99,72 @@ app.get('/getComprasByArtId/:idUsuario?/:idArticulo?', async (req, res) => {
     if (rol === undefined) {
       res.status(500).json({ message: "Usuario inexistente. Proporcione un ID de usuario válido." });
       return
-    } else if (rol != rolEnum.administrador) {
-      res.status(500).json({ message: "Solo un administrador puede filtrar búsquedas por ID de artículo." });
+    } else if (rol != rolEnum.cliente) {
+      res.status(500).json({ message: "Servicio solo disponible para clientes" });
       return
     }
-    
-    let compras = await Compra.find({ idArticulo: idArticulo });
-    res.status(200).json({ compras });
-    
+
+    let compras = await Compra.find({ idCliente: idUsuario, idArticulo: idArticulo });
+    res.status(200).json(compras);
   } catch {
     res.status(500).json({ message: "Error al obtener compras" });
+  }
+});
+
+// Filtrado de inventario por id de articulo
+app.get('/getJoyaById/:idUsuario?/:idArticulo?', async (req, res) => {
+  try {
+    let idUsuario = req.params.idUsuario;
+    let idArticulo = req.params.idArticulo;
+
+    // Comprovar validez del id del usuario
+    if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
+      res.status(400).json({ message: "ID del cliente inválido o no proporcionado" });
+      return
+    }
+    let rolResp = await fetch("http://localhost:8060/getRolById/" + idUsuario);
+    let rolJSON = await rolResp.json();
+    let rol = rolJSON.rol;
+    if (rol === undefined) {
+      res.status(500).json({ message: "Usuario inexistente. Proporcione un ID de usuario válido." });
+      return
+    } else if (rol != rolEnum.cliente) {
+      res.status(500).json({ message: "Servicio solo disponible para clientes" });
+      return 
+    }
+
+    let joya = await Inventario.findOne({_id: idArticulo});
+    res.status(200).json(joya);
+  } catch {
+    res.status(500).json({ message: "Error al obtener la joya" })
+  }
+});
+
+app.get('/getInventarioTipo/:idUsuario?/:tipo?', async (req, res) => {
+  try {
+    let idUsuario = req.params.idUsuario;
+    let tipo = req.params.tipo;
+
+    // Comprovar validez del id del usuario
+    if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
+      res.status(400).json({ message: "ID del cliente inválido o no proporcionado" });
+      return
+    }
+    let rolResp = await fetch("http://localhost:8060/getRolById/" + idUsuario);
+    let rolJSON = await rolResp.json();
+    let rol = rolJSON.rol;
+    if (rol === undefined) {
+      res.status(500).json({ message: "Usuario inexistente. Proporcione un ID de usuario válido." });
+      return
+    } else if (rol != rolEnum.cliente) {
+      res.status(500).json({ message: "Servicio solo disponible para clientes" });
+      return
+    }
+
+    let joyas = await Inventario.find({tipo: parseInt(tipo)});
+    res.status(200).json(joyas)
+  } catch {
+    res.status(500).json({message: "Error al obtener las joyas"});
   }
 });
 
@@ -129,12 +190,14 @@ app.post('/compra', async (req, res) => {
     if (rol === undefined) {
       res.status(500).json({ message: "Cliente inexistente. Proporcione un ID de cliente válido." });
       return
+    } else if (rol != rolEnum.cliente) {
+      res.status(500).json({ message: "Servicio solo disponible para clientes" });
+      return
     }
 
-    let articuloSolicitado = await fetch("http://localhost:8080/getById/" + idArticulo);
-    let articuloJSON = await articuloSolicitado.json();
+    let articuloSolicitado = await Inventario.findOne({_id: idArticulo})
 
-    if (articuloJSON.joya.cantidad >= cantidad) {
+    if (articuloSolicitado.cantidad >= cantidad) {
       let newCompra = new Compra({
         idArticulo: idArticulo,
         idCliente: idCliente,
@@ -144,14 +207,8 @@ app.post('/compra', async (req, res) => {
       });
       newCompra.save();
 
-      articuloJSON.joya.cantidad -= cantidad;
-      await fetch('http://localhost:8080/inventario', {
-        method: 'PUT',
-        body: JSON.stringify(articuloJSON.joya),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8'
-        }
-      })
+      articuloSolicitado.cantidad -= cantidad;
+      await Inventario.updateOne({_id: idArticulo}, articuloSolicitado);
 
       res.status(200).json({ message: "Compra creada correctamente.\nID de la compra: " + newCompra._id })
     } else {
@@ -186,6 +243,9 @@ app.put('/compra', async (req, res) => {
       return
     } else if (rol != rolEnum.administrador && idCliente != idUsuario) {
       res.status(500).json({ message: "Solo un administrador puede modificar la compra de otro usuario" });
+      return
+    } else if (rol != rolEnum.cliente) {
+      res.status(500).json({ message: "Servicio solo disponible para clientes" });
       return
     }
     
@@ -223,24 +283,16 @@ app.delete('/compra/:idUsuario?/:idCliente?/:idCompra?', async(req, res) => {
     } else if (rol != rolEnum.administrador && idCliente != idUsuario) {
       res.status(500).json({ message: "Solo un administrador puede modificar la compra de otro usuario" });
       return
+    } else if (rol != rolEnum.cliente) {
+      res.status(500).json({ message: "Servicio solo disponible para clientes" });
+      return
     }
 
     let compra_data = await Compra.findOne({_id: idCompra});
-    console.log(compra_data);
-    let articuloResp = await fetch('http://localhost:8080/getById/' + compra_data.idArticulo);
-    let articulo = await articuloResp.json();
+    let articulo = await Inventario.findOne({_id: idArticulo});
 
-    articulo.joya.cantidad += compra_data.cantidad;
-    console.log('AAA')
-    await fetch('http://localhost:8080/inventario', {
-      method: 'PUT',
-      body: JSON.stringify(articulo.joya),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8'
-      }
-    })
-
-    console.log('BBB')
+    articulo.cantidad += compra_data.cantidad;
+    await Inventario.updateOne({_id: idArticulo}, articulo);
     
     await Compra.deleteOne({_id: idCompra});
     res.status(200).json({ message: "Compra eliminada correctamente" });

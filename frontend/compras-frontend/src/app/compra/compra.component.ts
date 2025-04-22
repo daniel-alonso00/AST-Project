@@ -9,7 +9,6 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './compra.component.css'
 })
 export class CompraComponent {
-  articulosApiURL = 'http://localhost:8080';
   apiURL = 'http://localhost:8070';
 
   tipoEnum = {
@@ -20,8 +19,8 @@ export class CompraComponent {
   }
 
   shopping: boolean = true;
-  displayCompras: any;
-  displayItems: any;
+  displayCompras: any = [];
+  displayItems: any = [];
   showForm = 'hidden';
   updateFormInfo = {
     _id: '',
@@ -63,23 +62,19 @@ export class CompraComponent {
 
   ngOnInit() {
     this.shopping = true;
-    this.readJoyas();
   }
 
   readJoyas() {
-    this.http.get(this.articulosApiURL + '/inventario')
-    .subscribe(data => {
-      this.displayItems = data;
-    });
-  }
-
-  readCompras() {
-    this.http.get(this.apiURL + "/compras/" + this.userIdForm.value.userId)
-    .subscribe(data => {
-      this.displayCompras = data;
-    }, error => {
-      alert(error.error.message);
-    });
+    if (this.userIdForm.value.userId) {
+      this.http.get(this.apiURL + '/inventario/' + this.userIdForm.value.userId)
+      .subscribe(data => {
+        this.displayItems = data;
+      }, error => {
+        alert(error.error.message);
+      });
+    } else {
+      alert("Introduce un ID de usuario.");
+    }
   }
 
   onSubmit() {
@@ -123,25 +118,29 @@ export class CompraComponent {
   }
 
   onSearchSubmit(){
-    this.http.get<any>(this.articulosApiURL + '/getById/' + this.searchForm.value.id)
+    if (this.userIdForm.value.userId) {
+      this.http.get<any>(this.apiURL + '/getJoyaById/' + this.userIdForm.value.userId + '/' + this.searchForm.value.id)
       .subscribe(data => {
-        this.displayItems = [data.joya];
+        this.displayItems = [data];
       }, error => {
         alert(error.error.message);
       })
+    } else {
+      alert("Introduce un ID de usuario");
+    }
   }
 
   getComprasByArtId() {
-    if (this.articleFilterForm.valid) {
+    if (this.articleFilterForm.valid && this.userIdForm.value.userId) {
       this.http.get<any>(this.apiURL + '/getComprasByArtId/' + this.userIdForm.value.userId + '/' + this.articleFilterForm.value.idArticulo)
       .subscribe(data => {
-        this.displayCompras = data.compras;
+        this.displayCompras = data;
         console.log(data);
       }, error => {
         alert(error.error.message);
       });
     } else {
-      alert("Introduce un ID de artículo no nulo");
+      alert("Introduce un ID de artículo y un ID de usuario no nulos");
     }
   }
 
@@ -191,15 +190,19 @@ export class CompraComponent {
   }
 
   filterSelect(tipo: number) {
-    if (tipo == 4) {
-      this.readJoyas();
+    if (this.userIdForm.value.userId) {
+      if (tipo == 4) {
+        this.readJoyas();
+      } else {
+        this.http.get<any>(this.apiURL + '/getInventarioTipo/' + this.userIdForm.value.userId + '/' + tipo)
+          .subscribe(data => {
+            this.displayItems = data;
+          }, error => {
+            alert(error.error.message)
+          })
+      }
     } else {
-      this.http.get<any>(this.articulosApiURL + '/getTipo/' + tipo)
-        .subscribe(data => {
-          this.displayItems = data.joyas;
-        }, error => {
-          alert(error.error.message)
-        })
+      alert("Introduce un ID de usuario");
     }
   }
 

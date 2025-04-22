@@ -7,16 +7,14 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(cors())
 
-const Usuario = require('./models/usuario')
-const { type } = require("os")
-const { measureMemory } = require("vm")
+const Usuario = require('./models/usuario');
 
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})
   .then(() => {
     console.log('MongoDB connected (from usuario.js)')
 
-    // Escucha en puerto 8080
+    // Escucha en puerto 8060
     app.listen(8060, () => {
       console.log("Localhost listening on 8060.")
     })
@@ -37,7 +35,7 @@ app.get('/usuario', async (req, res) => {
   }
 });
 
-// --POST--
+// --- POST ---
 app.post('/usuario', async (req,res) => {
   try {
     permisos = req.body.rolUsuario;
@@ -55,7 +53,7 @@ app.post('/usuario', async (req,res) => {
   }
 })
 
-// --DELETE--
+// --- DELETE ---
 app.delete('/usuario/:_id', async (req,res) => {
   try {
     const _id = req.params._id;
@@ -107,7 +105,6 @@ app.get('/getUserByTipo/:tipoUsuario?/:id?', async(req,res) =>{
     
     const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
     const rol = await rolResponse.json();
-    console.log(rol.rol);
     
     if(rol.rol == "administrador"){
       if(tipoUsuario == "todos"){
@@ -124,7 +121,6 @@ app.get('/getUserByTipo/:tipoUsuario?/:id?', async(req,res) =>{
       
 
   } catch (error) {
-    console.log("error el la api");
     res.status(500).json({message:"Error al filtrar por rol"});
   }
 })

@@ -82,7 +82,7 @@ export class ArticuloComponent {
   // (PUT) Form para editar joya (botón con lápiz)
   onUpdateSubmit() {
     if (this.updateForm.valid){
-      const userId = this.userIdForm.value.userId; 
+      const userId = this.userIdForm.value.userId;
       this.http.put<any>(this.apiURL + '/inventario/' + userId, {
         _id: this.updatingId,
         tipo: this.updatingTipo,
@@ -91,7 +91,7 @@ export class ArticuloComponent {
         cantidad: this.updateForm.value.cantidad ?? ''
       }).subscribe(data => {
         alert(data.message);
-        //this.readJoyas(); //para que no se actulice la lista automaticamente
+        this.readJoyas();
         this.showUpdateForm = 'hidden';
         this.updateForm.reset();
       }, error => {
@@ -116,7 +116,7 @@ export class ArticuloComponent {
         cantidad: this.addForm.value.cantidad ?? ''
       }).subscribe(data => {
         alert(data.message);
-        //this.readJoyas();   //no se si esto quitarlo por que si la intenta crear un cliente esto no funcionaria
+        this.readJoyas();
         this.showForm = 'hidden';
         this.addForm.reset();
       }, error => {
@@ -132,13 +132,17 @@ export class ArticuloComponent {
   // (DELETE) Eliminar una joya (botón con X)
   eliminarItem(_id: String){
     const userId = this.userIdForm.value.userId;
-    this.http.delete<any>(this.apiURL + '/inventario/' + userId + '/' + _id)
-      .subscribe(data => {
-        alert(data.message);
-        //this.readJoyas(); //que se actualice dandole al boton, no automaticamente
-      }, error => {
-        alert(error.error.message);
-      })
+    if (userId) {
+      this.http.delete<any>(this.apiURL + '/inventario/' + userId + '/' + _id)
+        .subscribe(data => {
+          alert(data.message);
+          //this.readJoyas(); //que se actualice dandole al boton, no automaticamente
+        }, error => {
+          alert(error.error.message);
+        })
+    } else {
+      alert("Introduce un ID de usuario");
+    }
   }
 
   // --- Filtrados ---

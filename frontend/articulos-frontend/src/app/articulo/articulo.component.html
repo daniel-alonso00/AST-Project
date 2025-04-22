@@ -10,14 +10,14 @@
         <button class="botones-menu" (click)='filterSelect(tipoEnum.pulsera)'>PULSERAS</button>
     </div>
 </div>
-    
+
 
 <div>
     <form id="userForm" [formGroup]="userIdForm">
         <p>ID Usuario:</p>
         <input type="text" formControlName="userId" name="userId">
     </form>
-    
+
     <!-- <button id="mostrarArticulos" (click)="this.readJoyas()">Mostrar Articulos</button> -->
 </div>
 
@@ -87,12 +87,18 @@
         <h3>Actualizar Joya</h3>
         <span>Id: {{this.updatingId}}</span>
         <br>
-        <label for="nombre">Nombre: </label>
-        <input type="text" formControlName="nombre">
-        <label for="precio">Precio: </label>
-        <input type="text" formControlName="precio">
-        <label for="cantidad">Cantidad: </label>
-        <input type="text" formControlName="cantidad">
+        <div class="input-container">
+            <span>Nombre: </span>
+            <input type="text" formControlName="nombre">
+        </div>
+        <div class="input-container">
+            <span>Precio: </span>
+            <input type="text" formControlName="precio">
+        </div>
+        <div class="input-container">
+            <span>Cantidad: </span>
+            <input type="text" formControlName="cantidad">
+        </div>
         <input type="submit" name="submit" value="Actualizar">
         <button type="button" (click)="this.showUpdateForm = 'hidden'">Cerrar</button>
     </form>

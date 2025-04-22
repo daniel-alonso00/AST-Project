@@ -150,14 +150,18 @@ export class ArticuloComponent {
   // Put para búsqueda por ID
   onSearchSubmit(){
     const userId = this.userIdForm.value.userId;
-    this.http.get<any>(this.apiURL + '/getById/' + this.searchForm.value.id + '/' + userId)
-      .subscribe(data => {
-        //alert(data.message);
-        this.displayItems = [data.joya];
-        console.log(data);
-      }, error => {
-        alert(error.error.message);
-      })
+    if (userId && this.searchForm.value.id) {
+      this.http.get<any>(this.apiURL + '/getById/' + this.searchForm.value.id + '/' + userId)
+        .subscribe(data => {
+          //alert(data.message);
+          this.displayItems = [data.joya];
+          console.log(data);
+        }, error => {
+          alert(error.error.message);
+        })
+    } else {
+      alert("Introduce un Id de administrador.");
+    }
   }
 
   // Put para filtrar por tipo de joya (anillo, collar, pendiente, pulsera)

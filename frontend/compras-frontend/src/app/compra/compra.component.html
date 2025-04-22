@@ -82,14 +82,16 @@
 <div id="compras-container">
     @for(compra of this.displayCompras; track compra._id) {
         <div class="box-compra">
-            <p>ID compra: {{compra._id}}</p>
-            <p>ID cliente: {{ compra.idCliente }}</p>
-            <p>ID árticulo: {{ compra.idArticulo }}</p>
-            <p>Cantidad: {{ compra.cantidad }}</p>
+            <p class="prop-com-nombre">Nombre articulo: {{compra.articuloDetails[0].nombre}}</p>
+            <p class="prop-com-precio">Precio articulo: {{compra.articuloDetails[0].precio}}€</p>
             <p>Nombre del cliente: {{ compra.nombreCliente }}</p>
             <p>Dirección de envío: {{ compra.direccion }}</p>
-            <p>Nombre articulo: {{compra.articuloDetails[0].nombre}}</p>
-            <p>Precio articulo: {{compra.articuloDetails[0].precio}}€</p>
+            <p>Cantidad: {{ compra.cantidad }}</p>
+            <div class="id-com-container">
+                <p>ID compra: {{compra._id}}</p>
+                <p>ID cliente: {{ compra.idCliente }}</p>
+                <p>ID árticulo: {{ compra.idArticulo }}</p>
+            </div>
             <div class="box-buttons-container">
                 <button id="elBotonBueno" type="button" (click)="this.viewUpdateForm(compra)">Editar Compra</button>
                 <button type="button" (click)="this.deleteCompra(compra)">Eliminar Compra</button>

@@ -111,6 +111,9 @@ app.get('/getById/:_id?/:userId?', async (req,res)=>{
     _id = req.params._id;
     userId = req.params.userId;
 
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "ID inválido o no proporcionado" });
+    }
     const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
     const rol = await rolResponse.json();
 
@@ -118,16 +121,14 @@ app.get('/getById/:_id?/:userId?', async (req,res)=>{
       if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(400).json({ message: "ID inválido o no proporcionado" });
       }
-  
       let joya = await Inventario.findOne({_id: new mongoose.Types.ObjectId(_id)});
-  
       if(!joya){
         return res.status(404).json({ message: "Articulo no encontrado"});
       }
       res.status(200).json({joya: joya});  
 
     }else{
-      res.json({message: "Tienes que ser administrador para poder hacer esto"});
+      res.status(200).json({message: "Tienes que ser administrador para poder hacer esto"});
     }     
 
   } catch (error) {

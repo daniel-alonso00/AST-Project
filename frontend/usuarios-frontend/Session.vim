@@ -14,11 +14,13 @@ else
   set shortmess=aoO
 endif
 badd +1 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
+badd +40 src/app/usuario/usuario.component.html
+badd +250 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.css
 argglobal
 %argdel
-edit ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
+edit src/app/usuario/usuario.component.html
 argglobal
-balt ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
+balt ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.css
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -29,11 +31,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+let s:l = 40 - ((20 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
+keepjumps 40
 normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'

@@ -374,6 +374,30 @@ h1 {
     transition: 200ms ease-in-out all;
 }
 
+#compras-container > .box-compra > .prop-com-nombre {
+    font-size: 1.25rem;
+    color: var(--mid-dark);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#compras-container > .box-compra > .prop-com-precio {
+    margin-top: 0;
+    color: var(--mid-dark);
+    font-weight: bold;
+}
+
+#compras-container > .box-compra > .id-com-container > p {
+    display: inline;
+}
+
+#compras-container > .box-compra > .id-com-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
 #compras-container > .box-compra > .box-buttons-container {
     margin-bottom: 20px;
     margin-top: 10px;

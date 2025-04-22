@@ -146,14 +146,18 @@ export class CompraComponent {
   }
 
   deleteCompra(compra: any) {
-    this.http.delete<any>(this.apiURL+'/compra/'+this.userIdForm.value.userId+'/'+compra.idCliente+'/'+compra._id)
-    .subscribe(data => {
-      alert(data.message);
-      this.showCompras();
-      this.readJoyas();
-    }, error => {
-      alert(error.error.message);
-    });
+    if (this.userIdForm.value.userId) {
+      this.http.delete<any>(this.apiURL+'/compra/'+this.userIdForm.value.userId+'/'+compra.idCliente+'/'+compra._id)
+      .subscribe(data => {
+        alert(data.message);
+        this.showCompras();
+        this.readJoyas();
+      }, error => {
+        alert(error.error.message);
+      });
+    } else {
+      alert("Introduce un ID de usuario.");
+    }
   }
 
   showCompras() {

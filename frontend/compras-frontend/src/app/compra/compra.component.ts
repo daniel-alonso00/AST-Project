@@ -83,7 +83,7 @@ export class CompraComponent {
   }
 
   onSubmit() {
-    if (this.compraForm.valid && /^\d+$/.test(this.compraForm.value.cantidad as string)) {
+    if (this.compraForm.valid && /^\d+$/.test(this.compraForm.value.cantidad as string) && this.compraForm.value.cantidad != '0') {
       this.http.post<any>(this.apiURL + '/compra', {
         idArticulo: this.articleId ?? '',
         idCliente: this.userIdForm.value.userId ?? '',

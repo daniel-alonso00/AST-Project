@@ -9,9 +9,14 @@
     <button class="botones-menu" (click)='filterSelect(tipoEnum.pulsera)'>PULSERAS</button>
 </div>
 
-<form [formGroup]="userIdForm">
-  <input type="text" formControlName="userId" name="userId">
-</form>
+<div>
+    <form id="inputUserId" [formGroup]="userIdForm">
+        <input type="text" formControlName="userId" name="userId">
+    </form>
+    
+    <button id="mostrarArticulos" (click)="this.readJoyas()">Mostrar Articulos</button>
+</div>
+
 
 <form id="id-search-form" [formGroup]="searchForm" (submit)="onSearchSubmit()">
     <input type="text" formControlName="id" placeholder="Introduce ID para buscar">

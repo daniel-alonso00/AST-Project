@@ -60,23 +60,30 @@ export class ArticuloComponent {
 
   // Este método se llama al cargar la página
   ngOnInit() {
-    this.readJoyas();
+
   }
 
   // --- Métodos CRUD (get, put, post, delete) ---
 
   // (GET) Leer todas las joyas del inventario
   readJoyas() {
-    this.http.get(this.apiURL + '/inventario')
+    const userId = this.userIdForm.value.userId;
+    console.log('UserID:', userId);
+
+    this.http.get<any>(this.apiURL + '/inventario/' + userId)
       .subscribe(data => {
-        this.displayItems = data;
-      });
+        alert(data.message);
+        this.displayItems = data.joyas;
+      },error => {
+        alert(error.error.message)
+      } );
   }
 
   // (PUT) Form para editar joya (botón con lápiz)
   onUpdateSubmit() {
     if (this.updateForm.valid){
-      this.http.put<any>(this.apiURL + '/inventario', {
+      const userId = this.userIdForm.value.userId; 
+      this.http.put<any>(this.apiURL + '/inventario/' + userId, {
         _id: this.updatingId,
         tipo: this.updatingTipo,
         nombre: this.updateForm.value.nombre ?? '',
@@ -84,7 +91,7 @@ export class ArticuloComponent {
         cantidad: this.updateForm.value.cantidad ?? ''
       }).subscribe(data => {
         alert(data.message);
-        this.readJoyas();
+        //this.readJoyas(); //para que no se actulice la lista automaticamente
         this.showUpdateForm = 'hidden';
         this.updateForm.reset();
       }, error => {
@@ -101,14 +108,15 @@ export class ArticuloComponent {
   onSubmit() {
     console.log(this.userIdForm.value.userId);
     if(this.addForm.valid){
-      this.http.post<any>(this.apiURL + '/inventario', {
+      const userId = this.userIdForm.value.userId;
+      this.http.post<any>(this.apiURL + '/inventario/' + userId, {
         tipo: this.creatingTipo,
         nombre: this.addForm.value.nombre ?? '',
         precio: this.addForm.value.precio ?? '',
         cantidad: this.addForm.value.cantidad ?? ''
       }).subscribe(data => {
         alert(data.message);
-        this.readJoyas();
+        //this.readJoyas();   //no se si esto quitarlo por que si la intenta crear un cliente esto no funcionaria
         this.showForm = 'hidden';
         this.addForm.reset();
       }, error => {
@@ -123,10 +131,11 @@ export class ArticuloComponent {
 
   // (DELETE) Eliminar una joya (botón con X)
   eliminarItem(_id: String){
-    this.http.delete<any>(this.apiURL + '/inventario/' + _id )
+    const userId = this.userIdForm.value.userId;
+    this.http.delete<any>(this.apiURL + '/inventario/' + userId + '/' + _id)
       .subscribe(data => {
         alert(data.message);
-        this.readJoyas();
+        //this.readJoyas(); //que se actualice dandole al boton, no automaticamente
       }, error => {
         alert(error.error.message);
       })
@@ -136,8 +145,10 @@ export class ArticuloComponent {
 
   // Put para búsqueda por ID
   onSearchSubmit(){
-    this.http.get<any>(this.apiURL + '/getById/' + this.searchForm.value.id)
+    const userId = this.userIdForm.value.userId;
+    this.http.get<any>(this.apiURL + '/getById/' + this.searchForm.value.id + '/' + userId)
       .subscribe(data => {
+        alert(data.message);
         this.displayItems = [data.joya];
         console.log(data);
       }, error => {
@@ -147,11 +158,13 @@ export class ArticuloComponent {
 
   // Put para filtrar por tipo de joya (anillo, collar, pendiente, pulsera)
   filterSelect(tipo: Number) {
+    const userId = this.userIdForm.value.userId;
     if (tipo == 4) {
       this.readJoyas();
     } else {
-      this.http.get<any>(this.apiURL + '/getTipo/' + tipo)
+      this.http.get<any>(this.apiURL + '/getTipo/' + tipo + '/' + userId)
         .subscribe(data => {
+          alert(data.message);
           this.displayItems = data.joyas;
         }, error => {
           alert(error.error.message)

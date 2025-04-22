@@ -83,7 +83,7 @@ export class CompraComponent {
   }
 
   onSubmit() {
-    if (this.compraForm.valid && /^\d+$/.test(this.compraForm.value.cantidad as string)) {
+    if (this.compraForm.valid && /^\d+$/.test(this.compraForm.value.cantidad as string) && this.compraForm.value.cantidad != '0') {
       this.http.post<any>(this.apiURL + '/compra', {
         idArticulo: this.articleId ?? '',
         idCliente: this.userIdForm.value.userId ?? '',
@@ -146,14 +146,18 @@ export class CompraComponent {
   }
 
   deleteCompra(compra: any) {
-    this.http.delete<any>(this.apiURL+'/compra/'+this.userIdForm.value.userId+'/'+compra.idCliente+'/'+compra._id)
-    .subscribe(data => {
-      alert(data.message);
-      this.showCompras();
-      this.readJoyas();
-    }, error => {
-      alert(error.error.message);
-    });
+    if (this.userIdForm.value.userId) {
+      this.http.delete<any>(this.apiURL+'/compra/'+this.userIdForm.value.userId+'/'+compra.idCliente+'/'+compra._id)
+      .subscribe(data => {
+        alert(data.message);
+        this.showCompras();
+        this.readJoyas();
+      }, error => {
+        alert(error.error.message);
+      });
+    } else {
+      alert("Introduce un ID de usuario.");
+    }
   }
 
   showCompras() {

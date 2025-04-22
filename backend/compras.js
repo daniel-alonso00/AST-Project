@@ -9,7 +9,6 @@ app.use(cors())
 
 const Inventario = require('./models/inventario');
 const Compra = require('./models/compra');
-const Usuario = require('./models/usuario');
 
 const rolEnum = {
   administrador: "administrador",

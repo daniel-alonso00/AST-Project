@@ -9,7 +9,6 @@ app.use(cors())
 
 const Inventario = require('./models/inventario');
 const Compra = require('./models/compra');
-const Usuario = require('./models/usuario');
 
 // Conectar con Mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/joyas', {})

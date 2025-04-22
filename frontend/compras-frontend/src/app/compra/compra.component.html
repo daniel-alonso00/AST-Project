@@ -84,6 +84,8 @@
             <p>Cantidad: {{ compra.cantidad }}</p>
             <p>Nombre del cliente: {{ compra.nombreCliente }}</p>
             <p>Dirección de envío: {{ compra.direccion }}</p>
+            <p>Nombre articulo: {{compra.articuloDetails[0].nombre}}</p>
+            <p>Precio articulo: {{compra.articuloDetails[0].precio}}€</p>
             <div class="box-buttons-container">
                 <button id="elBotonBueno" type="button" (click)="this.viewUpdateForm(compra)">Editar Compra</button>
                 <button type="button" (click)="this.deleteCompra(compra)">Eliminar Compra</button>

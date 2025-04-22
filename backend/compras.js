@@ -51,7 +51,7 @@ app.get('/inventario/:idUsuario?', async (req, res) => {
     let joyas = await Inventario.find({});
     res.status(200).json(joyas);
   } catch {
-    alert("Error al obtener los artículos");
+    res.status(500).json({ message: "Error al obtener la joyas" });
   }
 });
 
@@ -74,8 +74,29 @@ app.get('/getComprasById/:id?', async (req, res) => {
       return
     }
 
-    let compras = await Compra.find({ idCliente: new mongoose.Types.ObjectId(userId) });
-    res.status(200).json(compras);
+    let result = await Compra.aggregate([
+      {
+        $match: {
+          idCliente: userId
+        },
+      },
+      {
+        $addFields: {
+          idArticuloObj: { $toObjectId: "$idArticulo" }
+        },
+      },
+      {
+        $lookup: { 
+          from: 'inventarios', 
+          localField: 'idArticuloObj', foreignField: '_id',
+          as: 'articuloDetails',
+          pipeline: [{
+              $project: {nombre: 1, precio:1}
+          }]
+        }
+      }
+    ])
+    res.status(200).json(result);
   } catch {
     res.status(500).json({ message: "Error al obtener las compras." })
   }

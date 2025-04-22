@@ -13,15 +13,15 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +79 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.ts
-badd +70 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.html
-badd +7 ~/AST-Project/frontend/compras-frontend/src/styles.css
-badd +257 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.css
+badd +180 ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.ts
+badd +88 src/app/compra/compra.component.html
+badd +257 src/app/compra/compra.component.css
+badd +7 src/styles.css
 argglobal
 %argdel
 edit ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.ts
 argglobal
-balt ~/AST-Project/frontend/compras-frontend/src/app/compra/compra.component.html
+balt src/app/compra/compra.component.html
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}

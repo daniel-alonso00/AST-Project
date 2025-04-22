@@ -65,15 +65,19 @@ export class CompraComponent {
   }
 
   readJoyas() {
-    if (this.userIdForm.value.userId) {
-      this.http.get(this.apiURL + '/inventario/' + this.userIdForm.value.userId)
-      .subscribe(data => {
-        this.displayItems = data;
-      }, error => {
-        alert(error.error.message);
-      });
-    } else {
-      alert("Introduce un ID de usuario.");
+    try{
+      if (this.userIdForm.value.userId) {
+        this.http.get(this.apiURL + '/inventario/' + this.userIdForm.value.userId)
+        .subscribe(data => {
+          this.displayItems = data;
+        }, error => {
+          alert(error.error.message);
+        });
+      } else {
+        alert("Introduce un ID de usuario.");
+      }
+    } catch {
+      alert("Base de datos no alcanzable");
     }
   }
 

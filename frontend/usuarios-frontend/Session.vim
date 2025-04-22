@@ -13,12 +13,10 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.spec.ts
-badd +79 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
-badd +49 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.html
+badd +1 ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
 argglobal
 %argdel
-edit ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.html
+edit ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
 argglobal
 balt ~/AST-Project/frontend/usuarios-frontend/src/app/usuario/usuario.component.ts
 setlocal fdm=manual

@@ -180,13 +180,16 @@ h1 {
     grid-auto-rows: minmax(100px, auto);
 }
 
+
 .box-item {
     padding: 20px 20px 20px 20px;
-
+    transition: 150ms ease-in-out all;
     background-color: var(--mid-light);
     /*border: var(--dark) solid 4px;*/
     border-radius: 10px;
-    position: relative; /* Necesario para posicionar los botones */
+}
+.box-item:hover{
+    transform: translateY(-5px);
 }
 
 .prop-nombre {

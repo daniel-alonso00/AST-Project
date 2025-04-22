@@ -152,7 +152,7 @@ export class ArticuloComponent {
     const userId = this.userIdForm.value.userId;
     this.http.get<any>(this.apiURL + '/getById/' + this.searchForm.value.id + '/' + userId)
       .subscribe(data => {
-        alert(data.message);
+        //alert(data.message);
         this.displayItems = [data.joya];
         console.log(data);
       }, error => {
@@ -168,7 +168,7 @@ export class ArticuloComponent {
     } else {
       this.http.get<any>(this.apiURL + '/getTipo/' + tipo + '/' + userId)
         .subscribe(data => {
-          alert(data.message);
+          //alert(data.message);
           this.displayItems = data.joyas;
         }, error => {
           alert(error.error.message)

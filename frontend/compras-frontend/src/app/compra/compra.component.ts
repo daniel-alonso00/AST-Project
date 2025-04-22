@@ -90,6 +90,7 @@ export class CompraComponent {
         nombreCliente: this.compraForm.value.nombreCliente ?? '',
         direccion: this.compraForm.value.direccion ?? ''
       }).subscribe(res => {
+        this.showForm = 'hidden';
         alert(res.message);
         this.compraForm.reset();
         this.readJoyas();
@@ -190,6 +191,11 @@ export class CompraComponent {
 
   viewUpdateForm(compra: any) {
     this.updateFormInfo = compra;
+
+    this.updateForm.patchValue({
+      nombreCliente: compra.nombreCliente,
+      direccion: compra.direccion
+    });
     this.showUpdateForm = 'visible';
   }
 

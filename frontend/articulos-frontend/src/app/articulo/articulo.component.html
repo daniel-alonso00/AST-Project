@@ -1,41 +1,51 @@
 <h1>Fake Tous</h1>
-<h3>--- ¿Qué te apetece hoy? ---</h3>
+<span id="subtitle">— ¿Qué te apetece hoy? —</span>
 
-<div class="barra-inicio">
-    <button class="botones-menu" (click)='filterSelect(4)'>TODOS</button>
-    <button class="botones-menu" (click)='filterSelect(tipoEnum.anillo)'>ANILLOS</button>
-    <button class="botones-menu" (click)='filterSelect(tipoEnum.collar)'>COLLARES</button>
-    <button class="botones-menu" (click)='filterSelect(tipoEnum.pendiente)'>PENDIENTES</button>
-    <button class="botones-menu" (click)='filterSelect(tipoEnum.pulsera)'>PULSERAS</button>
+<div id="mainMenu">
+    <div id="filterMenu">
+        <button class="botones-menu" (click)='filterSelect(4)'>TODOS</button>
+        <button class="botones-menu" (click)='filterSelect(tipoEnum.anillo)'>ANILLOS</button>
+        <button class="botones-menu" (click)='filterSelect(tipoEnum.collar)'>COLLARES</button>
+        <button class="botones-menu" (click)='filterSelect(tipoEnum.pendiente)'>PENDIENTES</button>
+        <button class="botones-menu" (click)='filterSelect(tipoEnum.pulsera)'>PULSERAS</button>
+    </div>
 </div>
+    
 
 <div>
-    <form id="inputUserId" [formGroup]="userIdForm">
+    <form id="userForm" [formGroup]="userIdForm">
+        <p>ID Usuario:</p>
         <input type="text" formControlName="userId" name="userId">
     </form>
     
-    <button id="mostrarArticulos" (click)="this.readJoyas()">Mostrar Articulos</button>
+    <!-- <button id="mostrarArticulos" (click)="this.readJoyas()">Mostrar Articulos</button> -->
+</div>
+
+<div id="titulo">
+    <span>Gestión de Articulos</span>
 </div>
 
 
-<form id="id-search-form" [formGroup]="searchForm" (submit)="onSearchSubmit()">
+<form class="searchForm" [formGroup]="searchForm" (submit)="onSearchSubmit()">
     <input type="text" formControlName="id" placeholder="Introduce ID para buscar">
     <button type="submit">Buscar</button>
 </form>
 
-<div class="box-container">
+<div id="box-container">
     @for(item of displayItems; track item._id){
         <div class="box-item">
-            <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button>
-            <button class="btn-editar" (click)="this.handleShowUpdate(item._id, item.tipo, item.nombre, item.precio, item.cantidad)">✎</button>
             <p class="prop-nombre">{{item.nombre}}</p>
             <p class="prop-precio">Precio: {{item.precio}}</p>
             <p class="prop-cantidad">Cantidad: {{ item.cantidad }}</p>
-            <p class="prop-id">{{item._id}}</p>
+            <p class="prop-id">ID: {{item._id}}</p>
+            <div class="box-buttons-container">
+                <button id="elBotonBueno" type="button"(click)="this.handleShowUpdate(item._id, item.tipo, item.nombre, item.precio, item.cantidad)">Editar</button>
+                <button type="button" (click)="eliminarItem(item._id)">Eliminar</button>
+            </div>
         </div>
     }
     <!--Boton para añadir un elementos-->
-    <button class="add-item" (click)="this.showForm = 'visible'">
+    <button class="box-item-add" (click)="this.showForm = 'visible'">
         <p class="add-icon">+</p>
     </button>
 </div>
@@ -43,7 +53,7 @@
 <!-- Formulario para crear -->
 <div id="addForm-container" [style]="'visibility:' + this.showForm">
     <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
-        <span>Nueva Joya</span>
+        <h3>Nueva Joya</h3>
         <div id="radio-container">
             <input type="radio" id="anillo" name="tipo" (click)="this.creatingTipo=this.tipoEnum.anillo" checked="checked">
             <label for="anillo">Anillo</label>
@@ -72,9 +82,9 @@
 </div>
 
 <!-- Formulario para editar -->
-<div id="updateForm-container" [style]="'visibility:' + this.showUpdateForm">
-    <form id="updateForm" [formGroup]="updateForm" (submit)="onUpdateSubmit()">
-        <span>Actualizar Joya</span>
+<div id="addForm-container" [style]="'visibility:' + this.showUpdateForm">
+    <form id="addForm" [formGroup]="updateForm" (submit)="onUpdateSubmit()">
+        <h3>Actualizar Joya</h3>
         <span>Id: {{this.updatingId}}</span>
         <br>
         <label for="nombre">Nombre: </label>

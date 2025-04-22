@@ -1,208 +1,228 @@
-h1{
+h1 {
+    margin-bottom: 0;
     text-align: center;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    margin: 40px auto 0 auto;
-    padding-bottom: 0;
+    color: var(--mid-dark);
+    letter-spacing: 0.5rem;
+    font-size: 3rem;
 }
 
-h3 {
-    font-style: italic;
-    text-align: center;
+#titulo{
+    background-color: var(--mid-dark);
+    width: 20%;
+    position: absolute;
+    top: 20px;
+    color: var(--mid-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 25px;
+    font-weight: bold;
+    height: 50px;
+    right: 10px;
+    border-radius: 10px;
+}
+
+#subtitle {
     margin-top: 0;
+    display: block;
+    text-align: center;
+    color: var(--mid-dark);
+    font-size: 1.5rem;
+    font-style: italic;
 }
 
-.barra-inicio {
+#mainMenu {
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 50px;
+    padding: 0 50px 0 50px;
+}
+
+#mainMenu > #filterMenu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 75%;
+}
+#menu-busqueda {
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 3px;
+    background-color: var(--mid-light);
+    color: var(--mid-dark);
+    width: 200px;
+    height: 30px;
+    transition: 150ms ease-in-out all;
+}
+
+#listarUsuarios{
+    width: 35%;
+}
+
+#listarUsuarios > #mostrarUsuarios {
+    margin-left: 5px;
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 3px;
+    background-color: var(--mid-dark);
+    color: var(--mid-light);
+    width: 100px;
+    height: 30px;
+    transition: 150ms ease-in-out all;
+}
+
+
+#mainMenu > #filterMenu > button {
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 3px;
+    background-color: var(--mid-dark);
+    color: var(--mid-light);
+    width: 17%;
+    height: 30px;
+    transition: 150ms ease-in-out all;
+}
+
+#mainMenu > #filterMenu > button:hover {
+    background-color: var(--hovered-blue);
+}
+
+#mainMenu > #showBuyMenu > button {
+    border: none;
+    border-top: 2px solid var(--mid-light);
+    border-bottom: 2px solid var(--mid-light);
+    border-radius: 5px;
+    letter-spacing: 3px;
+    background-color: var(--mid-light);
+    color: var(--mid-dark);
+    height: 30px;
+    font-weight: bold;
+    padding: 0 60px;
+    transition: 150ms ease-in-out all;
+}
+
+#mainMenu > #showBuyMenu > button:hover {
+    border-top: 2px solid var(--mid-dark);
+    border-bottom: 2px solid var(--mid-dark);
+}
+
+.searchForm > input {
+    width: 20%;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 30px;
+    border: 2px solid var(--mid-dark);
+    border-radius: 100px 0 0 100px;
+    font-size: 1.10rem;
+    padding-left: 10px;
+    transform: skewX(-10deg);
+}
+
+.searchForm > button {
+    border: none;
+    color: var(--mid-light);
+    font-weight: bold;
+    width: 8%;
+    height: 35px;
+    background-color: var(--mid-dark);
+    border-radius: 0 100px 100px 0;
+    font-size: 1rem;
+    transform: skewX(-10deg);
+    transition: 150ms ease-in-out all;
+}
+
+.searchForm > button:hover {
+    background-color: var(--hovered-blue);
+}
+
+#userForm {
+    position: absolute;
+    top: 0;
+    background-color: var(--mid-dark);
+    border-radius: 10px;
+    width: 25%;
+    height: 10px;
+    padding: 20px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 80%;
-    margin: 0 auto 50px auto;
 }
 
-.botones-menu {
-    width: 100%;
-    height: 2rem;
-    padding: 21px;
-    font-size: 16px;
-    border: none;
-    border-bottom: #A18E63 solid 2px;
-    background-color: white;
-    color: black;
-    transition: background-color 0.3s ease;
-}
-
-.botones-menu:hover {
-    padding: 20px;
-    border-bottom: #A18E63 solid 3px;
-}
-
-#id-search-form > input  {
-    height: 32px;
-    width: 20%;
-    padding: 2px 2px 2px 12px;
-    outline: none;
-    border: #A18E63 solid 1px;
-    border-radius: 3px;
-    margin-right: 5px;
-    margin-left: 20px;
-    transform: skewX(-10deg);
-}
-
-#id-search-form > input:focus {
-    border-width: 3px;
-    padding: 0 0 0 10px;
-}
-
-#id-search-form > button  {
-    height: 36px;
-    width: 5%;
-    border: none;
-    border-top-right-radius: 100px;
-    border-bottom-right-radius: 100px;
-    transform: skewX(-10deg);
-    background-color: #A18E63;
-}
-
-#id-search-form > button:hover  {
-    background-color: #695C40;
-    color: white;
-}
-
-/* Contenedor principal */
-.box-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 10px;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow-x: auto;
-}
-
-/* Estilos para cada artículo individual */
-.box-item {
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    padding: 15px;
-    padding-right: 40px;
-    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    /*width: 200px;*/
-    min-width: 200px;
-    flex-shrink: 0;
-    position: relative; /* Necesario para posicionar los botones */
-    text-align: left; /* Alineación del texto */
-    border: none;
-    border-bottom: lightgray solid 2px;
-    background-color: rgb(228, 209, 184);
-}
-
-.box-item:hover {
-    /*box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);*/
-    transform: translateY(-5px);
-    border-bottom: #A18E63 solid 2px;
-}
-
-.box-item p {
-    margin: 0 0 8px 0;
-}
-
-/* Propiedades de las Joyas */
-.prop-nombre {
-    display: block;
-    text-align: center;
-    font-size: 22px;
+#userForm > p {
     font-weight: bold;
-    font-style: italic;
-    color: #695C40;
+    font-size: 1.25rem;
+    color: var(--mid-light);
+    display: inline;
+
+    margin-right: 10px;
 }
 
-.prop-id {
-    font-style: italic;
-    margin-top: 15px;
-    text-align: right;
-    font-size: 14px;
+#userForm > input {
+    width: 50%;
+    height: 18px;
+    border: none;
+    border-radius: 2px;
+    background-color: var(--mid-light);
+    color: var(--dark);
 }
 
-/* Botón de eliminar (cruz) */
-.btn-eliminar {
+/* --- Consulta de Artículos --- */
+
+#box-container {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.box-item {
+    padding: 20px 20px 20px 20px;
+
+    background-color: var(--mid-light);
+    /*border: var(--dark) solid 4px;*/
+    border-radius: 10px;
+    position: relative; /* Necesario para posicionar los botones */
+}
+
+.prop-nombre {
+    color: var(--mid-dark);
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.box-item > button {
     position: absolute;
     top: 5px;
     right: 5px;
-    border: #ff4d4d solid 1px;
+    border:none;
     border-radius: 10px;
-    border-color: #ff4d4d;
-    background-color: white;
+    background-color: var(--mid-dark);
     width: 24px;
     height: 24px;
-    color: #ff4d4d;
+    color: var(--mid-light);
     font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
+    transition: ease-in-out all 250ms;
+    font-weight: bold;
 }
 
-.btn-eliminar:hover {
-    /*background-color: #f58989;*/
-    border-width: 2px;
-}
-
-/* Botón de editar */
-.btn-editar {
-    position: absolute;
-    top: 35px;
-    right: 5px;
-    border: #A18E63 solid 1px;
-    border-radius: 10px;
-    width: 24px;
-    height: 24px;
-    /*color: #0AC4B3;*/
-    color: #A18E63;
-    background-color: white;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-}
-
-.btn-editar:hover {
-    border-width: 2px;
-}
-
-/* Estilos para el botón de añadir */
-.add-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: white;
-    width: 50px;
-    font-size: 20px;
-    border: #A18E63 solid 1px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    transition: 0.1s all ease-in-out;
-    color: #695C40;
-    background-color: rgb(250, 250, 250);
-}
-
-.add-item:hover {
-    border-width: 2px;
-    transform: translateY(-5px);
+.box-item > button:hover {
+    background-color: var(--hovered-blue);
 }
 
 #addForm-container {
     visibility: hidden;
+    z-index: 10;
     margin: 0 auto;
     padding: 5px;
     width: 30%;
-    z-index: 10;
+    height: 30%;
 
     position: absolute;
     top: 50%;
@@ -212,12 +232,13 @@ h3 {
 
 #addForm {
     width: 100%;
+    height: 100%;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 
-    background-color: white;
+    background-color: var(--light);
     border-radius: 10px;
-    border: grey solid 1px;
+    border: var(--mid-dark) solid 1px;
     box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
 
     display: flex;
@@ -226,62 +247,199 @@ h3 {
     justify-content: space-around;
 }
 
-#addForm > span {
-    font-size: 22px;
-    margin-bottom: 10px;
+#addForm > h3 {
+    margin: 0;
+    color: var(--mid-dark);
+    font-size: 1.5rem;
 }
 
-#addForm > #radio-container {
-    margin-bottom: 10px;
+#radio-container > label{
+    color: var(--mid-dark);
 }
 
-#addForm > input[type="text"] {
-    display: block;
-    color: black;
-    background-color: #D9CDBC;
+#addForm > #addFormItemId {
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+#addForm > #cantidad-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addForm > #cantidad-container > button {
+    background-color: var(--mid-light);
+    border-radius: 5px;
+    border: 1px solid var(--mid-light);
+    width: 35px;
+    height: 35px;
+    justify-items: center;
+    text-align: center;
+    padding: 0;
+}
+
+#addForm > #cantidad-container > button:hover {
+    border: 1px solid var(--mid-dark);
+}
+
+#addForm #compra-cantidad {
+    background-color: var(--mid-light);
+    border-radius: 5px;
     border: none;
-    border-radius: 2px;
-    width: 80%;
-    height: 20px;
-    margin: 5px;
-    padding: 3px 0 3px 5px;
+    width: 50px;
+    height: 38px;
+    margin: 0 5px 0 5px;
+    justify-items: center;
+    text-align: center;
+    padding: 0;
 }
 
-#addForm > input[type="text"]:focus {
-    background-color: white;
+#addForm > .input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 80%;
+}
+
+#addForm > .input-container > span {
+    font-size: 1.25rem;
+    color: var(--mid-dark);
+    font-weight: bold;
+}
+
+#addForm input[type="text"] {
+    width: 75%;
+    height: 30px;
+    background-color: var(--mid-light);
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 1.1rem;
 }
 
 #addForm > input[type="submit"] {
-    width: 70%;
-    height: 35px;
     margin-top: 20px;
+    width: 70%;
+    height: 30px;
     border: none;
     border-radius: 10px;
-    background-color: #A18E63;
+    background-color: var(--mid-dark);
+    color: var(--mid-light);
     font-weight: bold;
-    transition: 0.1s all ease-in-out;
+    transition: ease-in-out all 150ms;
 }
 
 #addForm > input[type="submit"]:hover {
-    background-color: #695C40;
-    color: white;
+    background-color: var(--hovered-blue);
 }
 
 #addForm > button {
-    margin-top: 10px;
-    width: 30%;
-    height: 25px;
-    margin-top: 20px;
+    margin-top: 10x;
+    width: 35%;
+    height: 30px;
     border: none;
     border-radius: 10px;
-    background-color: #f58989;
-    color: black;
+    background-color: var(--dark);
+    color: var(--mid-light);
     font-weight: bold;
-    transition: 0.1s all ease-in-out;
+    transition: ease-in-out all 150ms;
 }
 
 #addForm > button:hover {
-    background-color: #BD210D;
+}
+
+/* --- Consulta de Compras --- */
+
+#meCanseDePensarNombres {
+    margin: 40px 0 40px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#meCanseDePensarNombres > button {
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 3px;
+    background-color: var(--mid-dark);
+    color: var(--mid-light);
+    width: 20%;
+    height: 30px;
+    transition: 150ms ease-in-out all;
+}
+
+#meCanseDePensarNombres > button:hover {
+    background-color: var(--hovered-blue);
+}
+
+#meCanseDePensarNombres > #shop-button {
+    border: none;
+    border-top: 2px solid var(--mid-light);
+    border-bottom: 2px solid var(--mid-light);
+    border-radius: 5px;
+    letter-spacing: 3px;
+    background-color: var(--mid-light);
+    color: var(--mid-dark);
+    height: 30px;
+    font-weight: bold;
+    transition: 150ms ease-in-out all;
+}
+
+#meCanseDePensarNombres > #shop-button:hover {
+    border-top: 2px solid var(--mid-dark);
+    border-bottom: 2px solid var(--mid-dark);
+}
+
+#compras-container {
+    margin: 20px auto;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#compras-container > .box-compra {
+    background-color: var(--mid-light);
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 0 20px;
+    transition: 200ms ease-in-out all;
+}
+
+#compras-container > .box-compra > .box-buttons-container {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#compras-container > .box-compra > .box-buttons-container > button {
+    background-color: var(--dark);
+    color: var(--mid-light);
+    border: none;
+    border-radius: 5px;
+    width: 30%;
+    height: 30px;
+    font-weight: bold;
+    transition: 150ms ease-in-out all;
+}
+
+#compras-container > .box-compra > .box-buttons-container > button:hover {
+    text-decoration: underline;
+}
+
+#compras-container > .box-compra > .box-buttons-container > #elBotonBueno {
+    background-color: var(--mid-dark);
+    color: var(--mid-light);
+}
+
+#compras-container > .box-compra > .box-buttons-container > #elBotonBueno:hover {
+    text-decoration: none;
+    background-color: var(--hovered-blue);
 }
 
 #updateForm-container {
@@ -290,7 +448,7 @@ h3 {
     padding: 5px;
     width: 30%;
 
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -298,78 +456,17 @@ h3 {
 
 #updateForm {
     width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 40px;
+    padding-top: 10px;
 
-    background-color: white;
+    background-color: var(--light);
     border-radius: 10px;
-    border: grey solid 1px;
+    border: var(--mid-dark) solid 1px;
     box-shadow: 0 4px 8px rgba(180, 180, 180, 0.3);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
 }
 
-#updateForm > span {
-    font-size: 22px;
-    margin-bottom: 10px;
+#updateForm > #formContentContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
 }
-
-#updateForm > input[type="text"] {
-    display: block;
-    color: black;
-    background-color: #D9CDBC;
-    border: none;
-    border-radius: 2px;
-    width: 80%;
-    height: 20px;
-    margin: 5px;
-    padding: 3px 0 3px 5px;
-}
-
-#updateForm > input[type="text"]:focus {
-    background-color: white;
-}
-
-#updateForm > input[type="submit"] {
-    width: 70%;
-    height: 35px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: #A18E63;
-    font-weight: bold;
-    transition: 0.1s all ease-in-out;
-}
-
-#updateForm > input[type="submit"]:hover {
-    background-color: #695C40;
-    color: white;
-}
-
-#updateForm > button {
-    margin-top: 10px;
-    width: 30%;
-    height: 25px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: #f58989;
-    color: black;
-    font-weight: bold;
-    transition: 0.1s all ease-in-out;
-}
-
-#updateForm > button:hover {
-    background-color: #BD210D;
-}
-
-
-#opciones{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-

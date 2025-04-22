@@ -1,41 +1,43 @@
 <h1>Fake Tous</h1>
-<h3>--- ¿Qué te apetece hoy? ---</h3>
-<h2>Gestion de Usuarios</h2>
+<span id="subtitle">— ¿Qué te apetece hoy?— </span>
 
-<form [formGroup]="boxIdUser">
-    <label for="userId">Introduce tu usuario: </label>
+
+<form id="userForm" [formGroup]="boxIdUser">
+    <p>ID Usuario:</p>
     <input type="text" formControlName="userId" name="userId">
 </form>
-<br>
 
-<div id="opciones">
-    <input type="button" id="crearUsuario" value="Crear Usuario" (click)="this.showFormCreate = 'visible'">
-    <input type="button" value="Eliminar Usuario" (click)="this.deleteUserFromButton()">
+<div id="titulo">
+    <span>Gestión de Usuarios</span>
+</div>
 
-    <div id="listarUsuarios">
-        <label for="menu-busqueda">Listar usuarios </label>
-        <select name="listarUsuarios" id="menu-busqueda" #seleccionUsuarios>
-            <option selected="true" disabled="disabled">Listar Usuarios</option>
-            <option value="todos">Todos</option>
-            <option [value]="this.rolEnum.administrador">Administradores</option>
-            <option [value]="this.rolEnum.cliente">Clientes</option>
-        </select>
-        <button id="mostrarUsuarios" (click)="this.filtradoUsers(seleccionUsuarios.value)">Mostrar</button>
+<div id="mainMenu">
+    <div id="filterMenu">
+        <button id="crearUsuario" (click)="this.showFormCreate = 'visible'">Crear Usuario</button>
+        <button (click)="this.deleteUserFromButton()">Eliminar Usuario</button>
+        
+        <div id="listarUsuarios">
+            <select name="listarUsuarios" id="menu-busqueda" #seleccionUsuarios>
+                <option selected="true" disabled="disabled">Listar Usuarios</option>
+                <option value="todos">Todos</option>
+                <option [value]="this.rolEnum.administrador">Administradores</option>
+                <option [value]="this.rolEnum.cliente">Clientes</option>
+            </select>
+            <button id="mostrarUsuarios" (click)="this.filtradoUsers(seleccionUsuarios.value)">Mostrar</button>
+        </div>
     </div>
 </div>
-<br>
 <hr>
 
 <div id="addForm-container" [style]="'visibility:' + this.showFormCreate">
     <form id="addForm" [formGroup]="addForm" (submit)="onSubmit()">
-        <span>Nuevo Usuario</span>
+        <h3>Nuevo Usuario</h3>
         <div id="radio-container">
             <label for="cliente">Cliente</label>
             <input type="radio" name="rolUsuario" id="cliente" [value]="this.rolEnum.cliente" formControlName="rolUsuario" checked="checked">
             <br>
             <label for="administrador">Administrador</label>
             <input type="radio" name="rolUsuario" id="administrador" [value]="this.rolEnum.administrador" formControlName="rolUsuario">
-            <br>
         </div>
         <input type="text" formControlName="nombre" placeholder="Nombre del usuario">
         <input type="submit" name="submit" value="Crear usuario">
@@ -43,12 +45,17 @@
     </form>
 </div>
 
-<div class="box-container">
+<div id="box-container">
     @for (item of displayItems; track item._id) {
         <div class="box-item">
-            <p>Nombre: {{item.nombre}}</p>
+            <!-- <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button> -->
+            <p class="prop-nombre">{{item.nombre}}</p>
             <p>Rol: {{item.permisos}}</p>
             <p>ID: {{item._id}}</p>
+            
+            <!-- <p class="prop-precio">Precio: {{item.precio}}</p>
+            <p class="prop-cantidad">Cantidad: {{ item.cantidad }}</p>
+            <p class="prop-id">{{item._id}}</p> -->
         </div>
     }
 </div>

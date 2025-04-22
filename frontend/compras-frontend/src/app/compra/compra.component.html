@@ -1,10 +1,14 @@
 <h1>Fake Tous</h1>
-<span id="subtitle">— ¿Qué te apetece hoy?— </span>
+<span id="subtitle">— ¿Qué te apetece hoy? —</span>
 
 <form id="userForm" [formGroup]="userIdForm">
     <p>ID Usuario:</p>
     <input type="text" formControlName="userId" name="userId">
 </form>
+
+<div id="titulo">
+    <span>Gestión de Compras</span>
+</div>
 
 @if (this.shopping) {
 

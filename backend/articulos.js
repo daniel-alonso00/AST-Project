@@ -109,20 +109,29 @@ app.put('/inventario/:userId?', async (req, res) => {
 })
 
 // Filtrado por ID mediante solitud al backend
-app.get('/getById/:_id?', async (req,res)=>{
+app.get('/getById/:_id?/:userId?', async (req,res)=>{
   try {
     _id = req.params._id;
+    userId = req.params.userId;
 
-    if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
-      return res.status(400).json({ message: "ID inválido o no proporcionado" });
-    }
+    const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
+    const rol = await rolResponse.json();
 
-    let joya = await Inventario.findOne({_id: new mongoose.Types.ObjectId(_id)});
+    if(rol.rol == 'administrador'){
+      if (!_id || !mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(400).json({ message: "ID inválido o no proporcionado" });
+      }
+  
+      let joya = await Inventario.findOne({_id: new mongoose.Types.ObjectId(_id)});
+  
+      if(!joya){
+        return res.status(404).json({ message: "Articulo no encontrado"});
+      }
+      res.status(200).json({joya: joya});  
 
-    if(!joya){
-      return res.status(404).json({ message: "Articulo no encontrado"});
-    }
-    res.status(200).json({joya: joya});    
+    }else{
+      res.json({message: "Tienes que ser administrador para poder hacer esto"});
+    }     
 
   } catch (error) {
     res.status(500).json({ message: "Error al encontrar el articulo" });
@@ -130,11 +139,21 @@ app.get('/getById/:_id?', async (req,res)=>{
 })
 
 // Filtrado por tipo
-app.get('/getTipo/:tipo', async (req, res) => {
+app.get('/getTipo/:tipo?/:userId?', async (req, res) => {
   try {
-    tipo = req.params.tipo;
-    let joyas = await Inventario.find({ tipo: tipo });
-    res.status(200).json({joyas: joyas});
+    userId = req.params.userId;
+
+    const rolResponse = await fetch(`http://localhost:8060/getRolById/${userId}`);
+    const rol = await rolResponse.json();
+
+    if(rol.rol == 'administrador'){
+      tipo = req.params.tipo;
+      let joyas = await Inventario.find({ tipo: tipo });
+      res.status(200).json({joyas: joyas});
+    }else{
+      res.json({message: "Tienes que ser administrador para poder hacer esto"});
+    }
+    
   } catch(error) {
     res.status(500).json({ message: "Tipo no valido" })
   }
@@ -157,7 +176,7 @@ app.delete('/inventario/:userId?/:_id?', async (req, res) =>{
       }
       // Responder con éxito
       res.status(200).json({ message: "Articulo eliminado correctamente" });
-      
+
     }else{
       res.json({message:"No puedes borrar articulos, no eres administrador"});
     }

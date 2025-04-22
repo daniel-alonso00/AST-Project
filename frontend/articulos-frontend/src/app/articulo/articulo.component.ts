@@ -145,8 +145,10 @@ export class ArticuloComponent {
 
   // Put para búsqueda por ID
   onSearchSubmit(){
-    this.http.get<any>(this.apiURL + '/getById/' + this.searchForm.value.id)
+    const userId = this.userIdForm.value.userId;
+    this.http.get<any>(this.apiURL + '/getById/' + this.searchForm.value.id + '/' + userId)
       .subscribe(data => {
+        alert(data.message);
         this.displayItems = [data.joya];
         console.log(data);
       }, error => {
@@ -156,11 +158,13 @@ export class ArticuloComponent {
 
   // Put para filtrar por tipo de joya (anillo, collar, pendiente, pulsera)
   filterSelect(tipo: Number) {
+    const userId = this.userIdForm.value.userId;
     if (tipo == 4) {
       this.readJoyas();
     } else {
-      this.http.get<any>(this.apiURL + '/getTipo/' + tipo)
+      this.http.get<any>(this.apiURL + '/getTipo/' + tipo + '/' + userId)
         .subscribe(data => {
+          alert(data.message);
           this.displayItems = data.joyas;
         }, error => {
           alert(error.error.message)

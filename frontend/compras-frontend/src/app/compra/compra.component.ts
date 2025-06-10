@@ -30,7 +30,6 @@ export class CompraComponent {
     nombreCliente: '',
     direccion: '',
     existencias: ''
-    //modificaciones: ''
   };
   showUpdateForm = 'hidden';
 
@@ -113,7 +112,6 @@ export class CompraComponent {
         idCliente: this.updateFormInfo.idCliente,
         nombreCliente: this.updateForm.value.nombreCliente ?? '',
         direccion: this.updateForm.value.direccion ?? ''
-        //modificaciones: this.updateFormInfo.modificaciones ?? ''
       }).subscribe(data => {
         alert(data.message);
         this.showUpdateForm = 'hidden';
@@ -179,7 +177,6 @@ export class CompraComponent {
       nombreCliente: '',
       direccion: '',
       existencias: ''
-      //modificaciones: ''
     };
     this.http.get<any>(this.apiURL + '/getComprasById/' + this.userIdForm.value.userId)
     .subscribe(data => {

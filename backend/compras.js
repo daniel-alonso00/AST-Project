@@ -236,7 +236,6 @@ app.post('/compra', async (req, res) => {
         nombreCliente: nombreCliente,
         direccion: direccion,
         existencias: existencias
-        //modificaciones: 0
       });
       newCompra.save();
       
@@ -265,7 +264,6 @@ app.put('/compra', async (req, res) => {
     idCliente = req.body.idCliente
     nombreCliente = req.body.nombreCliente
     direccion = req.body.direccion
-    //modificaciones = parseInt(req.body.modificaciones)
 
     // Comprovar validez del id del usuario
     if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
@@ -285,11 +283,10 @@ app.put('/compra', async (req, res) => {
       res.status(500).json({ message: "Servicio solo disponible para clientes" });
       return
     }
-    modificaciones = modificaciones + 1;
     await Compra.updateOne({_id: idCompra}, {
       nombreCliente: nombreCliente,
       direccion: direccion
-      //modificaciones: modificaciones
+      
     })
 
     res.status(200).json({ message: "Compra actualizada correctamente" })

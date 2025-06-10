@@ -102,8 +102,7 @@ export class UsuarioComponent {
       },error =>{
         alert(error.error.message);
       })
-    //hacemos una llamada a un endpoint en el que vamos a mandar el id de la caja y el id del usuario que queremos cambiar
-
+    
   }
 
 

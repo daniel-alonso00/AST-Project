@@ -48,10 +48,13 @@
 <div id="box-container">
     @for (item of displayItems; track item._id) {
         <div class="box-item">
-            <!-- <button class="btn-eliminar" (click)="eliminarItem(item._id)">×</button> -->
+            
             <p class="prop-nombre">{{item.nombre}}</p>
             <p>Rol: {{item.permisos}}</p>
             <p>ID: {{item._id}}</p>
+
+            <!-- Mandamos con el boton el id del usuario que vamos a modificar -->
+            <button (click)="this.changeRolUser(item._id)">Cambiar Rol</button>
             
             <!-- <p class="prop-precio">Precio: {{item.precio}}</p>
             <p class="prop-cantidad">Cantidad: {{ item.cantidad }}</p>

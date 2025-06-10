@@ -201,14 +201,14 @@ h1 {
 }
 
 .box-item > button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+    /* position: absolute; */
+    /* top: 5px;
+    right: 5px; */
     border:none;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: var(--mid-dark);
-    width: 24px;
-    height: 24px;
+    /* width: 24px; */
+    /* height: 24px; */
     color: var(--mid-light);
     font-size: 16px;
     transition: ease-in-out all 250ms;

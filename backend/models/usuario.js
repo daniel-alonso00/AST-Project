@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const usuario = new mongoose.Schema({
-  permisos: String,     // <- true: Admin; false: No-Admin. |!| => Igual hay que cambiar este campo a String
+  permisos: String,     //String con el rol: "administrador" o "cliente"
   nombre: String  //Añadimos el ombre del usuario
 })
 

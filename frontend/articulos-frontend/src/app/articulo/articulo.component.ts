@@ -42,7 +42,7 @@ export class ArticuloComponent {
   addForm = new FormGroup({         // Form para añadir Joya
     nombre: new FormControl(''),
     precio: new FormControl('', [Validators.required, Validators.min(0)]) ,   // Campos requeridos con una cantidad minima
-    cantidad: new FormControl('', [Validators.required, Validators.min(0)]),  // Campos requeridos con una cantidad minima
+    cantidad: new FormControl('', [Validators.required]),  // Campos requeridos, pero puede ser negativa la cantidad a la hora de crearlo
     userId: new FormControl('')
   });
 

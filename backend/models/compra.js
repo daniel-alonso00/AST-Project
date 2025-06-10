@@ -5,7 +5,9 @@ const compra = new mongoose.Schema({
   idCliente: String,
   cantidad: Number,
   nombreCliente: String,
-  direccion: String
+  direccion: String,
+  existencias: Boolean,
+  modificaciones: Number
 })
 
 module.exports = mongoose.model("Compra", compra)

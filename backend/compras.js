@@ -217,22 +217,38 @@ app.post('/compra', async (req, res) => {
 
     let articuloSolicitado = await Inventario.findOne({_id: idArticulo})
 
-    if (articuloSolicitado.cantidad >= cantidad) {
+    var existencias;
+
+    //Puede hacerse compras si la compra excede a la cantidad de articulos
+    if (articuloSolicitado.cantidad >= 0){
+
+      if(articuloSolicitado.cantidad >= cantidad){  //si la cantidad que queremos comprar es menos que la que hay en stock
+        existencias = true;
+      }else{
+        existencias = false;
+      }
+
+      console.log("tenemos cantidad suficiente");
       let newCompra = new Compra({
         idArticulo: idArticulo,
         idCliente: idCliente,
         cantidad: parseInt(cantidad),
         nombreCliente: nombreCliente,
-        direccion: direccion
+        direccion: direccion,
+        existencias: existencias
+        //modificaciones: 0
       });
       newCompra.save();
-
+      
+      //Restamos la cantidad que vamos a comprar con la cantidad que tiene el articulo
       articuloSolicitado.cantidad -= cantidad;
+      
       await Inventario.updateOne({_id: idArticulo}, articuloSolicitado);
 
       res.status(200).json({ message: "Compra creada correctamente.\nID de la compra: " + newCompra._id })
     } else {
-      res.status(500).json({ message: "Existencias disponibles insuficientes.\nCantidad disponible: "+articuloJSON.joya.cantidad})
+      console.log("cantidad insuficiente");
+      res.status(404).json({ message: "Existencias disponibles insuficientes."})
     }
   } catch {
     res.status(500).json({ message: "Error al crear compra" })
@@ -249,6 +265,7 @@ app.put('/compra', async (req, res) => {
     idCliente = req.body.idCliente
     nombreCliente = req.body.nombreCliente
     direccion = req.body.direccion
+    //modificaciones = parseInt(req.body.modificaciones)
 
     // Comprovar validez del id del usuario
     if (!idUsuario || !mongoose.Types.ObjectId.isValid(idUsuario)) {
@@ -268,10 +285,11 @@ app.put('/compra', async (req, res) => {
       res.status(500).json({ message: "Servicio solo disponible para clientes" });
       return
     }
-    
+    modificaciones = modificaciones + 1;
     await Compra.updateOne({_id: idCompra}, {
       nombreCliente: nombreCliente,
       direccion: direccion
+      //modificaciones: modificaciones
     })
 
     res.status(200).json({ message: "Compra actualizada correctamente" })
@@ -309,9 +327,13 @@ app.delete('/compra/:idUsuario?/:idCliente?/:idCompra?', async(req, res) => {
     }
 
     let compra_data = await Compra.findOne({_id: idCompra});
-    let articulo = await Inventario.findOne({_id: idArticulo});
 
+    let idArticulo = compra_data.idArticulo;
+
+    let articulo = await Inventario.findOne({_id: idArticulo});
+    
     articulo.cantidad += compra_data.cantidad;
+    
     await Inventario.updateOne({_id: idArticulo}, articulo);
     
     await Compra.deleteOne({_id: idCompra});

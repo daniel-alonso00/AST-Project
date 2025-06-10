@@ -89,5 +89,22 @@ export class UsuarioComponent {
       })
   }
 
+  //Funcion para el cambio de rol del usuario
+  changeRolUser(_id: String){
+    const userId = this.boxIdUser.value.userId; //pillamos el user de la caja para ver si es administrador
+
+    //como no queremos mandar los datos por el body del PUT, lo mandamos vacio con '{}'
+    this.http.put<any>(this.apiURL + '/usuario/' + userId + '/' + _id,{})
+      .subscribe(data => {
+        //console.log(data.message)
+        alert(data.message);
+        this.readUsuarios();
+      },error =>{
+        alert(error.error.message);
+      })
+    //hacemos una llamada a un endpoint en el que vamos a mandar el id de la caja y el id del usuario que queremos cambiar
+
+  }
+
 
 }
